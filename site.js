@@ -2,10 +2,11 @@
    Paste a URL between the quotes. Empty = the button shows "Coming soon". */
 const LINKS = {
   calendly:           "https://calendly.com/edwardjohn-gt/discoverycall",   // your Calendly link, e.g. https://calendly.com/your-name/30min
-  productivityGuide:  "",   // 9-to-5 Productivity Guide
-  communicationGuide: "",   // Communication Workout guide
+  productivityGuide:  "https://drive.google.com/file/d/1HxfB9Hn86U3lepX-JU2USM-E61WHq-H4/view?usp=sharing",   // After Hours guide (PDF)
+  communicationGuide: "https://docs.google.com/document/d/1nhCB7iHLw6TaDug5NVfzes_-4DRo7WzJ/edit?usp=sharing&ouid=102164912297663590073&rtpof=true&sd=true",   // 30-Minute Speaking Workout
   figureItOutLoud:    "https://figureitoutloud.netlify.app",
-  kingsClub:          "https://www.danmartell.com/kingsclub/#eventlist"
+  kingsClub:          "https://www.danmartell.com/kingsclub/#eventlist",
+  foundersHike:       "https://www.danmartell.com/events/"
 };
 
 document.querySelectorAll("[data-link]").forEach(a => {
@@ -20,12 +21,36 @@ document.querySelectorAll("[data-link]").forEach(a => {
   }
 });
 
-/* Resource video previews: show a labelled placeholder until the video file exists */
+/* Resource video previews: poster shows instantly; video plays muted on loop.
+   If the browser refuses the file directly, load it as a blob and try again. */
 document.querySelectorAll(".card-media video").forEach(v => {
-  const miss = () => v.parentNode.classList.add("empty");
-  v.addEventListener("error", miss);
-  if (v.error || v.networkState === 3) miss();
+  v.muted = true;
+  const tryPlay = () => { const p = v.play(); if (p) p.catch(() => {}); };
+  let retried = false;
+  v.addEventListener("error", async () => {
+    if (retried) return; retried = true;
+    try {
+      const r = await fetch(v.getAttribute("src"));
+      if (!r.ok) throw 0;
+      v.src = URL.createObjectURL(await r.blob()); v.load(); tryPlay();
+    } catch (e) { /* the poster image stays visible */ }
+  });
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? tryPlay() : v.pause()), { threshold: 0.2 }).observe(v);
+  } else tryPlay();
 });
+
+/* Scroll reveal: only content that starts below the first screen fades up as it scrolls in */
+if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const sel = ".section .head, .sides > *, .paths > *, .kings, .hike, .dm-gallery figure, .cards > *, .timeline li, .table-wrap, .cta-band, .split > div:first-child";
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const t = e.target; t.classList.add("in"); io.unobserve(t); setTimeout(() => t.style.removeProperty("--d"), 1400); } }), { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+  document.querySelectorAll(sel).forEach(el => {
+    if (el.getBoundingClientRect().top < innerHeight * 0.92) return;
+    const sibs = [...el.parentNode.children];
+    el.style.setProperty("--d", (Math.min(sibs.indexOf(el), 5) * 0.08) + "s");
+    el.classList.add("reveal"); io.observe(el);
+  });
+}
 
 /* Time-lapse countdown: runs from the full time to 00:00 across one loop of the video, so it matches the clip's pace */
 document.querySelectorAll(".card-media[data-countdown]").forEach(box => {
