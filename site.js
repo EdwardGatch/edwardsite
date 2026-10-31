@@ -1,3 +1,7 @@
+/* Vercel Web Analytics */
+import { inject } from '@vercel/analytics';
+inject();
+
 /* ===== EDIT YOUR LINKS HERE =====
    Paste a URL between the quotes. Empty = the button shows "Coming soon". */
 const LINKS = {
