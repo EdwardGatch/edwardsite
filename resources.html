@@ -13,6 +13,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="site.css">
+<style>
+/* Kevin guide: one wide card above the grid */
+.card.card-wide{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:32px;align-items:center;margin-bottom:18px}
+.card.card-wide .card-media{margin:0;width:100%;max-width:100%;aspect-ratio:4/3}
+.card.card-wide .card-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s ease}
+.card.card-wide:hover .card-media img{transform:scale(1.03)}
+.card-wide .card-body{display:flex;flex-direction:column;gap:14px;min-width:0}
+@media (max-width:860px){.card.card-wide{grid-template-columns:minmax(0,1fr);gap:18px}}
+</style>
 </head>
 <body>
 <a class="announce" data-link="kingsClub" href="#">Ages 13–23? King's Club by Dan Martell is free. <b>Join the community →</b></a>
@@ -33,6 +42,16 @@
   <p class="lede">The guides and tools I actually use. Short, practical, built from my own routine.</p>
 </div></section>
 <section><div class="wrap">
+  <article class="card card-wide">
+    <div class="card-media"><img src="assets/preview-kevin.jpg" alt="Kevin's chat feed: 15 drafts ready in Gmail by 7 AM" width="1200" height="900" loading="lazy"></div>
+    <div class="card-body">
+      <div class="meta"><span class="label">Web guide · 21 steps</span><span class="label free">Free</span></div>
+      <h3>Build Your Own Kevin</h3>
+      <p>The AI assistant I built to find leads while I sleep. It checks every email address and leaves a personal draft in my Gmail by 7 AM. I just press Send.</p>
+      <ul><li>Copy-paste prompts, chat by chat</li><li>For clients, a job or market research</li><li>No coding needed</li></ul>
+      <a class="btn btn-primary" href="kevin/">Open the guide <span class="arr" aria-hidden="true">→</span></a>
+    </div>
+  </article>
   <div class="cards">
     <article class="card">
       <div class="card-media" data-countdown="5400"><span class="timer" aria-hidden="true"><i></i><b>90:00</b></span><video src="assets/preview-productivity.mp4" poster="assets/preview-productivity.jpg" autoplay muted loop playsinline preload="auto" aria-label="Edward working at a laptop, time-lapse"></video><span class="media-ph">Video preview<br>assets/preview-productivity.mp4</span></div>

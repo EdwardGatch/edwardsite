@@ -1,0 +1,2247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Build Your Own Kevin · Edward Gatchalian</title>
+<meta name="description" content="A free, step-by-step guide to building an AI assistant that finds leads, checks every email and leaves a personal draft in your Gmail each morning. For clients, a job or market research. No coding needed.">
+<link rel="canonical" href="https://edwardgatch.com/kevin/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Edward Gatchalian">
+<meta property="og:title" content="Build Your Own Kevin">
+<meta property="og:description" content="A free, step-by-step guide to building an AI assistant that finds leads, checks every email and leaves a personal draft in your Gmail each morning. For clients, a job or market research. No coding needed.">
+<meta property="og:url" content="https://edwardgatch.com/kevin/">
+<meta property="og:image" content="https://edwardgatch.com/kevin/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Build your own Kevin: a free guide by Edward Gatchalian">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Build Your Own Kevin">
+<meta name="twitter:description" content="A free, step-by-step guide to building an AI assistant that finds leads, checks every email and leaves a personal draft in your Gmail each morning. For clients, a job or market research. No coding needed.">
+<meta name="twitter:image" content="https://edwardgatch.com/kevin/og.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<style>
+/* page basics */
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<style>
+/* Layout: one calm reading column (720px) that widens to 1040px for mock screens and demos.
+   Apple feel: grouped grey ground, white cards with hairlines, system font, one blue accent. */
+:root{
+  --bg:#FBFAF7; --surface:#FFFFFF; --surface-2:#F2EFE8; --fill:rgba(118,118,128,.12);
+  --ink:#1D1D1F; --muted:#6E6E73; --muted-2:#8E8E93; --line:rgba(60,60,67,.14);
+  --accent:#8C6A17; --accent-ink:#7A5C12; --accent-soft:rgba(176,138,46,.14);
+  --ok:#248A3D; --ok-bg:rgba(52,199,89,.14); --warn:#B25000; --warn-bg:rgba(255,149,0,.14);
+  --bad:#D70015; --bad-bg:rgba(255,59,48,.12); --mark:rgba(201,165,78,.26);
+  --gold:#8A6A16; --gold-line:#C9A54E; --gold-soft:rgba(201,165,78,.16);
+  /* Claude app colours, used only in pictures of Claude */
+  --c-bg:#262624; --c-side:#1F1E1D; --c-card:#30302E; --c-hover:rgba(255,255,255,.08); --c-line:rgba(255,255,255,.11);
+  --c-ink:#ECEAE3; --c-muted:#A3A097; --c-coral:#D97757; --c-user:#141413;
+  --serif:ui-serif,"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --glass:rgba(251,250,247,.84); --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 28px rgba(0,0,0,.06);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;
+  --display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
+}
+/* Light only, on purpose (Edward, 2026-11-08): the page stays light even when the viewer's device is in dark mode. */
+:root,:root[data-theme="dark"]{color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+a{color:var(--accent-ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.025em}
+p{margin:0}
+code,.mono{font-family:var(--mono);font-size:.86em}
+code{background:var(--fill);padding:.1em .38em;border-radius:6px}
+
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:720px;margin:0 auto}
+
+/* top bar */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--glass)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+.bar-in{display:flex;align-items:center;gap:14px;min-height:52px;flex-wrap:wrap;padding-block:6px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:15px;margin-right:auto}
+.k{width:26px;height:26px;border-radius:8px;background:linear-gradient(160deg,#D2AE57,#8C6A17);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+.prog{position:absolute;left:0;bottom:-1px;height:2px;background:var(--accent);width:0;transition:width .1s linear}
+
+/* segmented control */
+.seg{display:inline-flex;background:var(--fill);border-radius:10px;padding:2px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;color:var(--ink);font:500 13px/1 var(--font);padding:8px 12px;border-radius:8px;cursor:pointer;transition:background .2s,box-shadow .2s}
+.seg button[aria-pressed="true"]{background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.seg-label{font-size:13px;color:var(--muted)}
+
+/* hero */
+.hero{padding-block:72px 40px;text-align:left}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink)}
+.hero h1{font-size:clamp(44px,7.4vw,80px);line-height:1.02;font-weight:700;margin-top:14px;letter-spacing:-.04em}
+.hero .lede{font-size:clamp(19px,2.3vw,23px);color:var(--muted);margin-top:18px;max-width:640px;line-height:1.4}
+.byline{display:flex;gap:10px;align-items:center;margin-top:22px;font-size:14px;color:var(--muted);flex-wrap:wrap}
+.dot{width:4px;height:4px;border-radius:50%;background:var(--muted-2)}
+.picker{margin-top:34px;padding:18px;border-radius:18px;background:var(--surface);box-shadow:var(--shadow);border:1px solid var(--line);display:grid;gap:12px;max-width:640px}
+.picker p{font-size:15px;font-weight:600}
+.picker small{font-size:13px;color:var(--muted)}
+
+/* overview */
+.over{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:8px}
+.over a{display:grid;gap:4px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;transition:transform .2s ease,box-shadow .2s}
+.over a:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.over .n{font:600 13px/1 var(--mono);color:var(--accent-ink)}
+.over .t{font-size:13px;color:var(--muted)}
+.over b{font-size:17px}
+
+/* sections */
+section{padding-block:56px}
+.sec-head{display:grid;gap:10px;margin-bottom:28px}
+.sec-head h2{font-size:clamp(32px,4.6vw,48px);line-height:1.05;font-weight:700}
+.sec-head p{font-size:19px;color:var(--muted);max-width:620px}
+.phase-tag{display:flex;align-items:baseline;gap:12px}
+.phase-tag .big{font:700 15px/1 var(--mono);color:var(--accent-ink)}
+.phase-tag .when{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+hr.sep{border:0;border-top:1px solid var(--line);margin:0}
+
+/* steps */
+.step{display:grid;grid-template-columns:36px minmax(0,1fr);gap:16px;margin-top:44px}
+.num{width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-weight:600;font-size:15px}
+.step h3{font-size:24px;line-height:1.2;font-weight:650;margin-top:2px}
+.step .sub{color:var(--muted);margin-top:4px}
+.step-body{display:grid;gap:16px;margin-top:16px;min-width:0}
+.step-body > p{max-width:640px}
+.why{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;font-size:15px;color:var(--muted);background:var(--surface-2);border-radius:12px;padding:12px 14px}
+.why b{color:var(--ink);font-weight:600}
+.why .ic{font-weight:700;color:var(--accent-ink);font-size:13px;letter-spacing:.04em;text-transform:uppercase;padding-top:1px}
+ul.plain{margin:0;padding-left:20px;display:grid;gap:6px}
+ol.clicks{margin:0;padding-left:22px;display:grid;gap:8px}
+ol.clicks b{font-weight:600}
+
+/* card */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+
+/* prompt block */
+.prompt{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.prompt-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line)}
+.prompt-h span{font-size:14px;font-weight:600}
+.copy{border:0;background:var(--accent);color:#fff;font:600 13px/1 var(--font);padding:8px 12px;border-radius:999px;cursor:pointer;flex:none}
+.copy.done{background:var(--ok)}
+.prompt-b{padding:14px 16px;font-size:15px;line-height:1.6;white-space:pre-wrap;color:var(--ink)}
+.fill{color:var(--gold);font-weight:600;border-bottom:1.5px dashed var(--gold-line);padding:0 1px;outline:none;cursor:text;border-radius:3px}
+.fill:focus{background:var(--gold-soft)}
+.hint{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.hint .fill{cursor:default}
+
+/* chat (problem box) */
+.problem{display:grid;gap:10px;padding:18px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.problem .lab{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.msg{max-width:80%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.4}
+.msg.you{justify-self:end;background:var(--accent);color:#fff;border-bottom-right-radius:6px}
+.msg.ai{justify-self:start;background:var(--surface-2);border-bottom-left-radius:6px}
+.problem .verdict{font-size:15px;color:var(--bad);font-weight:600}
+
+/* window chrome mock */
+.win{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.win-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.win-bar i{width:10px;height:10px;border-radius:50%;background:var(--line);display:block}
+.win-bar .url{margin-left:10px;font-size:12px;color:var(--muted);background:var(--surface);border-radius:6px;padding:3px 10px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* CRM mock */
+.crm{display:grid;grid-template-columns:170px minmax(0,1fr);min-height:420px}
+.crm-side{border-right:1px solid var(--line);padding:12px 8px;display:grid;align-content:start;gap:2px;background:var(--surface-2)}
+.crm-side div{font-size:13px;padding:7px 10px;border-radius:8px;color:var(--muted)}
+.crm-side .on{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+.crm-main{padding:16px;display:grid;gap:14px;align-content:start;min-width:0}
+.crm-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.crm-top h4{font-size:24px}
+.live{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--ok-bg);color:var(--ok)}
+.live i{width:7px;height:7px;border-radius:50%;background:currentColor;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.tile{background:var(--surface-2);border-radius:12px;padding:12px}
+.tile .l{font-size:12px;color:var(--muted)}
+.tile .v{font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .d{font-size:11px;color:var(--muted)}
+.feed{background:var(--surface-2);border-radius:14px;padding:12px;display:grid;gap:8px}
+.feed-h{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.fmsg{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:start}
+.fmsg time{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:9px;width:34px}
+.fb{background:var(--surface);border-radius:14px;border-top-left-radius:5px;padding:8px 12px;font-size:13.5px;line-height:1.4}
+.fb.report{border:1.5px solid var(--accent)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chip{font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink)}
+.typing{display:inline-flex;gap:4px;padding:10px 12px;background:var(--surface);border-radius:14px;border-top-left-radius:5px;width:max-content}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--muted-2);animation:bounce 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+.sample{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+
+/* timeline */
+.tl{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;position:relative;margin-top:6px}
+.tl::before{content:"";position:absolute;left:4%;right:4%;top:15px;height:2px;background:var(--line)}
+.tl-i{display:grid;justify-items:center;text-align:center;gap:6px;position:relative;padding:0 4px}
+.tl-i b{font:600 12px/1 var(--mono);background:var(--bg);padding:8px 6px;border-radius:999px;border:1px solid var(--line);position:relative}
+.tl-i span{font-size:13px;color:var(--muted);line-height:1.3}
+.tl-i.hot b{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* assembly line */
+.line{display:grid;gap:14px}
+.lane{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;align-items:center}
+.lane-name{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.track{position:relative;display:flex;gap:8px;flex-wrap:wrap;padding:10px;border-radius:14px;background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.track::after{content:"";position:absolute;top:0;bottom:0;width:60px;left:-60px;background:linear-gradient(90deg,transparent,var(--accent-soft),transparent);animation:sweep 4.5s ease-in-out infinite}
+.lane:nth-child(2) .track::after{animation-delay:1.5s}.lane:nth-child(3) .track::after{animation-delay:3s}
+@keyframes sweep{0%{left:-60px}60%,100%{left:100%}}
+.st{display:grid;gap:2px;padding:9px 12px;border-radius:10px;background:var(--surface-2);min-width:0;flex:1 1 130px;position:relative;z-index:1}
+.st b{font-size:14px}
+.st span{font-size:12.5px;color:var(--muted);line-height:1.3}
+.st.you{background:var(--accent);color:#fff}.st.you span{color:rgba(255,255,255,.85)}
+.paid{display:inline-block;font-size:10.5px;font-weight:700;color:var(--warn);background:var(--warn-bg);padding:1px 6px;border-radius:999px;margin-left:4px;vertical-align:2px}
+
+/* shopping list table */
+.tbl-wrap{overflow-x:auto;border-radius:16px;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.cost{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:600}
+.free{color:var(--ok)}
+.req{font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.req.must{background:var(--accent-soft);color:var(--accent-ink)}
+.req.opt{background:var(--fill);color:var(--muted)}
+
+/* click-through demo */
+.demo{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.demo.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.pane{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:10px;align-content:start;transition:transform .35s ease,box-shadow .35s ease,border-color .35s;min-width:0}
+.pane.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);transform:translateY(-3px)}
+.pane .cap{display:flex;gap:8px;align-items:center;font-size:13px;font-weight:600}
+.pane .cap i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:11px;flex:none}
+.screen{background:var(--surface-2);border-radius:10px;padding:10px;display:grid;gap:7px;font-size:12.5px;min-height:132px;align-content:start}
+.screen .crumb{font-size:11px;color:var(--muted)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--surface);border-radius:8px;padding:7px 9px;min-width:0}
+.row span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{font-size:11px;font-weight:600;padding:4px 9px;border-radius:999px;background:var(--accent);color:#fff;white-space:nowrap;flex:none}
+.btn.g{background:var(--fill);color:var(--ink)}
+.btn.ok{background:var(--ok-bg);color:var(--ok)}
+.pane.on .btn.press{animation:press 2.4s ease-in-out infinite}
+@keyframes press{0%,40%,100%{transform:scale(1)}50%{transform:scale(.9)}60%{transform:scale(1)}}
+.field{background:var(--surface);border-radius:8px;padding:6px 9px;display:grid;gap:1px}
+.field small{font-size:10px;color:var(--muted)}
+
+/* files stack */
+.files{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.file{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:4px;min-width:0}
+.file code{background:none;padding:0;font-weight:600;color:var(--accent-ink);font-size:13px}
+.file span{font-size:13.5px;color:var(--muted);line-height:1.35}
+
+/* scoring */
+.score{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;padding:16px}
+.sig{display:grid;gap:8px}
+.sig button{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 14px/1.3 var(--font);padding:10px 12px;border-radius:12px;cursor:pointer;transition:background .2s,border-color .2s}
+.sig button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.sig .pts{font:600 13px/1 var(--mono);flex:none}
+.sig .neg{color:var(--bad)}
+.meter{display:grid;gap:12px;align-content:center;justify-items:center;text-align:center;background:var(--surface-2);border-radius:14px;padding:18px}
+.ring{width:150px;height:150px}
+.ring circle{fill:none;stroke-width:12}
+.ring .bgc{stroke:var(--fill)}
+.ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .5s ease,stroke .3s}
+.ring text{fill:var(--ink);font:700 38px var(--display);text-anchor:middle;dominant-baseline:central}
+.ring .th{fill:var(--muted);font:500 12px var(--font)}
+.verdict-pill{font-weight:700;font-size:15px;padding:7px 14px;border-radius:999px}
+.verdict-pill.y{background:var(--ok-bg);color:var(--ok)}
+.verdict-pill.n{background:var(--bad-bg);color:var(--bad)}
+.meter small{font-size:13px;color:var(--muted);max-width:240px}
+
+/* email mock */
+.mail{display:grid;grid-template-columns:220px minmax(0,1fr)}
+.mail-list{border-right:1px solid var(--line);background:var(--surface-2);padding:8px;display:grid;gap:4px;align-content:start}
+.mail-list div{padding:8px 10px;border-radius:8px;font-size:12.5px;display:grid;gap:1px;min-width:0}
+.mail-list div span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
+.mail-list .on{background:var(--surface)}
+.mail-list .dr{color:var(--bad);font-weight:600;font-size:11px}
+.mail-body{padding:16px 18px;display:grid;gap:10px;font-size:14.5px;line-height:1.55;min-width:0}
+.mail-body .meta{font-size:13px;color:var(--muted);display:grid;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.mail-body .subj{font-size:17px;font-weight:650;color:var(--ink)}
+mark{background:var(--mark);color:inherit;border-radius:4px;padding:0 3px}
+.send-row{display:flex;gap:10px;align-items:center;margin-top:4px}
+.sendb{background:var(--accent);color:#fff;font-weight:600;font-size:13px;padding:7px 16px;border-radius:999px}
+
+/* team grid */
+.team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.mate{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:4px;align-content:start;min-width:0}
+.mate .who{display:flex;align-items:center;gap:8px;font-weight:650;font-size:15px}
+.av{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;flex:none}
+.mate span{font-size:13px;color:var(--muted);line-height:1.35}
+.g1 .av{background:#8C6A17}.g2 .av{background:#5F5A4E}.g3 .av{background:#4F7A5A}.g4 .av{background:#9A5B3C}
+
+/* sheet mock */
+.sheet-tabs{display:flex;gap:2px;overflow-x:auto;background:var(--surface-2);border-top:1px solid var(--line);padding:4px}
+.sheet-tabs button{border:0;background:transparent;color:var(--muted);font:500 12.5px/1 var(--font);padding:8px 11px;border-radius:7px;cursor:pointer;white-space:nowrap}
+.sheet-tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.sheet-grid{overflow-x:auto}
+.sheet-grid table{font-size:12.5px}
+.sheet-grid th{text-transform:none;letter-spacing:0;font-size:12px;color:var(--ink);white-space:nowrap}
+.sheet-grid td{white-space:nowrap;color:var(--muted)}
+.sheet-note{padding:12px 14px;font-size:14px;color:var(--muted);border-bottom:1px solid var(--line)}
+.sheet-note b{color:var(--ink)}
+
+/* status pipeline */
+.pipe{display:flex;gap:6px;align-items:stretch;overflow-x:auto;padding:4px 2px 8px}
+.ps{flex:1 0 110px;display:grid;gap:4px;padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);position:relative;transition:border-color .3s,box-shadow .3s}
+.ps b{font-size:14px}
+.ps span{font-size:12px;color:var(--muted);line-height:1.3}
+.ps em{font-style:normal;font-size:11px;font-weight:700;color:var(--accent-ink)}
+.ps.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+/* ramp chart */
+.ramp{padding:16px 16px 10px}
+.ramp svg{width:100%;height:auto;display:block}
+.ramp .bar-r{fill:var(--accent)}
+.ramp .bar-r.dim{fill:var(--accent-soft)}
+.ramp text{fill:var(--muted);font:500 12px var(--font)}
+.ramp .val{fill:var(--ink);font:700 14px var(--font)}
+.ramp line{stroke:var(--line)}
+
+/* calculator */
+.calc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.2fr);gap:12px;padding:16px;align-items:end}
+.calc label{display:grid;gap:6px;font-size:13px;color:var(--muted);font-weight:500}
+.calc input{width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:10px 12px;font:600 17px var(--font);color:var(--ink);font-variant-numeric:tabular-nums}
+.calc .out{background:var(--accent-soft);border-radius:12px;padding:10px 14px;display:grid;gap:2px}
+.calc .out b{font-size:28px;letter-spacing:-.02em;color:var(--accent-ink);font-variant-numeric:tabular-nums}
+.calc .out span{font-size:12.5px;color:var(--muted)}
+
+/* rules, glossary, faq */
+.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:6px}
+.rule b{font-size:16px}
+.rule span{font-size:14.5px;color:var(--muted)}
+.gloss{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}
+.gloss div{padding:12px 0;border-bottom:1px solid var(--line);display:grid;gap:3px}
+.gloss dt{font-weight:650;font-size:15px}
+.gloss dd{margin:0;font-size:14.5px;color:var(--muted)}
+.gloss dd i{font-style:normal;color:var(--muted-2);font-size:13px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:0 16px}
+details+details{margin-top:8px}
+summary{cursor:pointer;padding:14px 0;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--muted);font-weight:400;font-size:20px;line-height:1}
+details[open] summary::after{content:"–"}
+details p{padding-bottom:14px;font-size:15px;color:var(--muted)}
+.note{font-size:14px;color:var(--muted);border-left:3px solid var(--accent);padding:4px 0 4px 12px}
+.modebox{background:var(--accent-soft);border-radius:14px;padding:14px 16px;font-size:15px;display:grid;gap:4px}
+.modebox b{color:var(--accent-ink)}
+footer{padding-block:48px 72px;color:var(--muted);font-size:14px;text-align:center}
+.disclaimer{max-width:620px;margin:10px auto 0;font-size:12.5px;line-height:1.5;color:var(--muted-2)}
+
+[data-show]{display:none}
+body[data-mode="clients"] [data-show~="clients"],body[data-mode="job"] [data-show~="job"],body[data-mode="insights"] [data-show~="insights"]{display:revert}
+[data-if-lf],[data-if-claude],[data-if-email]{display:none}
+body[data-lf="hunter"] [data-if-lf~="hunter"],body[data-lf="apollo"] [data-if-lf~="apollo"],body[data-lf="other"] [data-if-lf~="other"],body[data-lf="unsure"] [data-if-lf~="unsure"],
+body[data-claude="none"] [data-if-claude~="none"],body[data-claude="free"] [data-if-claude~="free"],body[data-claude="pro"] [data-if-claude~="pro"],body[data-claude="code"] [data-if-claude~="code"],
+body[data-email="gmail"] [data-if-email~="gmail"],body[data-email="workspace"] [data-if-email~="workspace"],body[data-email="other"] [data-if-email~="other"]{display:revert}
+
+/* starting-point quiz */
+.quiz{margin-top:34px;padding:20px;border-radius:20px;background:var(--surface);box-shadow:var(--shadow);border:1px solid var(--line);display:grid;gap:18px;max-width:720px}
+.quiz-h{display:grid;gap:4px}
+.quiz-h b{font-size:19px;letter-spacing:-.02em}
+.quiz-h span{font-size:14px;color:var(--muted)}
+.q{display:grid;gap:8px}
+.q p{font-size:15px;font-weight:600;display:flex;gap:8px;align-items:baseline}
+.q p i{font-style:normal;font:600 12px/1 var(--mono);color:var(--accent-ink)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 14px/1.2 var(--font);padding:9px 13px;border-radius:999px;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.opts button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.other-in{border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 12px;font:500 15px var(--font);color:var(--ink);max-width:320px;width:100%}
+.path{background:var(--surface-2);border-radius:14px;padding:14px 16px;display:grid;gap:10px}
+.path-row{display:grid;grid-template-columns:110px minmax(0,1fr);gap:10px;font-size:14.5px}
+.path-row > span:first-child{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:2px}
+.path-row b{font-weight:650}
+.path ul{margin:0;padding-left:18px;display:grid;gap:3px}
+.badge{display:inline-block;vertical-align:4px;margin-left:8px;font:700 11px/1 var(--font);letter-spacing:.02em;padding:4px 8px;border-radius:999px}
+.badge.skip{background:var(--ok-bg);color:var(--ok)}
+.badge.quick{background:var(--accent-soft);color:var(--accent-ink)}
+.step.is-skip .step-body{opacity:.55}
+
+/* Google's own sign-in screen look */
+.screen.gg{background:#fff;border:1px solid #dadce0;color:#202124}
+.screen.gg .row{background:#fff;border:1px solid #dadce0}
+.screen.gg .btn{background:#1a73e8;color:#fff;border-radius:4px}
+.screen.gg .btn.g{background:#fff;color:#1a73e8;border:1px solid #dadce0}
+/* Claude app look, for every picture of Claude itself */
+.cwin{border-radius:14px;overflow:hidden;border:1px solid var(--c-line);background:var(--c-bg);box-shadow:var(--shadow);color:var(--c-ink)}
+.cwin-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:var(--c-side);border-bottom:1px solid var(--c-line);position:relative;min-height:38px}
+.cwin-bar i{width:10px;height:10px;border-radius:50%;background:var(--c-line);display:block}
+.cmode{position:absolute;left:50%;transform:translateX(-50%);display:flex;background:var(--c-hover);border-radius:8px;padding:2px;font-size:12px}
+.cmode span{padding:3px 12px;border-radius:6px;color:var(--c-muted)}
+.cmode .on{background:var(--c-card);color:var(--c-ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.ctb{color:var(--c-muted);font-size:13px;width:16px;text-align:center}
+.cmodes{display:flex;gap:2px;margin-left:12px;background:var(--c-hover);border-radius:8px;padding:2px}
+.cmodes span{padding:2px 8px;border-radius:6px;color:var(--c-muted);font:600 11.5px/1.4 var(--mono)}
+.cmodes .on{background:var(--c-card);color:var(--c-ink)}
+.cnav{padding:7px 10px;border-radius:8px;font-size:13px}
+.cnav.on{background:var(--c-hover)}
+.cbottom{display:grid;gap:8px;max-width:560px;width:100%;margin:0 auto}
+.cunder{display:flex;gap:14px;align-items:center;font-size:12px;color:var(--c-muted);padding:0 6px;flex-wrap:wrap}
+.cunder .folder{color:var(--c-ink);font-weight:500}
+.cunder .r{margin-left:auto;color:var(--c-ink)}
+.cunder i{font-style:normal;color:var(--c-muted)}
+.cchats{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:420px}
+.cside{background:var(--c-side);border-right:1px solid var(--c-line);padding:10px 8px;display:grid;gap:1px;align-content:start;font-size:13px}
+.cnew{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-weight:500}
+.cnew .plus{width:20px;height:20px;border-radius:50%;background:var(--c-coral);color:#fff;display:grid;place-items:center;font-size:14px;line-height:1}
+.cside .grp{font-size:11.5px;color:var(--c-muted);padding:12px 10px 4px;font-weight:500}
+.cside .c{padding:7px 10px;border-radius:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cside .c.on{background:var(--c-hover);font-weight:500}
+.cside .c small{color:var(--c-muted);font-size:11px}
+.cmain{display:grid;grid-template-rows:1fr auto;padding:20px 22px 16px;gap:14px;min-width:0}
+.cthread{display:grid;gap:14px;align-content:start;max-width:560px;width:100%;margin:0 auto}
+.cu{justify-self:end;background:var(--c-user);border-radius:14px;padding:9px 13px;font-size:14px;max-width:85%}
+.ca{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;font-family:var(--serif);font-size:15.5px;line-height:1.55;color:var(--c-ink)}
+.spark{color:var(--c-coral);padding-top:3px}
+.spark svg{width:18px;height:18px;display:block;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.cperm{border:1px solid var(--c-line);border-radius:12px;background:var(--c-card);padding:12px 14px;display:grid;gap:10px;font-size:13.5px}
+.cperm code{background:var(--c-hover)}
+.cperm .acts{display:flex;gap:6px;flex-wrap:wrap}
+.cb{font-size:12.5px;font-weight:500;padding:6px 12px;border-radius:8px;border:1px solid var(--c-line);background:var(--c-card);color:var(--c-ink)}
+.cb.dark{background:var(--c-ink);color:var(--c-card);border-color:var(--c-ink);animation:press 2.4s ease-in-out infinite}
+.ccomp{border:1px solid var(--c-line);border-radius:18px;background:var(--c-card);padding:12px 12px 10px 14px;display:grid;gap:10px}
+.ccomp .ph{font-size:14px;color:var(--c-muted)}
+.ccomp .row2{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--c-muted)}
+.ccomp .pill{border:1px solid var(--c-line);border-radius:8px;padding:3px 8px}
+.ccomp .send{margin-left:auto;width:28px;height:28px;border-radius:8px;background:var(--c-coral);color:#fff;display:grid;place-items:center;font-weight:700}
+.screen.cl{background:var(--c-bg);border:1px solid var(--c-line);color:var(--c-ink)}
+.screen.cl .crumb{color:var(--c-muted)}
+.screen.cl .row,.screen.cl .field{background:var(--c-card);border:1px solid var(--c-line)}
+.screen.cl .btn{background:var(--c-ink);color:var(--c-card);border-radius:8px}
+.screen.cl .btn.g{background:var(--c-card);color:var(--c-ink);border:1px solid var(--c-line)}
+.screen.cl .btn.ok{background:transparent;color:var(--c-muted);padding-right:0}
+.screen.cl .btn.coral{background:var(--c-coral);color:#fff}
+.screen.cl .cl-title{display:flex;align-items:center;gap:6px;font-weight:600;font-size:12.5px}
+.screen.cl .cl-title .spark{padding-top:0}
+.screen.cl .cl-title .spark svg{width:14px;height:14px}
+@media (max-width:720px){.cchats{grid-template-columns:minmax(0,1fr)}.cside{display:none}.cmain{padding:16px 14px}}
+
+/* build plan, folder tree, prompt labels */
+[id]{scroll-margin-top:84px}
+.plan{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.pl-group{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:10px}
+.pl-group.opt{border-style:dashed}
+.pl-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pl-n{font:600 12px/1 var(--mono);color:var(--accent-ink);background:var(--accent-soft);padding:5px 9px;border-radius:999px}
+.pl-h b{font-size:17px}
+.pl-h small{font-size:13px;color:var(--muted)}
+.pl-group ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.pl-group li{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:10px;align-items:baseline;font-size:15px}
+.pl-group li .st{font-size:12.5px;color:var(--muted);white-space:nowrap}
+body[data-lf="other"] .pl-group li[data-if-lf~="other"],body[data-claude="none"] .pl-group li[data-if-claude~="none"],body[data-claude="free"] .pl-group li[data-if-claude~="free"],body[data-claude="pro"] .pl-group li[data-if-claude~="pro"]{display:grid}
+.pl-group a{color:var(--accent-ink);font-weight:600;text-decoration:none}
+.pl-group a:hover{text-decoration:underline}
+.tag{font:700 10.5px/1 var(--font);letter-spacing:.05em;text-transform:uppercase;padding:5px 0;border-radius:6px;text-align:center}
+.tag.you{background:var(--fill);color:var(--ink)}
+.tag.paste{background:var(--accent-soft);color:var(--accent-ink)}
+.ph-t{display:grid;gap:2px;min-width:0}
+.where{font:700 10.5px/1.2 var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink)}
+.prompt:target{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.tree{padding:6px 0;overflow-x:auto}
+.tr{display:grid;grid-template-columns:minmax(170px,auto) minmax(0,1fr) auto;gap:12px;padding:7px 16px;align-items:baseline;border-bottom:1px solid var(--line);font-size:14px}
+.tr:last-child{border-bottom:0}
+.tn{font-family:var(--mono);font-size:13px;padding-left:calc(var(--d) * 18px);white-space:nowrap}
+.tn.dir{font-weight:700;color:var(--accent-ink)}
+.td{color:var(--muted)}
+.ts{font-size:12px;color:var(--muted);white-space:nowrap}
+@media (max-width:720px){
+  .pl-group li{grid-template-columns:52px minmax(0,1fr)}.pl-group li .st{grid-column:2}
+  .tr{grid-template-columns:minmax(0,1fr) auto}.td{grid-column:1/-1;padding-left:calc(var(--d) * 18px)}
+}
+
+/* chat sections: a full-width band opens each chat */
+.chat-band{padding-block:28px;background:linear-gradient(180deg,var(--accent-soft),rgba(176,138,46,.04));border-top:2px solid var(--accent);border-bottom:1px solid var(--line)}
+.chat-band .col{display:grid;gap:10px}
+.cb-flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:600;color:var(--muted)}
+.cb-flow .sw-arrow{color:var(--accent-ink)}
+.cb-flow .sw-to{color:var(--accent-ink)}
+.cb-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.cb-num{font:700 13px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:#fff;background:var(--accent);padding:7px 11px;border-radius:999px;align-self:center}
+.cb-title{font-size:clamp(28px,4vw,38px);line-height:1.1;font-weight:700}
+.cb-meta{font-size:14px;color:var(--muted);font-weight:500}
+.cb-note{font-size:15px;color:var(--ink);font-weight:500}
+.sw-steps{margin:0;padding-left:20px;display:grid;gap:6px;font-size:15px;color:var(--muted)}
+.sw-steps b{color:var(--ink)}
+.sw-steps a{color:var(--accent-ink);font-weight:600}
+.chat-cont{padding-top:4px}
+.chat-cont .col > .step:first-child{margin-top:28px}
+.chatpill{font-size:12.5px;font-weight:600;color:var(--accent-ink);background:var(--accent-soft);padding:6px 10px;border-radius:999px;white-space:nowrap}
+.chatpill[hidden]{display:none}
+
+/* one-question-at-a-time wizard */
+body[data-stage="quiz"] #guideBody,body[data-stage="quiz"] .over,body[data-stage="quiz"] #yourGuide,body[data-stage="quiz"] .bar-tools{display:none}
+body[data-stage="guide"] #wiz{display:none}
+.bar-tools{display:flex;gap:12px;align-items:center}
+.link{border:0;background:none;color:var(--accent-ink);font:500 14px var(--font);cursor:pointer;padding:6px 0}
+.link[disabled]{visibility:hidden}
+.wiz{margin-top:30px;max-width:560px;background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:22px;display:grid;gap:18px;overflow:hidden}
+.wiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;color:var(--muted);font-weight:600}
+.wiz-dots{display:flex;gap:6px}
+.wiz-dots i{width:24px;height:4px;border-radius:2px;background:var(--fill);transition:background .3s}
+.wiz-dots i.on{background:var(--accent)}
+.wiz-screen{display:grid;gap:14px;animation:wizIn .34s cubic-bezier(.2,.8,.2,1) both}
+.wiz-screen.back{animation-name:wizBack}
+@keyframes wizIn{from{opacity:.0;transform:translateX(28px)}to{opacity:1;transform:none}}
+@keyframes wizBack{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+.wiz-screen h2,.yg h2{font-size:clamp(24px,3.4vw,30px);line-height:1.15;font-weight:700}
+.wsub{color:var(--muted);font-size:15px}
+.wopts{display:grid;gap:8px}
+.wopt{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;width:100%;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:13px 14px;cursor:pointer;font:inherit;transition:border-color .2s,background .2s,transform .15s}
+.wopt:hover{border-color:var(--accent)}
+.wopt:active{transform:scale(.99)}
+.wopt b{display:block;font-size:16px;font-weight:600}
+.wopt small{display:block;font-size:13.5px;color:var(--muted);margin-top:2px;line-height:1.35}
+.wopt .radio{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--muted-2);display:grid;place-items:center;transition:background .2s,border-color .2s}
+.wopt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.wopt[aria-pressed="true"] .radio{background:var(--accent);border-color:var(--accent)}
+.wopt[aria-pressed="true"] .radio::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
+.wiz-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px}
+.wiz-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-p{border:0;background:var(--accent);color:#fff;font:600 15px var(--font);padding:12px 18px;border-radius:999px;cursor:pointer}
+.btn-p[disabled]{opacity:.4;cursor:default}
+.btn-s{border:0;background:var(--fill);color:var(--ink);font:600 15px var(--font);padding:12px 18px;border-radius:999px;cursor:pointer}
+.yg{margin-top:-8px;margin-bottom:32px;background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:22px;display:grid;gap:14px}
+.yg-h{display:grid;gap:6px}
+.yg-chips{display:flex;flex-wrap:wrap;gap:6px}
+.yg-chips span{font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--fill);color:var(--ink)}
+@media (max-width:720px){.brand span:last-child{display:none}.bar-tools .seg button{padding:8px 10px}}
+
+/* follow card */
+.follow{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:22px;display:grid;gap:14px}
+.follow-who{display:flex;gap:12px;align-items:center}
+.follow-who div{display:grid;gap:2px}
+.follow-who b{font-size:18px;letter-spacing:-.02em}
+.follow-av{width:46px;height:46px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;font-weight:700;font-size:20px;background:linear-gradient(135deg,#F58529,#DD2A7B 55%,#8134AF)}
+.tagline{font-size:14.5px;color:var(--accent-ink);font-weight:600}
+.follow p{font-size:15.5px;color:var(--muted);max-width:620px}
+.follow-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.follow-btn{background:var(--ink);color:var(--bg);text-decoration:none;font-weight:600;font-size:15px;padding:11px 18px;border-radius:999px}
+.follow-btn:hover{opacity:.88;text-decoration:none}
+.follow-url{font-size:13px;color:var(--muted);user-select:all}
+
+/* compare */
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cmp{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:8px;align-content:start;transition:border-color .3s,box-shadow .3s}
+.cmp.pick{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.cmp h4{font-size:18px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cmp h4 small{font:600 11px/1 var(--font);color:var(--accent-ink);background:var(--accent-soft);padding:4px 8px;border-radius:999px;letter-spacing:0}
+.cmp dl{margin:0;display:grid;gap:6px}
+.cmp dt{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.cmp dd{margin:0 0 4px;font-size:14.5px}
+
+/* chats mock */
+.chats{display:grid;grid-template-columns:230px minmax(0,1fr)}
+.side{border-right:1px solid var(--line);background:var(--surface-2);padding:10px 8px;display:grid;gap:2px;align-content:start}
+.side .grp{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:10px 10px 4px}
+.side div.c{font-size:13px;padding:7px 10px;border-radius:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side div.c.on{background:var(--surface);font-weight:600}
+.side div.c small{color:var(--muted);font-size:11px}
+.convo{padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.perm{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:8px;background:var(--surface);max-width:420px}
+.perm span{font-size:13px}
+.perm div{display:flex;gap:6px}
+.composer{margin-top:4px;border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;align-items:center}
+.composer em{font-style:normal;font-size:11.5px;background:var(--fill);color:var(--ink);padding:3px 8px;border-radius:999px;white-space:nowrap}
+@media (max-width:720px){.compare{grid-template-columns:minmax(0,1fr)}.chats{grid-template-columns:minmax(0,1fr)}.side{display:none}.path-row{grid-template-columns:minmax(0,1fr);gap:2px}}
+
+@media (max-width:900px){
+  .team{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .demo.four{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .calc{grid-template-columns:repeat(3,minmax(0,1fr))}.calc .out{grid-column:1/-1}
+  .tl{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:18px}.tl::before{display:none}
+}
+@media (max-width:720px){
+  body{font-size:16px}
+  .over,.files,.rules,.gloss{grid-template-columns:minmax(0,1fr)}
+  .demo,.demo.four{grid-template-columns:minmax(0,1fr)}
+  .crm{grid-template-columns:minmax(0,1fr)}.crm-side{display:none}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .score{grid-template-columns:minmax(0,1fr)}
+  .mail{grid-template-columns:minmax(0,1fr)}.mail-list{display:none}
+  .lane{grid-template-columns:minmax(0,1fr);gap:6px}
+  .calc{grid-template-columns:minmax(0,1fr)}
+  .step{grid-template-columns:minmax(0,1fr);gap:10px}
+  .tl{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .brand .full{display:none}
+  .msg{max-width:92%}
+}
+@media (max-width:460px){.team{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<script>(function(){function d(){var b=document.body;b.setAttribute("data-stage","quiz");b.setAttribute("data-mode","clients");b.setAttribute("data-claude","none");b.setAttribute("data-email","gmail");b.setAttribute("data-lf","unsure");}document.body?d():document.addEventListener("DOMContentLoaded",d);})();</script>
+
+<div class="bar">
+  <div class="wrap bar-in" style="position:relative">
+    <div class="brand"><span class="k">K</span><span>Build Your Own Kevin</span></div>
+    <div class="bar-tools">
+      <span class="chatpill" id="chatPill" hidden></span>
+      <div class="seg" role="group" aria-label="Which guide" id="viewSeg">
+        <button type="button" data-view="mine">My guide</button>
+        <button type="button" data-view="full">Full guide</button>
+      </div>
+      <button type="button" class="link" id="barChange">Change answers</button>
+    </div>
+    <div class="prog" id="prog"></div>
+  </div>
+</div>
+
+<main>
+<!-- HERO -->
+<div class="wrap">
+  <header class="hero col">
+    <div class="eyebrow">Free playbook · From zero</div>
+    <h1>Build your own Kevin.</h1>
+    <p class="lede">An AI assistant that finds the right people, checks every email address, and leaves a personal draft in your Gmail each morning. You read it, and you press Send.</p>
+    <div class="byline"><span>By Edward Gatchalian · <a href="https://www.instagram.com/edward_gatch/" target="_blank" rel="noopener">@edward_gatch</a></span><span class="dot"></span><span>About 25 minutes to read</span><span class="dot"></span><span id="bylineTime">About 7 hours of setup, then a warm-up week</span></div>
+
+    <div class="wiz" id="wiz" aria-live="polite">
+      <div class="wiz-top"><span id="wizCount">Question 1 of 4</span><div class="wiz-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div></div>
+      <div id="wizStage">
+        <div class="wiz-screen"><h2>What do you want your Kevin to find?</h2><p class="wsub">This sets the examples, sample emails and prompts.</p></div>
+      </div>
+      <div class="wiz-foot"><button type="button" class="link" id="wizBack">← Back</button><button type="button" class="link" id="wizSkip">Skip and show the full guide</button></div>
+    </div>
+  </header>
+
+  <div class="col yg" id="yourGuide">
+    <div class="yg-h"><span class="eyebrow" id="ygEyebrow">Your guide</span><h2 id="ygTitle">Built around where you are.</h2><p id="ygText" class="wsub"></p></div>
+    <div class="yg-chips" id="ygChips"></div>
+    <div class="path" id="ygPath">
+      <div class="path-row"><span>Your time</span><span class="js-time"></span></div>
+      <div class="path-row"><span>Your cost</span><span class="js-cost"></span></div>
+      <div class="path-row"><span>Your path</span><ul class="js-path"></ul></div>
+    </div>
+    <div class="wiz-actions"><button type="button" class="btn-p" id="ygPrimary">Show the full guide</button><a class="btn-s" href="#plan" style="text-decoration:none">See the build order</a><button type="button" class="btn-s" id="ygChange">Change answers</button></div>
+  </div>
+
+  <nav class="col over" aria-label="Overview">
+    <a href="#p1"><span class="n">01</span><b>Get set up</b><span class="t" data-ptime="1">About 1½ hours</span></a>
+    <a href="#p2"><span class="n">02</span><b>Teach it your rules</b><span class="t" data-ptime="2">About 3 hours</span></a>
+    <a href="#p3"><span class="n">03</span><b>Build your CRM</b><span class="t" data-ptime="3">About 40 min</span></a>
+    <a href="#p4"><span class="n">04</span><b>Test small</b><span class="t" data-ptime="4">About 2 hours</span></a>
+    <a href="#p5"><span class="n">05</span><b>Put it on autopilot</b><span class="t" data-ptime="5">15 min + a warm-up week</span></a>
+    <a href="#p6"><span class="n">06</span><b>The real app</b><span class="t" data-ptime="6">About 3 hours · optional</span></a>
+  </nav>
+</div>
+
+<div id="guideBody">
+<!-- MEET KEVIN -->
+<section>
+  <div class="wrap">
+    <div class="col sec-head">
+      <div class="eyebrow">What you're building</div>
+      <h2>Meet Kevin.</h2>
+      <p>Kevin is the assistant I built to email construction companies and learn what slows them down. While I sleep, he finds companies, checks them, writes to them, and leaves the emails in my Gmail drafts. This is his CRM, the app where I watch him work.</p>
+    </div>
+
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span class="url">your-crm.vercel.app</span></div>
+      <div class="crm">
+        <div class="crm-side">
+          <div class="on">Today</div><div>Contacts</div><div>Pipeline</div><div>Drafts</div><div>Templates</div><div data-k="insightTab">What they need</div><div>Rejected</div><div>Daily log</div><div>Settings</div>
+        </div>
+        <div class="crm-main">
+          <div class="crm-top"><h4>Today</h4><span class="live"><i></i>Kevin · working</span></div>
+          <div class="tiles">
+            <div class="tile"><div class="l">Drafts ready</div><div class="v">15</div><div class="d">in Gmail, unsent</div></div>
+            <div class="tile"><div class="l">In the queue</div><div class="v">28</div><div class="d">checked, waiting</div></div>
+            <div class="tile"><div class="l">Replies</div><div class="v">3</div><div class="d">1 interested</div></div>
+            <div class="tile"><div class="l">Credits today</div><div class="v">62</div><div class="d">of 123 budget</div></div>
+          </div>
+          <div class="feed" aria-label="Kevin's chat feed, sample">
+            <div class="feed-h"><span class="k" style="width:22px;height:22px;font-size:12px;border-radius:7px">K</span>Kevin</div>
+            <div class="fmsg"><time>4:00</time><div class="fb">Morning. Budget is 123 credits and 28 leads are waiting, so I'm writing today's drafts first.</div></div>
+            <div class="fmsg"><time>4:06</time><div class="fb">3 replies overnight. One wants a call, one said not now, one asked to stop. That one's on Do Not Contact.</div></div>
+            <div class="fmsg"><time>4:24</time><div class="fb">15 drafts are in Gmail. Nothing's been sent; that's your call.</div></div>
+            <div class="fmsg"><time>5:41</time><div class="fb"><span data-k="batch">Columbus batch</span> done: 7 leads added, 13 didn't make it (mostly too small).</div></div>
+            <div class="fmsg"><time>6:58</time><div class="fb report">Done for today. 15 new drafts and 4 follow-ups are waiting for you. 14 leads added.<div class="chips"><span class="chip">15 drafts ready</span><span class="chip">62 credits</span></div></div></div>
+            <div class="fmsg"><time></time><div class="typing" aria-hidden="true"><i></i><i></i><i></i></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="sample">Sample data. Your CRM will show your own leads.</p>
+
+    <div class="col" style="margin-top:44px">
+      <h3 style="font-size:22px;margin-bottom:6px">His morning, every day</h3>
+      <p style="color:var(--muted);margin-bottom:22px">Kevin starts at 4 AM and has everything ready by 7. The order matters: drafts come first, so you always have emails to send even if finding new leads runs long.</p>
+    </div>
+    <div class="tl">
+      <div class="tl-i"><b>4:00</b><span>Plans the day and the credit budget</span></div>
+      <div class="tl-i"><b>4:05</b><span>Reads replies and unsubscribes</span></div>
+      <div class="tl-i"><b>4:15</b><span>Drafts follow-ups</span></div>
+      <div class="tl-i hot"><b>4:20</b><span>Writes today's new drafts</span></div>
+      <div class="tl-i"><b>4:45</b><span>Finds new leads, 20 companies at a time</span></div>
+      <div class="tl-i"><b>6:30</b><span>Wraps up</span></div>
+      <div class="tl-i hot"><b>7:00</b><span>Morning report is in</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="wrap">
+    <div class="col sec-head">
+      <div class="eyebrow">How it works</div>
+      <h2>One boss, twelve helpers.</h2>
+      <p>Kevin doesn't do the work himself. He's the manager. Each helper is a copy of Claude with one small job and its own instructions, like a team on an assembly line. Small jobs are easier to get right, and easier to fix when one goes wrong.</p>
+    </div>
+    <div class="line">
+      <div class="lane"><div class="lane-name">1 · Find</div>
+        <div class="track">
+          <div class="st"><b>Scout</b><span>Finds candidate companies</span></div>
+          <div class="st"><b>Gatekeeper</b><span>Keeps only the good fits</span></div>
+          <div class="st"><b>Researcher <span class="paid">credits</span></b><span>Finds 1–2 people and emails</span></div>
+        </div></div>
+      <div class="lane"><div class="lane-name">2 · Check</div>
+        <div class="track">
+          <div class="st"><b>Verifier <span class="paid">credits</span></b><span>Checks each email is real</span></div>
+          <div class="st"><b>Auditor</b><span>Re-checks a sample from scratch</span></div>
+          <div class="st"><b>Recorder</b><span>Saves it all in your Sheet</span></div>
+        </div></div>
+      <div class="lane"><div class="lane-name">3 · Write</div>
+        <div class="track">
+          <div class="st"><b>Personalizer</b><span>Finds one true detail</span></div>
+          <div class="st"><b>Copywriter</b><span>Fills in your email</span></div>
+          <div class="st"><b>Compliance</b><span>Checks the email laws</span></div>
+          <div class="st"><b>Drafter</b><span>Puts it in Gmail drafts</span></div>
+          <div class="st you"><b>You</b><span>Read it and press Send</span></div>
+        </div></div>
+      <div class="lane"><div class="lane-name">4 · Listen</div>
+        <div class="track">
+          <div class="st"><b>Reply analyst</b><span>Reads replies, notes what they said</span></div>
+          <div class="st"><b>Follow-up drafter</b><span>Drafts a polite nudge if nobody replied</span></div>
+        </div></div>
+    </div>
+    <div class="col" style="margin-top:22px">
+      <p class="note">Only two helpers spend money (<span data-lf="name">Hunter</span> credits). Everything before them is free, so bad fits get thrown out before a single credit is spent.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- SHOPPING LIST -->
+<section>
+  <div class="wrap">
+    <div class="col sec-head">
+      <div class="eyebrow">Before you start</div>
+      <h2>What you need, and why.</h2>
+      <p>Six things. Most are free. Prices were checked in November 2026; confirm on each site before you pay.</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>What</th><th>Cost</th><th></th><th>Why you need it</th></tr></thead>
+        <tbody>
+          <tr id="row-claude"><td><b>Claude Pro</b><br><span style="color:var(--muted);font-size:13px">desktop app, Code</span></td><td class="cost">≈ $20 / mo</td><td><span class="req must">Required</span></td><td>This is Kevin's brain. Claude Code (the &lt;/&gt; icon in the desktop app) lets Claude work with files on your computer, use your apps, and run on a schedule.</td></tr>
+          <tr><td><b>A Google account</b><br><span style="color:var(--muted);font-size:13px">Gmail + Google Sheets</span></td><td class="cost free">Free</td><td><span class="req must">Required</span></td><td>Gmail holds the drafts you send. A Google Sheet is your database: every lead, every reply, every number.</td></tr>
+          <tr><td><b>A lead finder</b><br><span style="color:var(--muted);font-size:13px" data-lf="label">Hunter (hunter.io)</span></td><td class="cost" data-lf="cost">Free · then $49 / mo</td><td><span class="req must">Required</span></td><td data-lf="why">Finds work emails and checks they're real. The free plan gives 50 credits a month, enough to test. Starter gives 2,000.</td></tr>
+          <tr id="row-domain"><td><b>Your own domain + Google Workspace</b><br><span style="color:var(--muted);font-size:13px">e.g. you@yourname.com</span></td><td class="cost">≈ $12 / yr + ≈ $7 / mo</td><td><span class="req opt">Recommended</span></td><td>Sending lots of first-time emails from your personal Gmail puts that address at risk. A separate address protects it, and looks more professional.</td></tr>
+          <tr><td><b>A computer that's on at 4 AM</b></td><td class="cost free">—</td><td><span class="req must">Required</span></td><td>Scheduled runs happen on your computer, with the Claude app open. If it's asleep, the run happens when it wakes.</td></tr>
+          <tr><td><b>Vercel + Google Cloud</b><br><span style="color:var(--muted);font-size:13px">only for phase 06</span></td><td class="cost free">Free</td><td><span class="req opt">Later</span></td><td>For the installable app. Vercel puts it online; Google Cloud lets it sign in with Google. No credit card needed for either.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- BUILD PLAN -->
+<section id="plan">
+  <div class="wrap"><div class="col">
+    <div class="sec-head">
+      <div class="eyebrow">Your build, in order</div>
+      <h2>Eight chats, one folder.</h2>
+      <p>This is the whole build on one page. Go top to bottom. <b>You</b> rows are things you do yourself. <b>Paste</b> rows are prompts you copy into Claude; tap one to jump to it. Every chat is a new session in the same Kevin folder.</p>
+    </div>
+    <ol class="plan">
+      <li class="pl-group"><div class="pl-h"><span class="pl-n">Before</span><b>Get ready</b><small>No chat yet</small></div>
+        <ul>
+          <li data-if-claude="none free"><span class="tag you">You</span><span>Install the Claude desktop app and get Claude Pro</span><span class="st">step 1</span></li>
+          <li data-if-claude="pro"><span class="tag you">You</span><span>Install the Claude desktop app, if you only use Claude in the browser</span><span class="st">step 1</span></li>
+          <li><span class="tag you">You</span><span>Make a folder called <b>Kevin</b> in Documents</span><span class="st">step 2</span></li>
+          <li><span class="tag you">You</span><span>Have the email address you'll send from ready</span><span class="st">step 4</span></li>
+          <li><span class="tag you">You</span><span>Make a free <span data-lf="name">Hunter</span> account</span><span class="st">step 5</span></li>
+          <li><span class="tag you">You</span><span>On claude.ai, connect Gmail, Google Sheets, Google Drive and <span data-lf="name">Hunter</span></span><span class="st">step 5</span></li>
+        </ul></li>
+      <li class="pl-group"><div class="pl-h"><span class="pl-n">Chat 1</span><b>Setup</b><small>Phase 01 · about 45 min</small></div>
+        <ul>
+          <li><span class="tag you">You</span><span>Click <b>&lt;/&gt;</b> (Code) at the top left, then <b>+ New</b>. Under the message box, pick <b>Kevin</b> in <b>Project or folder</b>. Rename the chat <b>Setup</b></span><span class="st">step 2</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-start">Start the project</a><span class="st">step 2</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-email">Check my email ID settings</a><span class="st">step 4</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-connected">Check what's connected</a><span class="st">step 5</span></li>
+          <li data-if-lf="other"><span class="tag paste">Paste</span><a href="#pr-lf">Connect my lead finder</a><span class="st">step 5</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-lock">Lock sending</a><span class="st">step 6</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-wrap">Wrap up a chat</a><span class="st">step 3</span></li>
+        </ul></li>
+      <li class="pl-group"><div class="pl-h"><span class="pl-n">Chat 2</span><b>Rules</b><small>Phase 02 · about 2½ hours</small></div>
+        <ul>
+          <li><span class="tag you">You</span><span><b>+ New</b>, pick the <b>Kevin</b> folder, rename the chat <b>Rules</b></span><span class="st"></span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-brain">Build Kevin's brain, then answer its questions</a><span class="st">step 7</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-scoring">Write my scoring rules</a><span class="st">step 8</span></li>
+          <li><span class="tag you">You</span><span>Write the email you'd send to one person, in your own words</span><span class="st">step 9</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-template">Turn my email into a template</a><span class="st">step 9</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-wrap">Wrap up a chat</a><span class="st">step 3</span></li>
+        </ul></li>
+      <li class="pl-group"><div class="pl-h"><span class="pl-n">Chat 3</span><b>Team</b><small>Phase 02 · about 30 min</small></div>
+        <ul>
+          <li><span class="tag you">You</span><span><b>+ New</b>, pick the <b>Kevin</b> folder, rename the chat <b>Team</b></span><span class="st"></span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-team">Build the team</a><span class="st">step 10</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-wrap">Wrap up a chat</a><span class="st">step 3</span></li>
+        </ul></li>
+      <li class="pl-group"><div class="pl-h"><span class="pl-n">Chat 4</span><b>CRM</b><small>Phase 03 · about 40 min</small></div>
+        <ul>
+          <li><span class="tag you">You</span><span>Open <b>sheets.new</b>, name the Sheet, copy its link</span><span class="st">step 11</span></li>
+          <li><span class="tag you">You</span><span><b>+ New</b>, pick the <b>Kevin</b> folder, rename the chat <b>CRM</b></span><span class="st"></span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-sheet">Set up my CRM Sheet</a><span class="st">step 11</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-page">Build my CRM page</a><span class="st">step 12</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-wrap">Wrap up a chat</a><span class="st">step 3</span></li>
+        </ul></li>
+      <li class="pl-group"><div class="pl-h"><span class="pl-n">Chat 5</span><b>Dry run</b><small>Phase 04 · about 45 min</small></div>
+        <ul>
+          <li><span class="tag you">You</span><span><b>+ New</b>, pick the <b>Kevin</b> folder, rename the chat <b>Dry run</b></span><span class="st"></span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-dry">Free dry run</a><span class="st">step 13</span></li>
+          <li><span class="tag you">You</span><span>Read every verdict. Tell Claude where you disagree; it updates the rules</span><span class="st">step 13</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-wrap">Wrap up a chat</a><span class="st">step 3</span></li>
+        </ul></li>
+      <li class="pl-group"><div class="pl-h"><span class="pl-n">Chat 6</span><b>Paid test</b><small>Phase 04 · about 1 hour</small></div>
+        <ul>
+          <li><span class="tag you">You</span><span><b>+ New</b>, pick the <b>Kevin</b> folder, rename the chat <b>Paid test</b></span><span class="st"></span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-paid">Paid test</a><span class="st">step 14</span></li>
+          <li><span class="tag you">You</span><span>Review every row. Each correction becomes a rule</span><span class="st">step 14</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-wrap">Wrap up a chat</a><span class="st">step 3</span></li>
+        </ul></li>
+      <li class="pl-group"><div class="pl-h"><span class="pl-n">Chat 7</span><b>First drafts</b><small>Phase 04 · about 20 min</small></div>
+        <ul>
+          <li><span class="tag you">You</span><span><b>+ New</b>, pick the <b>Kevin</b> folder, rename the chat <b>First drafts</b></span><span class="st"></span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-drafts">Drafts to me first</a><span class="st">step 15</span></li>
+          <li><span class="tag you">You</span><span>Send one copy to a personal Gmail and see where it lands</span><span class="st">step 15</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-wrap">Wrap up a chat</a><span class="st">step 3</span></li>
+        </ul></li>
+      <li class="pl-group"><div class="pl-h"><span class="pl-n">Chat 8</span><b>Schedule</b><small>Phase 05 · about 15 min</small></div>
+        <ul>
+          <li><span class="tag you">You</span><span><b>+ New</b>, pick the <b>Kevin</b> folder, rename the chat <b>Schedule</b></span><span class="st"></span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-schedule">Schedule the daily run</a><span class="st">step 16</span></li>
+          <li><span class="tag you">You</span><span>Turn on <b>Keep computer awake</b> and leave the Claude app open</span><span class="st">step 16</span></li>
+        </ul></li>
+      <li class="pl-group"><div class="pl-h"><span class="pl-n">Daily</span><b>Every morning</b><small>About 10 min</small></div>
+        <ul>
+          <li><span class="tag you">You</span><span>Kevin runs at 4 AM in his own chats, under <b>Scheduled</b>. You don't paste anything</span><span class="st">step 16</span></li>
+          <li><span class="tag you">You</span><span>Read his report, check the drafts in Gmail, press Send</span><span class="st">step 18</span></li>
+        </ul></li>
+      <li class="pl-group opt"><div class="pl-h"><span class="pl-n">Chat 9</span><b>App</b><small>Phase 06 · optional, about 3 hours</small></div>
+        <ul>
+          <li><span class="tag you">You</span><span><b>+ New</b>, pick the <b>Kevin</b> folder, rename the chat <b>App</b></span><span class="st"></span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-cloud">Walk me through Google Cloud</a><span class="st">step 19</span></li>
+          <li><span class="tag paste">Paste</span><a href="#pr-app">Build my CRM app</a><span class="st">step 20</span></li>
+          <li><span class="tag you">You</span><span>Sign up for Vercel, paste the Client ID to Claude, install the app on your phone</span><span class="st">steps 20–21</span></li>
+        </ul></li>
+    </ol>
+  </div></div>
+</section>
+
+<hr class="sep">
+
+<!-- PHASE 1 -->
+<section id="p1">
+  <div class="wrap"><div class="col">
+    <div class="sec-head">
+      <div class="phase-tag"><span class="big">01</span><span class="when" data-ptime="1">About 1½ hours</span></div>
+      <h2>Get set up.</h2>
+      <p>Install Claude, pick the address you'll send from, plug in your apps, and add a lock so nothing ever sends without you.</p>
+    </div>
+
+    <div class="step" id="s-install"><div class="num">1</div><div>
+      <h3>Install Claude and make Kevin a home</h3>
+      <p class="sub">One app, one folder.</p>
+      <div class="step-body">
+        <ol class="clicks" data-if-claude="none free">
+          <li>Go to <b>claude.com/download</b> and install the desktop app for Mac or Windows. Sign in, or make a free account.</li>
+          <li>Upgrade to <b>Pro</b> under Settings → Billing. Claude Code, scheduled runs and helpers need a paid plan.</li>
+          <li>Make a new empty folder on your computer called <code>Kevin</code> (or your assistant's name).</li>
+          <li>In the app, click <b>&lt;/&gt;</b> (Code) at the top left, then <b>+ New</b>. Under the message box, choose that folder in <b>Project or folder</b>.</li>
+        </ol>
+        <ol class="clicks" data-if-claude="pro">
+          <li>You have the plan already. If you only use Claude in the browser, install the desktop app from <b>claude.com/download</b> and sign in. Scheduled runs need the desktop app.</li>
+          <li>Make a new empty folder on your computer called <code>Kevin</code> (or your assistant's name).</li>
+          <li>Click <b>&lt;/&gt;</b> (Code) at the top left, then <b>+ New</b>. Under the message box, choose that folder in <b>Project or folder</b>.</li>
+        </ol>
+        <div data-if-claude="code"><p>You're set. Make a new, empty folder just for Kevin and pick it in <b>Project or folder</b> when you start a new chat in Code. Keep him apart from your other projects so his rules don't mix with theirs.</p></div>
+        <div class="why"><span class="ic">Why</span><span>Everything Kevin knows lives as plain text files in this folder: his rules, his team, every day's work. You can open and read any of it. Nothing is hidden in a black box.</span></div>
+      </div>
+    </div></div>
+
+  </div></div>
+</section>
+
+<section class="chat-band switch" id="chat-1" data-chat="Chat 1 · Setup">
+  <div class="wrap"><div class="col">
+    <div class="cb-flow"><span class="sw-from">Start here</span><span class="sw-arrow" aria-hidden="true">→</span><span class="sw-to">Chat 1 · Setup</span></div>
+    <div class="cb-head"><span class="cb-num">Chat 1</span><h2 class="cb-title">Setup</h2><span class="cb-meta">Steps 2–6 · about 1 hour</span></div>
+    <p class="cb-note">Everything from here to the next gold band goes in this one chat.</p>
+    <ol class="sw-steps">
+      <li><b>&lt;/&gt;</b> (Code) at the top left → <b>+ New</b> → under the message box, open <b>Project or folder</b> and pick <b>Kevin</b> (step 2 shows how to make it).</li>
+      <li>Rename it <b>Setup</b>. The next prompts all go in this chat. Steps 2 to 6 happen here.</li>
+    </ol>
+  </div></div>
+</section>
+
+<section class="chat-cont">
+  <div class="wrap"><div class="col">
+    <div class="step" id="s-project"><div class="num">2</div><div>
+      <h3>Set up the project</h3>
+      <p class="sub">One folder holds everything. Here's how to make it, and find it again.</p>
+      <div class="step-body">
+        <p>For this build, a <b>project</b> is simply a folder on your computer. Kevin's rules, his helpers and every day's work are plain text files inside it. (This isn't a "Project" in Claude's Chat tab. Those can't save files or run on a schedule, so Kevin lives in the <b>Code</b> tab.)</p>
+        <ol class="clicks">
+          <li><b>Make the folder.</b> Windows: File Explorer → Documents → right-click → New → Folder. Mac: Finder → Documents → File → New Folder. Name it <code>Kevin</code>.</li>
+          <li><b>Open it in Claude.</b> In the desktop app, click the <b>&lt;/&gt;</b> icon at the top left to switch to Code, then <b>+ New</b> at the top of the sidebar. Under the message box, click <b>Project or folder</b> and choose your <code>Kevin</code> folder.</li>
+          <li><b>Name the chat.</b> Rename the chat <b>Setup</b>. It shows in the sidebar under <b>Recents</b>. This is chat 1 of <a href="#plan">your build plan</a>.</li>
+          <li><b>Paste the very first prompt</b> below. It builds the folder's skeleton and a map of it.</li>
+        </ol>
+        <div class="prompt" id="pr-start"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 1 · Setup</small><span>Start the project</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">This folder is the home for my outreach assistant, called <span class="fill" contenteditable="true" spellcheck="false">Kevin</span>. Before we build anything, set it up so a beginner can find their way around:
+1. Create CLAUDE.md: a short starter that says who Kevin is, that he drafts emails and never sends them, and that he follows the files in this folder. Keep it under 30 lines; we'll fill it in later.
+2. Create these empty folders: .claude/agents (the helpers), templates (my emails), runs (one folder per day's work) and tests (test results).
+3. Create README.md: a plain-English map of this folder, one line per file or folder: what it's for, and whether I edit it or only you do.
+Then show me the folder as a tree, tell me its full location on my computer, and how to open it in File Explorer or Finder.</div></div>
+        <p style="font-weight:600;margin-top:4px">What the folder looks like when you're done</p>
+        <div class="card tree" aria-label="The Kevin folder when the build is finished">
+        <div class="tr"><span class="tn dir" style="--d:0">Kevin/</span><span class="td">The project. Everything lives in here.</span><span class="ts">step 2</span></div>
+        <div class="tr"><span class="tn" style="--d:1">CLAUDE.md</span><span class="td">Kevin's job description. Claude reads it at the start of every chat.</span><span class="ts">steps 2, 7</span></div>
+        <div class="tr"><span class="tn" style="--d:1">README.md</span><span class="td">A plain-English map of this folder.</span><span class="ts">step 2</span></div>
+        <div class="tr"><span class="tn" style="--d:1">soul.md · identity.md · user.md</span><span class="td">His personality, his goal and guardrails, and who you are.</span><span class="ts">step 7</span></div>
+        <div class="tr"><span class="tn" style="--d:1">playbook.md</span><span class="td">The daily run, step by step.</span><span class="ts">step 7</span></div>
+        <div class="tr"><span class="tn" style="--d:1">roles.md · compliance.md</span><span class="td">Who to email, and what every email must pass.</span><span class="ts">step 7</span></div>
+        <div class="tr"><span class="tn" style="--d:1">scoring.md</span><span class="td">Lead or no lead.</span><span class="ts">step 8</span></div>
+        <div class="tr"><span class="tn" style="--d:1">tracker-fields.md</span><span class="td">Where everything goes in your Sheet.</span><span class="ts">step 11</span></div>
+        <div class="tr"><span class="tn dir" style="--d:1">templates/</span><span class="td">Your first email, follow-up and signature.</span><span class="ts">step 9</span></div>
+        <div class="tr"><span class="tn dir" style="--d:1">.claude/</span><span class="td">Claude's own settings. Hidden at first (see below).</span><span class="ts"></span></div>
+        <div class="tr"><span class="tn" style="--d:2">settings.json</span><span class="td">The safety lock.</span><span class="ts">step 6</span></div>
+        <div class="tr"><span class="tn dir" style="--d:2">hooks/</span><span class="td">The tripwire that blocks sending.</span><span class="ts">step 6</span></div>
+        <div class="tr"><span class="tn dir" style="--d:2">agents/</span><span class="td">The 12 helpers, one file each.</span><span class="ts">step 10</span></div>
+        <div class="tr"><span class="tn dir" style="--d:1">tests/</span><span class="td">Reports from your dry run and tests.</span><span class="ts">steps 13–15</span></div>
+        <div class="tr"><span class="tn dir" style="--d:1">runs/</span><span class="td">One folder per day. Kevin writes these.</span><span class="ts">step 16 on</span></div>
+        <div class="tr"><span class="tn dir" style="--d:2">2026-11-10/</span><span class="td">plan.md, credits.md, batch-01/, summary.md</span><span class="ts">daily</span></div>
+        <div class="tr"><span class="tn dir" style="--d:1">my-crm/</span><span class="td">The app, if you build it.</span><span class="ts">step 20</span></div>
+        </div>
+        <ul class="plain">
+          <li><b>Opening files:</b> files ending in <code>.md</code> are plain text with a few <code>#</code> headings. Open them with Notepad (Windows) or TextEdit (Mac). When Claude names a file in a chat, click it to open it right in the app.</li>
+          <li><b>Can't see <code>.claude</code>?</b> It's hidden. Windows: File Explorer → View → Show → Hidden items. Mac: in Finder, press Cmd + Shift + . (period).</li>
+          <li><b>Changing a rule:</b> you can edit any <code>.md</code> file yourself, but it's easier to tell Claude, for example "In scoring.md, make one-person companies a hard no." Leave <code>settings.json</code> and <code>hooks</code> to Claude.</li>
+          <li><b>Lost the folder?</b> In any chat in it, ask: "Where is this folder on my computer? Open it for me."</li>
+        </ul>
+        <div class="why"><span class="ic">Why</span><span>One folder means every new chat starts out knowing everything, and backing Kevin up is just copying one folder. If you ever build a second assistant, make a second folder; never mix two in one.</span></div>
+      </div>
+    </div></div>
+
+    <div class="step" id="s-chats"><div class="num">3</div><div>
+      <h3>Learn how chats work</h3>
+      <p class="sub">Is organizing them required? No. Does it help? A lot.</p>
+      <div class="step-body">
+        <p>Each chat (Claude calls it a <b>session</b>) is one conversation, tied to your Kevin folder. They stack up in the sidebar under <b>Recents</b>. Here's the one thing to understand: <b>Kevin's memory lives in the files, not in the chats.</b> Every new chat in this folder reads <code>CLAUDE.md</code> first, so it already knows his rules. You can close any chat without losing anything that was saved to a file.</p>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:16px">
+    <div class="cwin">
+      <div class="cwin-bar"><span class="ctb">≡</span><span class="ctb">▯</span><span class="ctb">‹</span><span class="ctb">›</span><span class="cmodes"><span title="Chat">◌</span><span class="on" title="Code">&lt;/&gt;</span></span></div>
+      <div class="cchats">
+        <div class="cside">
+          <div class="cnav on">+ New</div>
+          <div class="cnav">Search</div>
+          <div class="cnav">Projects</div>
+          <div class="cnav">Artifacts</div>
+          <div class="cnav">Scheduled</div>
+          <div class="cnav">Customize</div>
+          <div class="grp">Recents</div>
+          <div class="c">Setup</div>
+          <div class="c on">Rules</div>
+          <div class="c">Team</div>
+          <div class="c">CRM</div>
+          <div class="c">Dry run</div>
+          <div class="c">Paid test</div>
+          <div class="c">First drafts</div>
+          <div class="c">Schedule</div>
+        </div>
+        <div class="cmain">
+          <div class="cthread">
+            <div class="cu">Interview me to build my outreach assistant…</div>
+            <div class="ca"><span class="spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M18.4 5.6l-4.2 4.2M9.8 14.2l-4.2 4.2"/></svg></span><p>Happy to. Three questions to start: who are you emailing, what makes a company a good fit, and what should rule one out?</p></div>
+            <div class="cu">Dental clinics in Ohio with 5+ dentists. Not chains.</div>
+            <div class="ca"><span class="spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M18.4 5.6l-4.2 4.2M9.8 14.2l-4.2 4.2"/></svg></span><p>Got it. I've drafted your scoring rules. Can I save them?</p></div>
+            <div class="cperm"><span>Claude wants to create <code>scoring.md</code></span><div class="acts"><span class="cb dark">Allow</span><span class="cb">Always allow</span><span class="cb">Deny</span></div></div>
+          </div>
+          <div class="cbottom">
+            <div class="ccomp"><span class="ph">Reply to Claude…</span><div class="row2"><span class="pill">+</span><span class="send" aria-hidden="true">↑</span></div></div>
+            <div class="cunder"><span class="folder">Kevin ▾</span><span class="r">Opus 5.5 <i>Medium</i></span><span>Manual ▾</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="sample">Made-up example of a chat in Code, in the Claude desktop app.</p>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="step-body" style="margin-top:16px">
+      <ul class="plain">
+        <li><b>One chat per job, in the order of <a href="#plan">your build plan</a>:</b> Setup, Rules, Team, CRM, Dry run, Paid test, First drafts, Schedule. All of them in the same Kevin folder. Rename each one in the sidebar so you can find it later.</li>
+        <li><b>Start a fresh chat when a job is done or a chat gets long.</b> Very long chats get summarized automatically, and small details can blur.</li>
+        <li><b>Before you close a chat, have Claude save what you decided</b> (prompt below). Anything not in a file is forgotten next time.</li>
+        <li><b>Claude asks before it changes files or runs commands.</b> Read the request and tap Allow. Once you trust it, the permission menu under the message box (it says <b>Manual</b> at first) lets it edit files without asking each time.</li>
+        <li><b>Morning runs open their own chats</b> under Scheduled. Open them to see what happened; don't type into one while it's running.</li>
+        <li><b>Never paste passwords or secret keys into a chat.</b> Sign in to apps yourself, in their own windows.</li>
+      </ul>
+      <div class="prompt" id="pr-wrap"><div class="prompt-h"><div class="ph-t"><small class="where">Last prompt in every chat</small><span>Wrap up a chat</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Before I close this chat, save every decision we made into the right file (the rules, playbook.md, a helper's file, or CLAUDE.md). Then tell me in three lines what you saved and where, and what's still open for next time.</div></div>
+      <div class="why"><span class="ic">Why</span><span>A messy pile of chats isn't dangerous, just hard to look back through. The files are what count. Kevin's own folder has one chat per job, plus one chat per morning run that you can open and read.</span></div>
+    </div>
+  </div></div>
+  <div class="wrap"><div class="col">
+
+    <div class="step" id="s-email"><div class="num">4</div><div>
+      <h3>Pick the address you'll send from</h3>
+      <p class="sub">And give it an ID card, so your emails don't land in spam.</p>
+      <div class="step-body">
+        <p data-if-email="gmail workspace">Use a separate address for outreach, ideally on your own domain (like <code>you@yourname.com</code>) through Google Workspace. Then make sure three settings called <b>SPF</b>, <b>DKIM</b> and <b>DMARC</b> pass. Together they prove to other inboxes that an email from your domain really came from you.</p>
+        <div class="modebox" data-if-email="gmail"><b>Starting with personal Gmail?</b><span>That's fine for testing (steps 13–15), and Gmail already passes the three checks for you. Before you send real volume, get your own domain (about $12 a year) and Google Workspace (from about $7 a month), so your personal address is never at risk.</span></div>
+        <div class="modebox" data-if-email="workspace"><b>You have this already.</b><span>Just run the check below to confirm all three settings say PASS.</span></div>
+        <div class="modebox" data-if-email="other"><b>Kevin needs a Google mailbox.</b><span>He leaves drafts through the Gmail connector. Set up Google Workspace on your own domain just for outreach (you can keep Outlook for everything else), or make a new Gmail to test with. Then make sure SPF, DKIM and DMARC pass, so other inboxes trust your emails.</span></div>
+        <div class="prompt" id="pr-email"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 1 · Setup</small><span>Check my email ID settings</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">I send email from <span class="fill" contenteditable="true" spellcheck="false">you@yourname.com</span> using <span class="fill" contenteditable="true" spellcheck="false">Google Workspace</span>. Explain SPF, DKIM and DMARC in plain words, then walk me through checking and setting up each one, one click at a time. Wait for me after each step. Tell me how to confirm all three say PASS.</div></div>
+        <p class="hint">Tap the <span class="fill">gold words</span> to type your own, then copy.</p>
+        <div class="why"><span class="ic">Why</span><span>A brand-new domain with no ID card goes straight to spam. And if a send goes wrong, it's the outreach address that takes the hit, not the personal one your friends and bank use.</span></div>
+      </div>
+    </div></div>
+
+    <div class="step" id="s-connect"><div class="num">5</div><div>
+      <h3>Connect your apps</h3>
+      <p class="sub">Give Claude a key to Gmail, Google Sheets and <span data-lf="name">Hunter</span>.</p>
+      <div class="step-body">
+        <p>A <b>connector</b> is a key you give Claude to one of your apps. You choose exactly which apps, and you can take the key back any time. You need four:</p>
+        <ul class="plain">
+          <li><b>Gmail</b>: to create drafts and read replies.</li>
+          <li><b>Google Sheets</b>: to read and write your CRM.</li>
+          <li><b>Google Drive</b>: to find your files.</li>
+          <li><b data-lf="name">Hunter</b>: <span data-lf="account">to find and check emails. Make a free account at hunter.io first.</span></li>
+        </ul>
+        <p data-if-lf="hunter apollo unsure"><b>Hunter or Apollo?</b> Kevin uses Hunter. Both work, and both have a connector in Claude. Pick one:</p>
+        <div class="compare" data-if-lf="hunter apollo unsure">
+          <div class="cmp" data-cmp="hunter"><h4>Hunter <small>What Kevin uses</small></h4><dl>
+            <dt>Best at</dt><dd>Finding and checking the emails at a company you already found, from its website address.</dd>
+            <dt>Works well when</dt><dd>Your companies are small or local, so Kevin finds them on the web first.</dd>
+            <dt>Cost</dt><dd>Free: 50 credits a month. Starter: $49 a month for 2,000.</dd></dl></div>
+          <div class="cmp" data-cmp="apollo"><h4>Apollo <small>Big people search</small></h4><dl>
+            <dt>Best at</dt><dd>Searching a large database of people by job title, industry and location.</dd>
+            <dt>Works well when</dt><dd>You're after roles at mid-size or bigger companies, like heads of design at fintechs.</dd>
+            <dt>Cost</dt><dd>A free plan to start. Paid plans from about $49 per user a month. Limits change often, so check apollo.io/pricing.</dd></dl></div>
+        </div>
+        <div class="prompt" id="pr-lf" data-if-lf="other"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 1 · Setup</small><span>Connect my lead finder</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">I use <span data-lf="name">my lead finder</span> to find email addresses. Check whether it has a connector in Claude's directory (Settings → Connectors → Browse). If it does, walk me through connecting it, one click at a time. If it doesn't, explain my options in plain words, for example exporting a list each week into a folder you read, and wait for me to choose. Then write down in identity.md how <span data-lf="name">my lead finder</span> charges (credits, searches or a flat fee) so you can keep a daily budget. Never ask me to paste a password or secret key into this chat.</div></div>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:20px">
+    <div class="demo" data-cycle>
+      <div class="pane"><div class="cap"><i>1</i>Open Connectors</div>
+        <div class="screen cl"><div class="cl-title"><span class="spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M18.4 5.6l-4.2 4.2M9.8 14.2l-4.2 4.2"/></svg></span>Settings › Connectors</div>
+          <div class="row"><span>Gmail</span><span class="btn press">Connect</span></div>
+          <div class="row"><span>Google Sheets</span><span class="btn">Connect</span></div>
+          <div class="row"><span>Google Drive</span><span class="btn">Connect</span></div>
+          <div class="row"><span data-lf="connector">Hunter IO</span><span class="btn g">Browse</span></div>
+        </div></div>
+      <div class="pane"><div class="cap"><i>2</i>Allow access</div>
+        <div class="screen gg"><div class="crumb">accounts.google.com</div>
+          <div style="font-weight:650;font-size:13px">Claude wants to access your Google Account</div>
+          <div class="row"><span>Read, compose drafts</span><span>✓</span></div>
+          <div class="row"><span>See and edit your Sheets</span><span>✓</span></div>
+          <div style="display:flex;gap:6px;justify-content:flex-end"><span class="btn g">Cancel</span><span class="btn press">Allow</span></div>
+        </div></div>
+      <div class="pane"><div class="cap"><i>3</i>Connected</div>
+        <div class="screen cl"><div class="cl-title"><span class="spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M18.4 5.6l-4.2 4.2M9.8 14.2l-4.2 4.2"/></svg></span>Settings › Connectors</div>
+          <div class="row"><span>Gmail</span><span class="btn ok">✓ Connected</span></div>
+          <div class="row"><span>Google Sheets</span><span class="btn ok">✓ Connected</span></div>
+          <div class="row"><span>Google Drive</span><span class="btn ok">✓ Connected</span></div>
+          <div class="row"><span data-lf="connector">Hunter IO</span><span class="btn ok">✓ Connected</span></div>
+        </div></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="step-body" style="margin-top:20px">
+      <ol class="clicks">
+        <li>On <b>claude.ai</b>, open <b>Settings → Connectors</b>.</li>
+        <li>Click <b>Browse connectors</b>, search each one, click <b>Connect</b>, and sign in. Use your outreach Google account for Gmail.</li>
+        <li>Back in the desktop app, start a new Code session. The connectors show up there by themselves.</li>
+      </ol>
+      <div class="prompt" id="pr-connected"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 1 · Setup</small><span>Check what's connected</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">I'm setting up an AI assistant called <span class="fill" contenteditable="true" spellcheck="false">Kevin</span> in this folder. Check which connectors you can use right now: Gmail, Google Sheets, Google Drive and <span data-lf="name">Hunter</span>. Use only read-only calls (search one email thread, check my <span data-lf="name">Hunter</span> account balance). Tell me in plain words which account each one is signed in as and what's missing. Don't create, send or change anything.</div></div>
+      <div class="why"><span class="ic">Why</span><span>Techies call connectors "MCP servers". You don't need to know how they work. What matters: Claude can only touch the apps you connect, signed in as the account you chose.</span></div>
+    </div>
+
+    <div class="step"><div class="num">6</div><div>
+      <h3>Add the safety lock</h3>
+      <p class="sub">Kevin writes drafts. He never sends.</p>
+      <div class="step-body">
+        <p>Your Gmail connector can send email, so you lock that ability away. There are two locks. A <b>block list</b> tells Claude it's not allowed to use the send tools. A <b>hook</b> is a tripwire that stops those tools even if someone changes a setting by accident.</p>
+        <div class="prompt" id="pr-lock"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 1 · Setup</small><span>Lock sending</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Add a safety lock to this project so you can never send email for me. In .claude/settings.json, deny every send, reply, forward and trash tool from the Gmail connector, and <span data-lf="sendTools">every tool that starts or adds people to a Hunter sequence</span>. Also add a PreToolUse hook that blocks the same tools with the message "Drafts only. I press Send myself." Then prove it works: try one blocked call on purpose and show me it was stopped.</div></div>
+        <div class="why"><span class="ic">Why</span><span>One wrong email to 100 people can't be unsent. With the lock, the worst Kevin can do is leave a bad draft, which you'll see and delete. Pressing Send is your yes for every single email.</span></div>
+      </div>
+    </div></div>
+  </div></div>
+</section>
+
+<hr class="sep">
+
+<!-- PHASE 2 -->
+<section id="p2">
+  <div class="wrap"><div class="col">
+    <div class="sec-head">
+      <div class="phase-tag"><span class="big">02</span><span class="when" data-ptime="2">About 3 hours</span></div>
+      <h2>Teach it your rules.</h2>
+      <p>This is the part that makes Kevin good. You write down, once, who you want, how to judge them, and what you'll never do.</p>
+    </div>
+
+    <div class="problem">
+      <div class="lab">The problem</div>
+      <p style="font-size:17px;font-weight:600">Ask AI for "leads" and you get a mess.</p>
+      <div class="msg you">Find me 100 leads and email them.</div>
+      <div class="msg ai">Done! I found 100 companies and guessed their emails as firstname@company.com. All 100 got the same message.</div>
+      <p class="verdict">Guessed emails bounce, the wrong people get them, and your domain ends up on a spam list by Friday.</p>
+    </div>
+
+  </div></div>
+</section>
+
+<section class="chat-band switch" id="chat-2" data-chat="Chat 2 · Rules">
+  <div class="wrap"><div class="col">
+    <div class="cb-flow"><span class="sw-from">✓ Chat 1 · Setup</span><span class="sw-arrow" aria-hidden="true">→</span><span class="sw-to">Chat 2 · Rules</span></div>
+    <div class="cb-head"><span class="cb-num">Chat 2</span><h2 class="cb-title">Rules</h2><span class="cb-meta">Steps 7–9 · about 2½ hours</span></div>
+    <p class="cb-note">Everything from here to the next gold band goes in this one chat.</p>
+    <ol class="sw-steps">
+      <li>In <b>chat 1 (Setup)</b>, paste <a href="#pr-wrap">Wrap up a chat</a> as the last message, so nothing is lost.</li>
+      <li><b>&lt;/&gt;</b> (Code) → <b>+ New</b> → <b>Project or folder</b>: pick the same <b>Kevin</b> folder.</li>
+      <li>Rename it <b>Rules</b>. The next prompts all go in this chat. Steps 7 to 9 happen here.</li>
+    </ol>
+  </div></div>
+</section>
+
+<section class="chat-cont">
+  <div class="wrap"><div class="col">
+    <div class="step"><div class="num">7</div><div>
+      <h3>Let Claude interview you</h3>
+      <p class="sub">Your answers become Kevin's brain.</p>
+      <div class="step-body">
+        <p>Claude asks you questions, then writes a handful of short text files. Claude reads them at the start of every session, so Kevin never forgets your rules.</p>
+        <div class="prompt" id="pr-brain"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 2 · Rules</small><span>Build Kevin's brain</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Interview me to build my outreach assistant. I'm <span class="fill" contenteditable="true" spellcheck="false" data-k="whoami">a freelance bookkeeper</span>, and I want to <span class="fill" contenteditable="true" spellcheck="false" data-k="goal">offer my monthly bookkeeping to small practices</span>. I want to reach <span class="fill" contenteditable="true" spellcheck="false" data-k="target">dental clinics in Ohio with 5+ dentists</span>, and inside them <span class="fill" contenteditable="true" spellcheck="false" data-k="people">practice owners and office managers</span>.
+
+Ask me up to 15 questions, a few at a time: what makes a good fit, what rules one out, which countries, how many emails a day, and what you must never do. Then write these files, and show me each one before saving:
+CLAUDE.md (the job and the hard rules), soul.md (personality and voice), identity.md (the goal, what "done" means each morning, the guardrails), user.md (about me), roles.md (who to email inside each company, best first), scoring.md (lead or no lead), compliance.md (the email laws for my countries) and playbook.md (the daily run, step by step).
+Keep every file short and in plain English.</div></div>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:16px"><div class="files">
+    <div class="file"><code>CLAUDE.md</code><span>The job description. Loads every time and points to everything else.</span></div>
+    <div class="file"><code>soul.md</code><span>How Kevin talks and behaves. Calm, precise, never pushy.</span></div>
+    <div class="file"><code>identity.md</code><span>The goal, what "done" means every morning, and the guardrails.</span></div>
+    <div class="file"><code>user.md</code><span>About you, so emails sound like you.</span></div>
+    <div class="file"><code>playbook.md</code><span>The daily run, step by step, with times.</span></div>
+    <div class="file"><code>scoring.md</code><span>How to decide: lead or no lead.</span></div>
+    <div class="file"><code>roles.md</code><span>Who to email inside each company, and who first.</span></div>
+    <div class="file"><code>compliance.md</code><span>What every email must pass before it's drafted.</span></div>
+    <div class="file"><code>tracker-fields.md</code><span>Where everything goes in your Sheet. (Step 11.)</span></div>
+  </div></div>
+
+  <div class="wrap"><div class="col">
+    <div class="step"><div class="num">8</div><div>
+      <h3>Lead or no lead</h3>
+      <p class="sub">No "maybe" pile. Ever.</p>
+      <div class="step-body">
+        <p>Kevin decides every company the same way. First, <b>hard rules</b> that pass or fail: a real website, the right location, not on your Do Not Contact list, and an email that a tool or a public page gave us, never a guess. Then a <b>fit score</b> from public clues. Above the line it's a lead. Below it, it's out, with a one-line reason. Try it:</p>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:16px">
+    <div class="card score">
+      <div class="sig" id="signals" aria-label="Fit signals, tap to toggle"></div>
+      <div class="meter">
+        <svg class="ring" viewBox="0 0 150 150" aria-hidden="true">
+          <circle class="bgc" cx="75" cy="75" r="62"></circle>
+          <circle class="fg" id="ringFg" cx="75" cy="75" r="62" transform="rotate(-90 75 75)" stroke-dasharray="389.6" stroke-dashoffset="389.6"></circle>
+          <text x="75" y="70" id="ringNum">0</text>
+          <text x="75" y="102" class="th">need 3</text>
+        </svg>
+        <span class="verdict-pill n" id="verdict">No lead</span>
+        <small id="reason">Tap the clues you found on their website.</small>
+      </div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="step-body" style="margin-top:16px">
+      <div class="prompt" id="pr-scoring"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 2 · Rules</small><span>Write my scoring rules</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Rewrite scoring.md for me in three parts. Part 1: hard rules that pass or fail, never scored (real website on its own domain, location in <span class="fill" contenteditable="true" spellcheck="false">the USA and Canada</span>, not on Do Not Contact, an email a tool or a public page gave us, never one built from a pattern). Part 2: a company fit score from public clues with points, needing <span class="fill" contenteditable="true" spellcheck="false">3</span> to pass. Part 3: a contact score (right role, where the email came from, how it verified), needing <span class="fill" contenteditable="true" spellcheck="false">6</span>. Add five worked examples. Every company and contact ends up lead or no lead, with a one-line reason. No other piles.</div></div>
+      <div class="why"><span class="ic">Why</span><span>A "check later" list grows forever and nobody checks it. One score with one line keeps things moving at 100 companies a day, and when a call looks wrong you change the points, not your whole process.</span></div>
+    </div>
+
+    <div class="step"><div class="num">9</div><div>
+      <h3>Write your email once</h3>
+      <p class="sub">Your words. Kevin only fills in the blanks.</p>
+      <div class="step-body">
+        <p>Write the email the way you'd write it to one person. Kevin changes only the highlighted parts for each contact, and the personal detail must come from a real public page. Here's what a finished draft looks like:</p>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:16px">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span class="url">mail.google.com · Drafts</span></div>
+      <div class="mail">
+        <div class="mail-list">
+          <div class="on"><b data-k="mailTo1">Dana Ruiz</b><span class="dr">Draft</span><span data-k="mailSubjShort">Quick question about Brightside's books</span></div>
+          <div><b data-k="mailTo2">Office team</b><span class="dr">Draft</span><span data-k="mailSubj2">Quick question about Lakeview Family Dental</span></div>
+          <div><b data-k="mailTo3">Marcus Lee</b><span class="dr">Draft</span><span data-k="mailSubj3">Quick question about Riverside Smiles</span></div>
+          <div><b>…12 more</b><span>Waiting for you</span></div>
+        </div>
+        <div class="mail-body">
+          <div data-show="clients">
+            <div class="meta"><span class="subj">Quick question about <mark>Brightside</mark>'s books</span><span>To: dana@brightsidedental.com</span></div>
+            <p style="margin-top:10px">Hi <mark>Dana</mark>,</p>
+            <p style="margin-top:10px">I came across <mark>Brightside Dental</mark> <mark>on the Ohio dental association's member list</mark> and saw <mark>you just opened a second clinic in Dublin</mark>. Congrats!</p>
+            <p style="margin-top:10px">I'm Sam, a bookkeeper who works with dental practices. When a clinic adds a location, month-end usually gets messy fast.</p>
+            <p style="margin-top:10px">Would a 15-minute call next week be useful? If not, no worries at all.</p>
+            <p style="margin-top:10px">Thanks!</p>
+          </div>
+          <div data-show="job">
+            <div class="meta"><span class="subj">Question about the design team at <mark>Northpath</mark></span><span>To: priya@northpath.com</span></div>
+            <p style="margin-top:10px">Hi <mark>Priya</mark>,</p>
+            <p style="margin-top:10px">I came across <mark>Northpath</mark> <mark>on a list of Toronto fintech startups</mark> and saw <mark>your team just launched the new savings app</mark>. Really clean work.</p>
+            <p style="margin-top:10px">I'm Sam, a product designer with four years in payments. I'd love to know what your team looks for when it hires designers.</p>
+            <p style="margin-top:10px">Happy to send my portfolio, but even a one-line reply would help a lot.</p>
+            <p style="margin-top:10px">Thanks!</p>
+          </div>
+          <div data-show="insights">
+            <div class="meta"><span class="subj">Quick question about admin work at <mark>Lone Star Roofing</mark></span><span>To: mike@lonestarroofing.com</span></div>
+            <p style="margin-top:10px">Hey <mark>Mike</mark>,</p>
+            <p style="margin-top:10px">I came across <mark>Lone Star Roofing</mark> <mark>on the Texas roofing association's member list</mark> and saw your team was part of <mark>the school re-roof project in Round Rock</mark>. Cool work!</p>
+            <p style="margin-top:10px">I used to coordinate commercial jobs and did a lot of the admin side. Which daily admin task takes your team the most hours?</p>
+            <p style="margin-top:10px">A one-line answer would help a lot, but feel free not to reply too.</p>
+            <p style="margin-top:10px">Thanks!</p>
+          </div>
+          <div class="send-row"><span class="sendb">Send</span><span style="font-size:13px;color:var(--muted)">Only you press this.</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="sample">Made-up example. The <mark>highlighted</mark> parts change for each person.</p>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="step-body" style="margin-top:16px">
+      <div class="prompt" id="pr-template"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 2 · Rules</small><span>Turn my email into a template</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Here is my email: <span class="fill" contenteditable="true" spellcheck="false">paste your email here</span>
+
+Turn it into templates/first-email.md. Only these parts change per person: {first_name}, {company}, {where_found} and {personal_detail}. Keep every other word exactly as I wrote it. Add rules: plain text, no links, no signature lines (Gmail adds mine), never pretend we've met, and the personal detail must come from a public page whose link gets saved in my Sheet. Also write a short follow-up for people who don't reply. Then show me three sample emails for made-up companies.</div></div>
+      <div class="modebox" data-show="clients"><b>Selling something?</b><span>In the US (CAN-SPAM), a sales email must include your mailing address and an easy way to opt out. In Canada (CASL), you need consent; an email address a business publishes, used for a message about their work, can count, as long as their site doesn't say "no unsolicited email". Check the rules where your contacts are. This isn't legal advice.</span></div>
+      <div class="modebox" data-show="job"><b>Job hunting?</b><span>Asking about a job isn't selling, so you don't need a mailing address or unsubscribe line. Stay honest: your real name, no fake "Re:", and stop the moment someone asks.</span></div>
+      <div class="modebox" data-show="insights"><b>Research only?</b><span>An email that sells nothing doesn't need a mailing address or unsubscribe line under US and Canadian law. The day a template pitches a product, a demo or a call to sell, add both.</span></div>
+      <div class="why"><span class="ic">Why</span><span>AI-written emails all sound the same, and people can tell. Your sentences plus one real detail ("saw your team worked on the school project in Round Rock") read like a person wrote them, because one did.</span></div>
+    </div>
+
+  </div></div>
+</section>
+
+<section class="chat-band switch" id="chat-3" data-chat="Chat 3 · Team">
+  <div class="wrap"><div class="col">
+    <div class="cb-flow"><span class="sw-from">✓ Chat 2 · Rules</span><span class="sw-arrow" aria-hidden="true">→</span><span class="sw-to">Chat 3 · Team</span></div>
+    <div class="cb-head"><span class="cb-num">Chat 3</span><h2 class="cb-title">Team</h2><span class="cb-meta">Step 10 · about 30 min</span></div>
+    <p class="cb-note">Everything from here to the next gold band goes in this one chat.</p>
+    <ol class="sw-steps">
+      <li>In <b>chat 2 (Rules)</b>, paste <a href="#pr-wrap">Wrap up a chat</a> as the last message, so nothing is lost.</li>
+      <li><b>&lt;/&gt;</b> (Code) → <b>+ New</b> → <b>Project or folder</b>: pick the same <b>Kevin</b> folder.</li>
+      <li>Rename it <b>Team</b>. The next prompts all go in this chat. Step 10 happens here.</li>
+    </ol>
+  </div></div>
+</section>
+
+<section class="chat-cont">
+  <div class="wrap"><div class="col">
+    <div class="step"><div class="num">10</div><div>
+      <h3>Hire the team</h3>
+      <p class="sub">Twelve helpers, one job each.</p>
+      <div class="step-body">
+        <p>Each helper is a short file in <code>.claude/agents/</code> that says its one job, what it reads, what it writes, which tools it may use, and what it must never do. Kevin hands out the work and checks what comes back.</p>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:16px"><div class="team">
+    <div class="mate g1"><div class="who"><span class="av">S</span>Scout</div><span>Finds candidate companies in one area and industry. Free.</span></div>
+    <div class="mate g1"><div class="who"><span class="av">G</span>Gatekeeper</div><span>Applies the hard rules and the fit score. Free.</span></div>
+    <div class="mate g1"><div class="who"><span class="av">R</span>Researcher</div><span>Finds 1–2 people. Website first, then <span data-lf="name">Hunter</span>. <span class="paid">credits</span></span></div>
+    <div class="mate g2"><div class="who"><span class="av">V</span>Verifier</div><span>Checks each email on its page and with <span data-lf="name">Hunter</span>. <span class="paid">credits</span></span></div>
+    <div class="mate g2"><div class="who"><span class="av">A</span>Auditor</div><span>Re-checks a random sample without seeing how it was found.</span></div>
+    <div class="mate g2"><div class="who"><span class="av">R</span>Recorder</div><span>The only one allowed to write in your Sheet.</span></div>
+    <div class="mate g3"><div class="who"><span class="av">P</span>Personalizer</div><span>Finds one true, specific detail, with its link.</span></div>
+    <div class="mate g3"><div class="who"><span class="av">C</span>Copywriter</div><span>Fills in your template. Never changes your sentences.</span></div>
+    <div class="mate g3"><div class="who"><span class="av">C</span>Compliance</div><span>Checks each email against the rules before it's drafted.</span></div>
+    <div class="mate g3"><div class="who"><span class="av">D</span>Drafter</div><span>Creates the Gmail drafts. Never sends.</span></div>
+    <div class="mate g4"><div class="who"><span class="av">F</span>Follow-up drafter</div><span>A short nudge in the same thread. Two at most.</span></div>
+    <div class="mate g4"><div class="who"><span class="av">R</span>Reply analyst</div><span>Reads replies, labels them, writes down what they said.</span></div>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <div class="step-body" style="margin-top:16px">
+      <div class="prompt" id="pr-team"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 3 · Team</small><span>Build the team</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Using playbook.md, build my team in .claude/agents/, one file per helper: scout, gatekeeper, researcher, verifier, auditor, recorder, personalizer, copywriter, compliance-check, drafter, follow-up-drafter and reply-analyst. For each one write: its single job, the file it reads and the file it writes in today's runs/ folder, the tools it may use, and a "Never" list. The researcher <span data-lf="researcherHow">checks the company's own website first, then uses Hunter's Domain Search</span>. Only the researcher and verifier may spend <span data-lf="name">Hunter</span> credits, within the budget Kevin gives them. Only the recorder may write to my Sheet. The drafter and follow-up drafter create drafts and never send. Use a cheaper, faster model for the simple jobs. Then update playbook.md so you, Kevin, hand each step to the right helper and check its work.</div></div>
+      <div class="why"><span class="ic">Why</span><span>Helpers pass work to each other through files in a dated folder (<code>runs/2026-11-10/</code>). You can open any step and see exactly what was found and why. The Auditor checks from scratch, so mistakes get caught instead of copied.</span></div>
+    </div>
+  </div></div>
+</section>
+
+<hr class="sep">
+
+<!-- PHASE 3 -->
+<section id="p3">
+  <div class="wrap"><div class="col">
+    <div class="sec-head">
+      <div class="phase-tag"><span class="big">03</span><span class="when" data-ptime="3">About 40 min</span></div>
+      <h2>Build your CRM.</h2>
+      <p>A CRM is just a tidy list of everyone you've contacted and where things stand. Yours starts as a Google Sheet.</p>
+    </div>
+
+  </div></div>
+</section>
+
+<section class="chat-band switch" id="chat-4" data-chat="Chat 4 · CRM">
+  <div class="wrap"><div class="col">
+    <div class="cb-flow"><span class="sw-from">✓ Chat 3 · Team</span><span class="sw-arrow" aria-hidden="true">→</span><span class="sw-to">Chat 4 · CRM</span></div>
+    <div class="cb-head"><span class="cb-num">Chat 4</span><h2 class="cb-title">CRM</h2><span class="cb-meta">Steps 11–12 · about 40 min</span></div>
+    <p class="cb-note">Everything from here to the next gold band goes in this one chat.</p>
+    <ol class="sw-steps">
+      <li>In <b>chat 3 (Team)</b>, paste <a href="#pr-wrap">Wrap up a chat</a> as the last message, so nothing is lost.</li>
+      <li><b>&lt;/&gt;</b> (Code) → <b>+ New</b> → <b>Project or folder</b>: pick the same <b>Kevin</b> folder.</li>
+      <li>Rename it <b>CRM</b>. The next prompts all go in this chat. Steps 11 and 12 happen here.</li>
+    </ol>
+  </div></div>
+</section>
+
+<section class="chat-cont">
+  <div class="wrap"><div class="col">
+    <div class="step"><div class="num">11</div><div>
+      <h3>Make the Sheet</h3>
+      <p class="sub">One file, a tab for each job.</p>
+      <div class="step-body">
+        <ol class="clicks">
+          <li>Type <b>sheets.new</b> in your browser. A blank Google Sheet opens.</li>
+          <li>Name it (top left), for example <code>Kevin CRM</code>.</li>
+          <li>Copy the link from the address bar and paste it into the prompt below.</li>
+        </ol>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:16px">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span class="url">docs.google.com/spreadsheets · Kevin CRM</span></div>
+      <div class="sheet-note" id="sheetNote"></div>
+      <div class="sheet-grid" id="sheetGrid"></div>
+      <div class="sheet-tabs" role="tablist" id="sheetTabs" aria-label="Sheet tabs"></div>
+    </div>
+    <p class="sample">Tap a tab to see what goes in it.</p>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="step-body" style="margin-top:16px">
+      <div class="prompt" id="pr-sheet"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 4 · CRM</small><span>Set up my CRM Sheet</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Here's my blank Google Sheet: <span class="fill" contenteditable="true" spellcheck="false">paste the link</span>. Turn it into my CRM with these tabs: Contacts (one row per person), Rejected, Do Not Contact, Replies, <span class="fill" contenteditable="true" spellcheck="false" data-k="insightTab">What they need</span> (formulas only, counts themes from Replies), Daily Log, Lists (the values for every dropdown), Templates and Kevin Feed. Make Status a dropdown: Queued, Drafted, Sent, Follow-up drafted, Follow-up sent, Replied, Bounced, Unsubscribed. Add a "My notes" column that no helper ever writes in. Write the Sheet ID, every tab and every column into tracker-fields.md. Then add one test row, read it back to prove it works, and delete it.</div></div>
+      <div class="why"><span class="ic">Why a Sheet</span><span>It's free, you already know how to use it, you can fix anything by hand, and it's the one place every helper reads from and the Recorder writes to. The app in phase 06 is just a nicer window onto this same Sheet.</span></div>
+    </div>
+
+    <div class="step"><div class="num">12</div><div>
+      <h3>See it as a page</h3>
+      <p class="sub">A private dashboard, no setup.</p>
+      <div class="step-body">
+        <p>Claude can make you a private web page on claude.ai (called an <b>Artifact</b>) that reads your Sheet live. It's the quickest way to get a CRM screen like Kevin's, with nothing to install or host.</p>
+        <div class="prompt" id="pr-page"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 4 · CRM</small><span>Build my CRM page</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Build me a private claude.ai page for my CRM. It reads my Google Sheet live through the Google Sheets connector, read-only, and never keeps its own copy. Screens: Today (counts and Kevin's latest feed messages), Contacts (search, filters, tap a row for the full card), Pipeline (columns by Status), <span class="fill" contenteditable="true" spellcheck="false" data-k="insightTab">What they need</span> (bar chart of themes) and Daily log. Make it feel like an Apple app: calm, roomy, system font, light and dark mode. Put the Sheet ID and tab names in one settings block at the top.</div></div>
+      </div>
+    </div></div>
+
+    <div style="margin-top:36px">
+      <h3 style="font-size:20px;margin-bottom:6px">How a contact moves through your CRM</h3>
+      <p style="color:var(--muted);margin-bottom:14px;font-size:15px">Every row has one Status. Here's who moves it.</p>
+    </div>
+  </div></div>
+  <div class="wrap">
+    <div class="pipe" data-cycle>
+      <div class="ps"><em>Kevin</em><b>Queued</b><span>Checked and waiting for its turn</span></div>
+      <div class="ps"><em>Kevin</em><b>Drafted</b><span>Email is in your Gmail drafts</span></div>
+      <div class="ps"><em>You</em><b>Sent</b><span>You pressed Send</span></div>
+      <div class="ps"><em>Kevin</em><b>Follow-up</b><span>Nudge drafted 1 day later if no reply</span></div>
+      <div class="ps"><em>Them</em><b>Replied</b><span>Kevin labels it and notes what they said</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- PHASE 4 -->
+<section id="p4">
+  <div class="wrap"><div class="col">
+    <div class="sec-head">
+      <div class="phase-tag"><span class="big">04</span><span class="when" data-ptime="4">About 2 hours</span></div>
+      <h2>Test small.</h2>
+      <p>First for free, then with 10 companies, then with drafts to yourself. Every mistake you catch becomes a new rule.</p>
+    </div>
+
+  </div></div>
+</section>
+
+<section class="chat-band switch" id="chat-5" data-chat="Chat 5 · Dry run">
+  <div class="wrap"><div class="col">
+    <div class="cb-flow"><span class="sw-from">✓ Chat 4 · CRM</span><span class="sw-arrow" aria-hidden="true">→</span><span class="sw-to">Chat 5 · Dry run</span></div>
+    <div class="cb-head"><span class="cb-num">Chat 5</span><h2 class="cb-title">Dry run</h2><span class="cb-meta">Step 13 · about 45 min</span></div>
+    <p class="cb-note">Everything from here to the next gold band goes in this one chat.</p>
+    <ol class="sw-steps">
+      <li>In <b>chat 4 (CRM)</b>, paste <a href="#pr-wrap">Wrap up a chat</a> as the last message, so nothing is lost.</li>
+      <li><b>&lt;/&gt;</b> (Code) → <b>+ New</b> → <b>Project or folder</b>: pick the same <b>Kevin</b> folder.</li>
+      <li>Rename it <b>Dry run</b>. The next prompts all go in this chat. Step 13 happens here.</li>
+    </ol>
+  </div></div>
+</section>
+
+<section class="chat-cont">
+  <div class="wrap"><div class="col">
+    <div class="step"><div class="num">13</div><div>
+      <h3>A free dry run</h3>
+      <p class="sub">Find and judge 10 companies. Spend nothing.</p>
+      <div class="step-body">
+        <div class="prompt" id="pr-dry"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 5 · Dry run</small><span>Free dry run</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Do a free dry run. Run only the scout and the gatekeeper on one slice: <span class="fill" contenteditable="true" spellcheck="false" data-k="slice">dental clinics, Columbus OH</span>, 10 companies. Don't use <span data-lf="name">Hunter</span>. Show me every company with its verdict, its reason, and the link behind each clue. Then tell me where my rules were unclear and you had to guess.</div></div>
+        <div class="why"><span class="ic">Why</span><span>The cheapest time to fix a rule is before it costs anything. Read every verdict and ask yourself "would I agree?". When you don't, tell Claude, and it updates scoring.md.</span></div>
+      </div>
+    </div></div>
+
+  </div></div>
+</section>
+
+<section class="chat-band switch" id="chat-6" data-chat="Chat 6 · Paid test">
+  <div class="wrap"><div class="col">
+    <div class="cb-flow"><span class="sw-from">✓ Chat 5 · Dry run</span><span class="sw-arrow" aria-hidden="true">→</span><span class="sw-to">Chat 6 · Paid test</span></div>
+    <div class="cb-head"><span class="cb-num">Chat 6</span><h2 class="cb-title">Paid test</h2><span class="cb-meta">Step 14 · about 1 hour</span></div>
+    <p class="cb-note">Everything from here to the next gold band goes in this one chat.</p>
+    <ol class="sw-steps">
+      <li>In <b>chat 5 (Dry run)</b>, paste <a href="#pr-wrap">Wrap up a chat</a> as the last message, so nothing is lost.</li>
+      <li><b>&lt;/&gt;</b> (Code) → <b>+ New</b> → <b>Project or folder</b>: pick the same <b>Kevin</b> folder.</li>
+      <li>Rename it <b>Paid test</b>. The next prompts all go in this chat. Step 14 happens here.</li>
+    </ol>
+  </div></div>
+</section>
+
+<section class="chat-cont">
+  <div class="wrap"><div class="col">
+    <div class="step"><div class="num">14</div><div>
+      <h3>A paid test on 10 companies</h3>
+      <p class="sub">The whole line, with a hard budget.</p>
+      <div class="step-body">
+        <p><span data-lf="costLine">Hunter charges credits: about 1 to search a company's emails (only when it finds some) and 0.5 to check one email.</span> Kevin never spends past a <b>daily budget</b>: what's left, minus a small reserve, split over the days until your plan resets.</p>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:16px">
+    <div class="card calc">
+      <label for="cBal">Credits left<input id="cBal" type="number" min="0" value="2000" inputmode="numeric"></label>
+      <label for="cRes">Reserve<input id="cRes" type="number" min="0" value="25" inputmode="numeric"></label>
+      <label for="cDays">Days until reset<input id="cDays" type="number" min="1" value="16" inputmode="numeric"></label>
+      <div class="out"><span>Today's budget</span><b id="cOut">123 credits</b><span id="cLeads">≈ 95 leads at 1.3 credits each</span></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="step-body" style="margin-top:16px">
+      <div class="prompt" id="pr-paid"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 6 · Paid test</small><span>Paid test</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Run a paid test on 10 companies through the whole line, but stop before writing any emails. Spend at most <span class="fill" contenteditable="true" spellcheck="false">15</span> <span data-lf="name">Hunter</span> credits. Check my balance first, log every paid call in credits.md (who, what, cost, running total), and check the balance again at the end. Then show me every row so I can review it. Every correction I make becomes a rule in the right file.</div></div>
+      <div class="why"><span class="ic">Why</span><span>Credits are cash. A written ledger means you always know where every credit went. <span data-lf="freeLine">Hunter's free 50 credits a month is enough for this test.</span></span></div>
+    </div>
+
+  </div></div>
+</section>
+
+<section class="chat-band switch" id="chat-7" data-chat="Chat 7 · First drafts">
+  <div class="wrap"><div class="col">
+    <div class="cb-flow"><span class="sw-from">✓ Chat 6 · Paid test</span><span class="sw-arrow" aria-hidden="true">→</span><span class="sw-to">Chat 7 · First drafts</span></div>
+    <div class="cb-head"><span class="cb-num">Chat 7</span><h2 class="cb-title">First drafts</h2><span class="cb-meta">Step 15 · about 20 min</span></div>
+    <p class="cb-note">Everything from here to the next gold band goes in this one chat.</p>
+    <ol class="sw-steps">
+      <li>In <b>chat 6 (Paid test)</b>, paste <a href="#pr-wrap">Wrap up a chat</a> as the last message, so nothing is lost.</li>
+      <li><b>&lt;/&gt;</b> (Code) → <b>+ New</b> → <b>Project or folder</b>: pick the same <b>Kevin</b> folder.</li>
+      <li>Rename it <b>First drafts</b>. The next prompts all go in this chat. Step 15 happens here.</li>
+    </ol>
+  </div></div>
+</section>
+
+<section class="chat-cont">
+  <div class="wrap"><div class="col">
+    <div class="step"><div class="num">15</div><div>
+      <h3>First drafts, to yourself</h3>
+      <p class="sub">See exactly what they'll see.</p>
+      <div class="step-body">
+        <div class="prompt" id="pr-drafts"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 7 · First drafts</small><span>Drafts to me first</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Write the first 3 emails from my queue, but address the drafts to me (<span class="fill" contenteditable="true" spellcheck="false">you@yourname.com</span>) instead of the real contacts. Run them through compliance-check first. Then tell me whether my Gmail signature shows up in the drafts. If it doesn't, save my signature in templates/signature.md and add it to every draft.</div></div>
+        <p>Then do a <b>seed test</b>: send one copy to a personal Gmail and see where it lands. Inbox is good. Promotions is OK. Spam means stop and fix step 4 before going further.</p>
+        <div class="why"><span class="ic">Why</span><span>You'll spot a weird sentence, a wrong name or a missing signature in seconds when it's in your own inbox. Much better than finding out from a stranger.</span></div>
+      </div>
+    </div></div>
+  </div></div>
+</section>
+
+<hr class="sep">
+
+<!-- PHASE 5 -->
+<section id="p5">
+  <div class="wrap"><div class="col">
+    <div class="sec-head">
+      <div class="phase-tag"><span class="big">05</span><span class="when" data-ptime="5">15 min + a warm-up week</span></div>
+      <h2>Put it on autopilot.</h2>
+      <p>Kevin runs every morning while you sleep. You spend ten minutes reading drafts and pressing Send.</p>
+    </div>
+
+  </div></div>
+</section>
+
+<section class="chat-band switch" id="chat-8" data-chat="Chat 8 · Schedule">
+  <div class="wrap"><div class="col">
+    <div class="cb-flow"><span class="sw-from">✓ Chat 7 · First drafts</span><span class="sw-arrow" aria-hidden="true">→</span><span class="sw-to">Chat 8 · Schedule</span></div>
+    <div class="cb-head"><span class="cb-num">Chat 8</span><h2 class="cb-title">Schedule</h2><span class="cb-meta">Step 16 · about 15 min</span></div>
+    <p class="cb-note">Everything from here to the next gold band goes in this one chat.</p>
+    <ol class="sw-steps">
+      <li>In <b>chat 7 (First drafts)</b>, paste <a href="#pr-wrap">Wrap up a chat</a> as the last message, so nothing is lost.</li>
+      <li><b>&lt;/&gt;</b> (Code) → <b>+ New</b> → <b>Project or folder</b>: pick the same <b>Kevin</b> folder.</li>
+      <li>Rename it <b>Schedule</b>. The next prompts all go in this chat. Step 16 happens here.</li>
+    </ol>
+  </div></div>
+</section>
+
+<section class="chat-cont">
+  <div class="wrap"><div class="col">
+    <div class="step"><div class="num">16</div><div>
+      <h3>Schedule the morning run</h3>
+      <p class="sub">4:00 AM start, done by 7:00.</p>
+      <div class="step-body">
+        <p>In the Claude desktop app, open <b>Scheduled</b> in the sidebar and create a new task, or just ask Claude to set it up for you. Turn on <b>Keep computer awake</b> in Settings so the run isn't skipped.</p>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:16px">
+    <div class="demo" data-cycle>
+      <div class="pane"><div class="cap"><i>1</i>New scheduled task</div>
+        <div class="screen cl"><div class="cl-title"><span class="spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M18.4 5.6l-4.2 4.2M9.8 14.2l-4.2 4.2"/></svg></span>Scheduled</div>
+          <div class="field"><small>Name</small>kevin-daily-run</div>
+          <div class="field"><small>Folder</small>Kevin</div>
+          <div style="display:flex;justify-content:flex-end"><span class="btn coral press">+ New task</span></div>
+        </div></div>
+      <div class="pane"><div class="cap"><i>2</i>Pick the time</div>
+        <div class="screen cl"><div class="cl-title"><span class="spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M18.4 5.6l-4.2 4.2M9.8 14.2l-4.2 4.2"/></svg></span>New scheduled task</div>
+          <div class="field"><small>Repeat</small>Every day</div>
+          <div class="field"><small>Time</small>4:00 AM</div>
+          <div class="field"><small>Prompt</small>Run playbook.md, start to finish</div>
+        </div></div>
+      <div class="pane"><div class="cap"><i>3</i>Wake up to drafts</div>
+        <div class="screen"><div class="crumb">7:00 AM · Gmail</div>
+          <div class="row"><span>Drafts</span><span class="btn ok">15 new</span></div>
+          <div class="row"><span>Follow-ups</span><span class="btn ok">4 new</span></div>
+          <div class="row"><span>Sent by Kevin</span><span class="btn g">0, always</span></div>
+        </div></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="step-body" style="margin-top:16px">
+      <div class="prompt" id="pr-schedule"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 8 · Schedule</small><span>Schedule the daily run</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Schedule my daily run in this folder: every day at <span class="fill" contenteditable="true" spellcheck="false">4:00 AM</span>, run playbook.md from planning to the morning report. Drafts must be in Gmail by <span class="fill" contenteditable="true" spellcheck="false">7:00 AM</span>, so start no new batch after 6:00 and wrap up at 6:30. Today's cap is <span class="fill" contenteditable="true" spellcheck="false">15</span> new drafts. Post a short message in the Kevin Feed tab at every step, in Kevin's voice, using the real time from the clock. Send me a phone notification at the start and at the end.</div></div>
+      <div class="why"><span class="ic">Why</span><span>Scheduled tasks run on your computer, so the PC has to be on and the Claude app open. If it was asleep, the run starts as soon as it wakes, on the same clock, shifted.</span></div>
+    </div>
+
+  </div></div>
+</section>
+
+<section class="chat-band switch" id="chat-after" data-chat="Kevin's daily runs">
+  <div class="wrap"><div class="col">
+    <div class="cb-flow"><span class="sw-from">✓ Chat 8 · Schedule</span><span class="sw-arrow" aria-hidden="true">→</span><span class="sw-to">No more chats</span></div>
+    <div class="cb-head"><span class="cb-num">After the build</span><h2 class="cb-title">Kevin takes over</h2><span class="cb-meta">Steps 17–18 · about 10 min a day</span></div>
+    <p class="cb-note">No new chat to open. Kevin works on his own from here.</p>
+    <ol class="sw-steps">
+      <li>In <b>chat 8 (Schedule)</b>, paste <a href="#pr-wrap">Wrap up a chat</a> as the last message, so nothing is lost.</li>
+      <li>From here, Kevin opens his own chat every morning, listed under <b>Scheduled</b> in the sidebar. You don't paste anything.</li>
+      <li>Your part is steps 17 and 18: watch the ramp and press Send each morning.</li>
+    </ol>
+  </div></div>
+</section>
+
+<section class="chat-cont">
+  <div class="wrap"><div class="col">
+    <div class="step"><div class="num">17</div><div>
+      <h3>Go slowly, then faster</h3>
+      <p class="sub">A new address has to earn trust.</p>
+      <div class="step-body">
+        <p>Inboxes watch new addresses closely. Start at 15 emails a day and step up only while things look healthy. This is the schedule Kevin used:</p>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:16px"><div class="col">
+    <div class="card ramp">
+      <svg viewBox="0 0 640 220" role="img" aria-label="Sending ramp: 15 drafts a day in week one, 25 on day 8, 50 on days 9 and 10, 100 from day 11.">
+        <line x1="40" y1="180" x2="620" y2="180"></line>
+        <rect class="bar-r" x="70" y="153" width="90" height="27" rx="6"></rect>
+        <rect class="bar-r" x="210" y="135" width="90" height="45" rx="6"></rect>
+        <rect class="bar-r" x="350" y="90" width="90" height="90" rx="6"></rect>
+        <rect class="bar-r" x="490" y="0" width="90" height="180" rx="6"></rect>
+        <text class="val" x="115" y="143" text-anchor="middle">15</text>
+        <text class="val" x="255" y="125" text-anchor="middle">25</text>
+        <text class="val" x="395" y="80" text-anchor="middle">50</text>
+        <text class="val" x="535" y="18" text-anchor="middle" style="fill:#fff">100</text>
+        <text x="115" y="202" text-anchor="middle">Week 1</text>
+        <text x="255" y="202" text-anchor="middle">Day 8</text>
+        <text x="395" y="202" text-anchor="middle">Days 9–10</text>
+        <text x="535" y="202" text-anchor="middle">Day 11 on</text>
+      </svg>
+      <p style="font-size:13px;color:var(--muted);padding:4px 4px 6px">New first emails per day. Follow-ups come on top.</p>
+    </div>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <div class="step-body" style="margin-top:16px">
+      <p><b>The brake.</b> If bounces reach 2% of the last week's sends, anyone marks you as spam, or your seed test lands in Spam, Kevin doesn't step up. He holds at today's number and tells you at the top of his report.</p>
+      <div class="why"><span class="ic">Why</span><span>Going from 0 to 100 emails a day on a new domain is the fastest way into everyone's spam folder. Slow and steady keeps you in the inbox.</span></div>
+    </div>
+
+    <div class="step"><div class="num">18</div><div>
+      <h3>Your ten-minute morning</h3>
+      <p class="sub">The only part that's yours.</p>
+      <div class="step-body">
+        <ol class="clicks">
+          <li>Read Kevin's report in the feed (or in your phone notification).</li>
+          <li>Open Gmail → <b>Drafts</b>. Read each one. Edit or delete anything that's off.</li>
+          <li>Press <b>Send</b> on the good ones.</li>
+          <li>Answer replies yourself. Kevin labels them and writes down what people said, so after 100 replies you can see the pattern.</li>
+        </ol>
+        <div class="why"><span class="ic">Why</span><span>Kevin's job is to do the slow, boring 95%. Your judgment is the last 5%, and it's the part that keeps every email honest.</span></div>
+      </div>
+    </div></div>
+  </div></div>
+</section>
+
+<hr class="sep">
+
+<!-- PHASE 6 -->
+<section id="p6">
+  <div class="wrap"><div class="col">
+    <div class="sec-head">
+      <div class="phase-tag"><span class="big">06</span><span class="when" data-ptime="6">About 3 hours · optional</span></div>
+      <h2>The real app.</h2>
+      <p>Optional. An app on your phone that signs in with Google, edits your Sheet, and spots sent emails and replies on its own. This is what Kevin's CRM is.</p>
+    </div>
+
+  </div></div>
+</section>
+
+<section class="chat-band switch" id="chat-9" data-chat="Chat 9 · App">
+  <div class="wrap"><div class="col">
+    <div class="cb-flow"><span class="sw-from">Optional, later</span><span class="sw-arrow" aria-hidden="true">→</span><span class="sw-to">Chat 9 · App</span></div>
+    <div class="cb-head"><span class="cb-num">Chat 9 · optional</span><h2 class="cb-title">App</h2><span class="cb-meta">Steps 19–21 · about 3 hours</span></div>
+    <p class="cb-note">Everything from here to the next gold band goes in this one chat.</p>
+    <ol class="sw-steps">
+      <li><b>&lt;/&gt;</b> (Code) → <b>+ New</b> → <b>Project or folder</b>: pick the same <b>Kevin</b> folder.</li>
+      <li>Rename it <b>App</b>. The next prompts all go in this chat. Steps 19 to 21 happen here.</li>
+    </ol>
+  </div></div>
+</section>
+
+<section class="chat-cont">
+  <div class="wrap"><div class="col">
+    <div class="step"><div class="num">19</div><div>
+      <h3>Give your app a Google key</h3>
+      <p class="sub">Free. About 15 minutes. No credit card.</p>
+      <div class="step-body">
+        <p>Your app needs permission to sign you in and read your Sheet and Gmail. You set that up once in <b>Google Cloud</b>. It sounds scary; it's four screens.</p>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:16px">
+    <div class="demo four" data-cycle>
+      <div class="pane"><div class="cap"><i>1</i>New project</div>
+        <div class="screen"><div class="crumb">console.cloud.google.com</div>
+          <div class="field"><small>Project name</small>My CRM</div>
+          <div class="row"><span>Billing</span><span class="btn g">Skip</span></div>
+          <div style="display:flex;justify-content:flex-end"><span class="btn press">Create</span></div>
+        </div></div>
+      <div class="pane"><div class="cap"><i>2</i>Turn on 2 APIs</div>
+        <div class="screen"><div class="crumb">APIs &amp; Services › Library</div>
+          <div class="row"><span>Google Sheets API</span><span class="btn press">Enable</span></div>
+          <div class="row"><span>Gmail API</span><span class="btn">Enable</span></div>
+        </div></div>
+      <div class="pane"><div class="cap"><i>3</i>Sign-in screen</div>
+        <div class="screen"><div class="crumb">Google Auth Platform</div>
+          <div class="row"><span>spreadsheets</span><span>✓</span></div>
+          <div class="row"><span>gmail.readonly</span><span>✓</span></div>
+          <div class="row"><span>gmail.send</span><span style="color:var(--bad)">never</span></div>
+        </div></div>
+      <div class="pane"><div class="cap"><i>4</i>Client ID</div>
+        <div class="screen"><div class="crumb">Clients › Web application</div>
+          <div class="field"><small>Allowed address</small>https://my-crm.vercel.app</div>
+          <div class="field"><small>Client ID</small><span class="mono" style="font-size:11px">1234…apps.googleusercontent.com</span></div>
+        </div></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="step-body" style="margin-top:16px">
+      <ol class="clicks">
+        <li>Go to <b>console.cloud.google.com</b>, signed in as the Google account your Sheet and Gmail use. Create a project. If it asks for billing, <b>skip it</b>.</li>
+        <li><b>APIs &amp; Services → Library</b>: enable <b>Google Sheets API</b> and <b>Gmail API</b>.</li>
+        <li><b>Google Auth Platform → Get started</b>. On a Workspace account choose <b>Internal</b>. On a regular Gmail choose <b>External</b> and add yourself as a test user.</li>
+        <li><b>Data Access</b>: add only <code>spreadsheets</code> and <code>gmail.readonly</code>. No send permission, so the app can't send even if it tried.</li>
+        <li><b>Clients → Create client → Web application</b>. You'll add the app's address after step 20, then copy the <b>Client ID</b>.</li>
+      </ol>
+      <div class="prompt" id="pr-cloud"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 9 · App</small><span>Walk me through Google Cloud</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Walk me through setting up Google Cloud for my CRM app, one click at a time, and wait for me after each step. My Google account is <span class="fill" contenteditable="true" spellcheck="false">you@yourname.com</span>. Create a project, enable the Google Sheets API and Gmail API, set up the sign-in screen, and add only the spreadsheets and gmail.readonly scopes. Stop me if I'm about to add a billing account. Write the steps into SETUP-GOOGLE-CLOUD.md as we go.</div></div>
+      <div class="why"><span class="ic">Why</span><span>The Client ID is your app's public name tag at Google, safe to share. Google also shows a "client secret"; your app doesn't use it, so never paste it anywhere. Sheets and Gmail reading are free at this size.</span></div>
+    </div>
+
+    <div class="step"><div class="num">20</div><div>
+      <h3>Build it and put it online</h3>
+      <p class="sub">Claude writes the app. Vercel hosts it for free.</p>
+      <div class="step-body">
+        <div class="prompt" id="pr-app"><div class="prompt-h"><div class="ph-t"><small class="where">Paste in chat 9 · App</small><span>Build my CRM app</span></div><button class="copy" type="button">Copy prompt</button></div>
+<div class="prompt-b">Build my CRM as a real web app in a folder called <span class="fill" contenteditable="true" spellcheck="false">my-crm</span>, using plain HTML, CSS and JavaScript. It signs in with Google, reads and writes my Sheet with the Sheets API, and reads Gmail (read-only) to notice when I've sent a draft or someone replied, then updates that contact's Status. Screens: Today with Kevin's chat feed, Contacts, Pipeline, Drafts, Templates, <span class="fill" contenteditable="true" spellcheck="false" data-k="insightTab">What they need</span>, Rejected, Daily log and Settings. Apple style, light and dark mode, installable on my phone. Put every setting (Client ID, Sheet ID, tab names) in config.js. Then help me put it online with Vercel, one click at a time.</div></div>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap" style="margin-top:16px">
+    <div class="demo" data-cycle>
+      <div class="pane"><div class="cap"><i>1</i>Sign up free</div>
+        <div class="screen"><div class="crumb">vercel.com</div>
+          <div class="row"><span>Continue with GitHub</span><span class="btn press">→</span></div>
+          <div class="row"><span>Continue with Google</span><span class="btn g">→</span></div>
+          <div class="row"><span>Plan</span><span class="btn ok">Hobby · Free</span></div>
+        </div></div>
+      <div class="pane"><div class="cap"><i>2</i>Claude deploys it</div>
+        <div class="screen cl"><div class="cl-title"><span class="spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M18.4 5.6l-4.2 4.2M9.8 14.2l-4.2 4.2"/></svg></span>Code · my-crm</div>
+          <div class="row"><span>Uploading my-crm…</span><span class="btn g">●●●</span></div>
+          <div class="row"><span>Building</span><span class="btn ok">Done</span></div>
+        </div></div>
+      <div class="pane"><div class="cap"><i>3</i>It's live</div>
+        <div class="screen"><div class="crumb">my-crm.vercel.app</div>
+          <div class="row"><span>Add this address in Google Cloud</span><span class="btn">Copy</span></div>
+          <div class="row"><span>Paste Client ID to Claude</span><span class="btn press">Done</span></div>
+        </div></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="step-body" style="margin-top:16px">
+      <div class="why"><span class="ic">Why</span><span>Your data never lives on Vercel. It stays in your Google Sheet. Vercel only serves the app's screens. One thing to know: Vercel's free plan is meant for personal, non-commercial use. If it's for a business, they may ask you to upgrade.</span></div>
+    </div>
+
+    <div class="step"><div class="num">21</div><div>
+      <h3>Put it on your phone</h3>
+      <p class="sub">And watch Kevin talk.</p>
+      <div class="step-body">
+        <ul class="plain">
+          <li><b>iPhone:</b> open the app's address in Safari → Share → <b>Add to Home Screen</b>.</li>
+          <li><b>Android:</b> Chrome → ⋮ menu → <b>Install app</b>.</li>
+          <li><b>Computer:</b> in Chrome or Edge, click the install icon at the right of the address bar.</li>
+        </ul>
+        <p>Kevin posts one short message to the Kevin Feed tab at every step, and the app shows it as a chat with a live "working" dot. If he goes quiet for 30 minutes, the dot turns amber so you know to check.</p>
+        <div class="why"><span class="ic">Why</span><span>A chat in plain words beats a log file. You see what he's doing and what it means, from anywhere, without opening a terminal.</span></div>
+      </div>
+    </div></div>
+  </div></div>
+</section>
+
+<hr class="sep">
+
+<!-- RULES -->
+<section>
+  <div class="wrap"><div class="col">
+    <div class="sec-head">
+      <div class="eyebrow">The rules that keep you out of trouble</div>
+      <h2>Eight lines Kevin never crosses.</h2>
+      <p>Put these in your CLAUDE.md word for word. They're the reason Kevin can run unattended.</p>
+    </div>
+  </div></div>
+  <div class="wrap"><div class="col rules">
+    <div class="rule"><b>Never send.</b><span>Drafts only. You press Send. Locked by the hook in step 6.</span></div>
+    <div class="rule"><b>Never guess an email.</b><span>Only addresses a tool or a public page gave us. No firstname@company.com.</span></div>
+    <div class="rule"><b>Every fact has a receipt.</b><span>Each email, title and personal detail is saved with the link it came from.</span></div>
+    <div class="rule"><b>Stop means forever.</b><span>Anyone who asks to stop goes on Do Not Contact and never comes back.</span></div>
+    <div class="rule"><b>No repeats.</b><span>Nobody gets a first email twice within 30 days. Two follow-ups at most.</span></div>
+    <div class="rule"><b>Credits are cash.</b><span>A daily budget, a written ledger, and the balance checked before and after.</span></div>
+    <div class="rule"><b>Don't scrape LinkedIn.</b><span>It's against LinkedIn's rules. Search results are fine to read; the pages aren't.</span></div>
+    <div class="rule"><b>Lead or no lead.</b><span>No "maybe" pile. Every call gets a one-line reason you can read later.</span></div>
+  </div></div>
+</section>
+
+<hr class="sep">
+
+<!-- GLOSSARY -->
+<section>
+  <div class="wrap"><div class="col">
+    <div class="sec-head">
+      <div class="eyebrow">Jargon, decoded</div>
+      <h2>Words you'll hear.</h2>
+    </div>
+    <dl class="gloss">
+      <div><dt>Claude Code</dt><dd>The part of Claude that works with files on your computer and runs tasks. Switch to it with the &lt;/&gt; icon at the top left of the desktop app.</dd></div>
+      <div><dt>Connector</dt><dd>A key that lets Claude use one of your apps. <i>Also called an MCP server.</i></dd></div>
+      <div><dt>Agent / helper</dt><dd>A copy of Claude with one narrow job and its own instructions file.</dd></div>
+      <div><dt>Hook</dt><dd>A tripwire that runs before Claude uses a tool, and can block it.</dd></div>
+      <div><dt>API</dt><dd>The door one app uses to talk to another. Your app uses Google's Sheets and Gmail doors.</dd></div>
+      <div><dt>Credits</dt><dd>Your lead finder's money, like <span data-lf="name">Hunter</span>'s credits. Finding or checking an email costs a little.</dd></div>
+      <div><dt>Verify</dt><dd>Asking the other side's mail server whether an address exists, without sending anything.</dd></div>
+      <div><dt>Accept-all</dt><dd>A mail server that says yes to every address, so the check can't tell if the person is real.</dd></div>
+      <div><dt>Bounce</dt><dd>An email that couldn't be delivered. Too many hurts your address.</dd></div>
+      <div><dt>SPF, DKIM, DMARC</dt><dd>Three settings that prove emails from your domain really came from you.</dd></div>
+      <div><dt>Domain</dt><dd>Your web address, like yourname.com.</dd></div>
+      <div><dt>Artifact</dt><dd>A private web page Claude makes and hosts for you on claude.ai.</dd></div>
+      <div><dt>Scope</dt><dd>One permission on Google's "Allow" screen, like "read Gmail".</dd></div>
+      <div><dt>Client ID</dt><dd>Your app's public name tag at Google. Safe to share. The secret isn't, and you won't need it.</dd></div>
+      <div><dt>Deploy</dt><dd>Putting your app on the internet at a web address.</dd></div>
+      <div><dt>Seed test</dt><dd>One copy of a real email to your own inbox, to see if it lands in Inbox, Promotions or Spam.</dd></div>
+    </dl>
+  </div></div>
+</section>
+
+<hr class="sep">
+
+<!-- FAQ -->
+<section>
+  <div class="wrap"><div class="col">
+    <div class="sec-head">
+      <div class="eyebrow">When something breaks</div>
+      <h2>Quick fixes.</h2>
+    </div>
+    <details><summary>Claude says it can't see Gmail, Sheets or <span data-lf="name">Hunter</span></summary><p>On claude.ai, open Settings → Connectors and check each one says Connected, signed in as the right account. Then start a new Code session; connectors load when a session starts.</p></details>
+    <details><summary>The 4 AM run didn't happen</summary><p>The computer was asleep or the Claude app was closed. Turn on Keep computer awake in the app's settings and leave the app open. A missed run starts when the computer wakes.</p></details>
+    <details><summary>The drafts have no signature</summary><p>Drafts made through the connector may not get Gmail's automatic signature. Ask Kevin to save your signature in templates/signature.md and add it to every draft.</p></details>
+    <details><summary>My emails are landing in Spam</summary><p>Stop stepping up. Check SPF, DKIM and DMARC all pass (step 4). Remove links from the email. Drop back to 15 a day and run a seed test each day until it lands in the inbox again.</p></details>
+    <details><summary>"Access blocked" when I sign in to my app</summary><p>On a Workspace account, an admin may need to trust the app: admin.google.com → Security → API controls → Manage third-party app access → mark your app Trusted. On regular Gmail, make sure you added yourself as a test user.</p></details>
+    <details><summary>"Google hasn't verified this app"</summary><p>That's normal for your own app in testing mode. You built it, so it's safe to click Continue. Never do this for an app someone else sent you.</p></details>
+    <details><summary>"Origin not allowed" or "redirect_uri_mismatch"</summary><p>The address in Google Cloud → Clients must match your app's address exactly: https:// at the start, no slash at the end.</p></details>
+    <details><summary>Kevin used more credits than I expected</summary><p>Open today's credits.md in the runs folder. Every paid call is listed. If a step wastes credits (for example searching companies that should have been rejected first), tell Claude and it will tighten that rule.</p></details>
+  </div></div>
+</section>
+
+<section style="padding-block:24px 8px">
+  <div class="wrap"><div class="col">
+    <div class="follow">
+      <div class="follow-who"><span class="follow-av">E</span><div><b>Made by Edward Gatchalian</b></div></div>
+      <p>I went from labourer to coordinating 20+ construction projects, then started building my own AI tools with zero coding background. Kevin is one of them. I post every day about what I'm building and how, so you can build it too.</p>
+      <div class="follow-cta"><a class="follow-btn" href="https://www.instagram.com/edward_gatch/" target="_blank" rel="noopener">Follow @edward_gatch on Instagram</a><span class="follow-url">instagram.com/edward_gatch</span></div>
+    </div>
+  </div></div>
+</section>
+
+<footer class="wrap">
+  <p>Built by <a href="/" style="color:var(--ink);font-weight:700;text-decoration:none">Edward Gatchalian</a> <a href="https://www.instagram.com/edward_gatch/" target="_blank" rel="noopener">@edward_gatch</a></p>
+  <p class="disclaimer">Not legal or financial advice. Email laws, prices and app screens change: check the rules where your contacts live and each tool's pricing page before you start. All examples use made-up data, not real contacts.</p>
+</footer>
+</div>
+</main>
+
+<script>
+(function(){
+  var MODES = {
+    clients: {
+      whoami:"a freelance bookkeeper", goal:"offer my monthly bookkeeping to small practices",
+      target:"dental clinics in Ohio with 5+ dentists", people:"practice owners and office managers",
+      slice:"dental clinics, Columbus OH", batch:"Columbus batch", insightTab:"What they need",
+      mailTo1:"Dana Ruiz", mailSubjShort:"Quick question about Brightside's books", mailTo2:"Office team", mailSubj2:"Quick question about Lakeview's books", mailTo3:"Marcus Lee", mailSubj3:"Quick question about Riverside's books",
+      signals:[["Website says 5+ staff or dentists",3],["Team page shows named people",2],["Hiring in the last 6 months",1],["More than one location",1],["100+ Google reviews",2],["One-person practice",-3]]
+    },
+    job: {
+      whoami:"a product designer with 4 years in payments", goal:"learn what their design team looks for and ask about openings",
+      target:"fintech startups in Toronto that hire product designers", people:"design managers and heads of product",
+      slice:"fintech startups, Toronto", batch:"Toronto batch", insightTab:"What they look for",
+      mailTo1:"Priya Shah", mailSubjShort:"Question about the design team at Northpath", mailTo2:"Careers team", mailSubj2:"Question about the design team at Ledgerly", mailTo3:"Tom Becker", mailSubj3:"Question about the design team at Coinwise",
+      signals:[["Posted a role like yours in the last 30 days",3],["Team page shows people in your field",2],["Raised money or grew this year",1],["Remote, or in your city",1],["Company has 20+ people",2],["Layoffs in the news this quarter",-3]]
+    },
+    insights: {
+      whoami:"a former project coordinator in construction", goal:"learn which admin tasks slow their team down, before I build any software",
+      target:"commercial roofing contractors in Texas with 10+ employees", people:"owners and operations managers",
+      slice:"roofing contractors, Austin TX", batch:"Austin batch", insightTab:"Pain points",
+      mailTo1:"Mike Alvarez", mailSubjShort:"Quick question about admin work at Lone Star", mailTo2:"Office team", mailSubj2:"Quick question about admin work at Hill Country", mailTo3:"Jen Park", mailSubj3:"Quick question about admin work at Gulf Coast",
+      signals:[["Website says 10+ employees",3],["Team page shows 10+ people",3],["3+ named office roles",2],["Job post in the last 6 months",1],["Commercial projects in the portfolio",1],["One-person operation",-3]]
+    }
+  };
+  var mode = "clients";
+  try{ var saved = localStorage.getItem("kevin-guide-mode"); if(saved && MODES[saved]) mode = saved; }catch(e){}
+
+  var on = {};
+  function renderSignals(){
+    var box = document.getElementById("signals"); box.innerHTML = "";
+    on = {};
+    MODES[mode].signals.forEach(function(s,i){
+      var b = document.createElement("button"); b.type="button"; b.setAttribute("aria-pressed","false");
+      b.innerHTML = '<span></span><span class="pts'+(s[1]<0?' neg':'')+'">'+(s[1]>0?'+':'−')+Math.abs(s[1])+'</span>';
+      b.firstChild.textContent = s[0];
+      b.addEventListener("click",function(){ on[i]=!on[i]; b.setAttribute("aria-pressed", on[i]?"true":"false"); score(); });
+      box.appendChild(b);
+    });
+    // start with two clues on so the demo shows something at rest
+    [0,3].forEach(function(i){ on[i]=true; box.children[i].setAttribute("aria-pressed","true"); });
+    score();
+  }
+  function score(){
+    var sig = MODES[mode].signals, total = 0, used = [];
+    sig.forEach(function(s,i){ if(on[i]){ total+=s[1]; used.push(s[0].toLowerCase()); } });
+    var C = 389.6, pct = Math.max(0, Math.min(total,8))/8;
+    document.getElementById("ringFg").setAttribute("stroke-dashoffset", (C*(1-pct)).toFixed(1));
+    document.getElementById("ringNum").textContent = total;
+    var v = document.getElementById("verdict"), r = document.getElementById("reason");
+    if(total>=3){ v.textContent="Lead"; v.className="verdict-pill y"; r.textContent="Score "+total+". Goes to the Contacts tab, then the researcher looks for people."; }
+    else { v.textContent="No lead"; v.className="verdict-pill n"; r.textContent="Logged on the Rejected tab: “Size: score "+total+(used.length?" ("+used.join(", ")+")":"")+"”. No credits spent."; }
+  }
+
+  function setMode(m){
+    mode = m; document.body.setAttribute("data-mode", m);
+    try{ localStorage.setItem("kevin-guide-mode", m); }catch(e){}
+    document.querySelectorAll(".seg [data-mode]").forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-mode")===m ? "true":"false"); });
+    document.querySelectorAll("[data-k]").forEach(function(el){
+      if(el.getAttribute("data-edited")) return;
+      var val = MODES[m][el.getAttribute("data-k")]; if(val) el.textContent = val;
+    });
+    renderSignals();
+    if(typeof curTab === "number") showTab(curTab);
+  }
+  var curTab;
+  document.querySelectorAll(".seg [data-mode]").forEach(function(b){ b.addEventListener("click", function(){ setMode(b.getAttribute("data-mode")); }); });
+  document.querySelectorAll(".fill[contenteditable]").forEach(function(el){
+    el.addEventListener("input", function(){ el.setAttribute("data-edited","1"); });
+    el.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); el.blur(); } });
+  });
+
+  // copy buttons
+  document.querySelectorAll(".copy").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var body = btn.closest(".prompt").querySelector(".prompt-b");
+      var text = body.innerText.trim();
+      function done(){ btn.textContent="Copied"; btn.classList.add("done"); setTimeout(function(){ btn.textContent="Copy prompt"; btn.classList.remove("done"); },1600); }
+      function fallback(){ var r=document.createRange(); r.selectNodeContents(body); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent="Selected, press Ctrl+C"; setTimeout(function(){ btn.textContent="Copy prompt"; },2400); }
+      try{ navigator.clipboard.writeText(text).then(done, fallback); }catch(e){ fallback(); }
+    });
+  });
+
+  // credit calculator
+  function calc(){
+    var b = +document.getElementById("cBal").value||0, r = +document.getElementById("cRes").value||0, d = Math.max(1, +document.getElementById("cDays").value||1);
+    var budget = Math.max(0, Math.floor((b-r)/d));
+    document.getElementById("cOut").textContent = budget.toLocaleString()+" credits";
+    document.getElementById("cLeads").textContent = "≈ "+Math.floor(budget/1.3).toLocaleString()+" leads at 1.3 credits each";
+  }
+  ["cBal","cRes","cDays"].forEach(function(id){ document.getElementById(id).addEventListener("input", calc); });
+  calc();
+
+  // sheet tabs
+  var TABS = [
+    ["Contacts","One row per person. The master list.",["ID","Date added","Status","Company","Website","Location","Name","Position","Email","Email source","Verified","Fit score","Personal line","Sent date","Reply","My notes"],["K0014","2026-11-10","Queued","Brightside Dental","brightsidedental.com","Columbus, OH","Dana Ruiz","Owner","dana@…","Published: /team","Valid","5","Second clinic in Dublin","","",""]],
+    ["Rejected","Every company that didn't make it, with a one-line reason.",["Date","Company","Website","Stage","Reason"],["2026-11-10","Smile Studio","smilestudio.com","Gatekeeper","Size: score 1 (one-person practice)"]],
+    ["Do Not Contact","Anyone who asked to stop. Checked before every draft. Never removed.",["Date","Email","Domain","Block whole company","Reason"],["2026-11-09","info@example.com","example.com","Y","Unsubscribe"]],
+    ["Replies","One row per reply, with what they said in one line.",["Date","Contact","Company","Label","What they said","Theme"],["2026-11-11","K0009","Lakeview Dental","Interested","Month-end takes our manager two full days","Month-end close"]],
+    ["Insights","Counts themes from Replies by itself. Nobody types here.",["Theme","Replies","Interested"],["Month-end close","7","3"]],
+    ["Daily Log","One row a day: leads added, drafts, sends, replies, credits.",["Date","Leads added","Drafts","Sent","Replies","Credits","Balance"],["2026-11-10","14","15","15","3","62","1,812"]],
+    ["Lists","The allowed values for every dropdown, so data stays tidy.",["Status","Country","Reply label","Theme"],["Queued","USA","Interested","Month-end close"]],
+    ["Templates","Your email texts. Edit them here (or in the app) and the next run uses them.",["Name","Type","In use","Subject"],["First email v2","First email","Yes","Quick question about {company}"]],
+    ["Kevin Feed","Kevin's chat messages, one per step.",["Time","State","Step","Message","Drafts","Credits"],["2026-11-10 04:24","Running","Writing drafts","15 drafts are in Gmail.","15","0"]]
+  ];
+  var tabsEl = document.getElementById("sheetTabs");
+  function showTab(i){
+    curTab = i;
+    var t = TABS[i];
+    var label = t[0]==="Insights" ? MODES[mode].insightTab : t[0];
+    document.getElementById("sheetNote").innerHTML = "<b></b> <span></span>";
+    document.getElementById("sheetNote").firstChild.textContent = label+".";
+    document.getElementById("sheetNote").lastChild.textContent = t[1];
+    var h = "<table><thead><tr>"+t[2].map(function(c){return "<th></th>";}).join("")+"</tr></thead><tbody><tr>"+t[3].map(function(){return "<td></td>";}).join("")+"</tr></tbody></table>";
+    var g = document.getElementById("sheetGrid"); g.innerHTML = h;
+    g.querySelectorAll("th").forEach(function(th,j){ th.textContent=t[2][j]; });
+    g.querySelectorAll("td").forEach(function(td,j){ td.textContent=t[3][j]||""; });
+    tabsEl.querySelectorAll("button").forEach(function(b,j){ b.setAttribute("aria-selected", j===i?"true":"false"); });
+  }
+  TABS.forEach(function(t,i){
+    var b=document.createElement("button"); b.type="button"; b.setAttribute("role","tab"); b.textContent=t[0];
+    if(t[0]==="Insights"){ b.setAttribute("data-k","insightTab"); }
+    b.addEventListener("click",function(){ showTab(i); }); tabsEl.appendChild(b);
+  });
+
+  // ---- starting point: Claude setup, email, lead finder ----
+  var HUNTER = {name:"Hunter", label:"Hunter (hunter.io)", connector:"Hunter IO", cost:"Free · then $49 / mo",
+    why:"Finds work emails and checks they're real. The free plan gives 50 credits a month, enough to test. Starter gives 2,000.",
+    account:"to find and check emails. Make a free account at hunter.io first.",
+    sendTools:"every tool that starts or adds people to a Hunter sequence",
+    researcherHow:"checks the company's own website first, then uses Hunter's Domain Search",
+    costLine:"Hunter charges credits: about 1 to search a company's emails (only when it finds some) and 0.5 to check one email.",
+    freeLine:"Hunter's free 50 credits a month is enough for this test."};
+  var LF = {
+    hunter: HUNTER, unsure: HUNTER,
+    apollo: {name:"Apollo", label:"Apollo (apollo.io)", connector:"Apollo.io", cost:"Free · then ≈ $49 / user / mo",
+      why:"Searches a big database of people by title, industry and place, and gives their work emails. Start on the free plan; limits change often, so check apollo.io/pricing.",
+      account:"to search people and get their emails. Make a free account at apollo.io first.",
+      sendTools:"every Apollo tool that sends email or adds people to a sequence",
+      researcherHow:"checks the company's own website first, then searches Apollo for people at that company by job title, and reveals only the emails we'll use",
+      costLine:"Apollo spends credits when it reveals or enriches a person's email. Check what each action costs on your plan in Apollo's settings.",
+      freeLine:"Apollo's free plan should cover a 10-company test. Check your credits in Apollo first."},
+    other: {name:"{name}", label:"{name}", connector:"{name}", cost:"Your current plan",
+      why:"Finds work emails. Kevin can use it once Claude reaches it through a connector, or through a list you export.",
+      account:"to find emails. The prompt below connects it.",
+      sendTools:"every {name} tool that sends email or starts a campaign",
+      researcherHow:"checks the company's own website first, then uses {name}",
+      costLine:"Find out how {name} charges (credits, searches or a flat fee). The prompt in step 5 saves it in identity.md, so Kevin can keep a daily budget.",
+      freeLine:"Use the smallest amount your plan allows."}
+  };
+  // st = the reader's answers. view "mine" shows their tailored guide; "full" shows every step, from scratch.
+  var st = {mode:mode, claude:"none", email:"gmail", lf:"unsure", other:"", answered:false, view:"full", stage:"quiz"};
+  try{ var ss = JSON.parse(localStorage.getItem("kevin-guide-start")||"null"); if(ss) for(var k in st){ if(ss[k]!=null) st[k]=ss[k]; } }catch(e){}
+  if(!MODES[st.mode]) st.mode = "clients";
+  var FULL = {claude:"none", email:"gmail", lf:"unsure", other:""};
+  function eff(){ return st.view==="full" ? FULL : st; }
+  function save(){ try{ localStorage.setItem("kevin-guide-start", JSON.stringify(st)); }catch(e){} }
+
+  function lfName(e){ e = e||eff(); return e.lf==="other" ? (e.other.trim() || "my lead finder") : LF[e.lf].name; }
+  function fmt(min){
+    if(min<60) return "About "+min+" min";
+    var h = Math.round(min/30)/2, whole = Math.floor(h), half = h-whole ? "½" : "";
+    return "About "+(whole||"")+half+(h===1?" hour":" hours");
+  }
+  function minutes(e){
+    var install = {none:20, free:15, pro:10, code:0}[e.claude];
+    var email = {gmail:20, workspace:15, other:60}[e.email];
+    var connect = e.lf==="other" ? 30 : 15;
+    return {1: install+10+email+connect+10, 2:180, 3:40, 4:125};
+  }
+  // fills a "Your time / Your cost / Your path" block from a set of answers
+  function fillPath(root, e){
+    var P = minutes(e), total = P[1]+P[2]+P[3]+P[4]+15, name = lfName(e);
+    var t = root.querySelector(".js-time"); t.innerHTML = "<b></b> <span></span>";
+    t.firstChild.textContent = fmt(total)+" of hands-on setup,";
+    t.lastChild.textContent = "best over 2 to 4 sittings. Then a warm-up week while sending grows from 15 to 100 emails a day. (Edward built Kevin's core in one long day and his app the next, but he'd built an assistant before.)";
+    var cost = [];
+    cost.push(e.claude==="pro"||e.claude==="code" ? "Claude: nothing new, you already pay for it." : "Claude Pro: about $20 a month.");
+    if(e.lf==="apollo") cost.push("Apollo: free to start, about $49 per user a month for more.");
+    else if(e.lf==="other") cost.push(name+": whatever your plan costs now.");
+    else cost.push("Hunter: free to start, $49 a month once you need more than 50 credits.");
+    if(e.email==="gmail") cost.push("Later, before real volume: your own domain (about $12 a year) and Google Workspace (from about $7 a month).");
+    if(e.email==="other") cost.push("Google Workspace for outreach: from about $7 a month, plus a domain if you don't have one.");
+    root.querySelector(".js-cost").textContent = cost.join(" ");
+    var items = [];
+    items.push({none:"Step 1: install the desktop app and get Claude Pro.", free:"Step 1: install the desktop app and upgrade to Pro.", pro:"Step 1 is quick: you have the plan, just make Kevin's folder.", code:"Step 1 is skipped: you already use Claude Code."}[e.claude]);
+    items.push({gmail:"Step 4: test with your Gmail now, and get your own domain before real volume.", workspace:"Step 4 is a quick check of your email settings.", other:"Step 4: set up a Google mailbox for outreach. Kevin drafts through Gmail."}[e.email]);
+    items.push({hunter:"Prompts use Hunter, like Kevin.", apollo:"Prompts use Apollo instead of Hunter.", other:"Prompts use "+name+", and step 5 gets an extra prompt to connect it.", unsure:"Compare Hunter and Apollo in step 5. Prompts say Hunter until you pick."}[e.lf]);
+    var ul = root.querySelector(".js-path"); ul.innerHTML = "";
+    items.forEach(function(x){ var li=document.createElement("li"); li.textContent=x; ul.appendChild(li); });
+  }
+
+  function applyStart(){
+    var b = document.body, e = eff(), mine = st.view==="mine";
+    b.setAttribute("data-claude", e.claude); b.setAttribute("data-email", e.email); b.setAttribute("data-lf", e.lf);
+    b.setAttribute("data-stage", st.stage);
+    save();
+    document.querySelectorAll("#viewSeg button").forEach(function(btn){ btn.setAttribute("aria-pressed", btn.getAttribute("data-view")===st.view ? "true":"false"); });
+    // lead finder words everywhere
+    var name = lfName(e), set = LF[e.lf];
+    document.querySelectorAll("[data-lf]").forEach(function(el){
+      if(el===b) return;
+      var key = el.getAttribute("data-lf"), v = set[key];
+      if(v!=null) el.textContent = v.replace(/\{name\}/g, name);
+    });
+    document.querySelectorAll(".cmp").forEach(function(c){ c.classList.toggle("pick", c.getAttribute("data-cmp")===e.lf); });
+
+    // times per phase
+    var P = minutes(e);
+    document.querySelectorAll("[data-ptime]").forEach(function(el){
+      var n = el.getAttribute("data-ptime");
+      if(P[n]) el.textContent = fmt(P[n]);
+    });
+    document.getElementById("bylineTime").textContent = fmt(P[1]+P[2]+P[3]+P[4]+15)+" of setup, then a warm-up week";
+
+    // tailored guide: hide what they already have; full guide shows everything
+    document.getElementById("s-install").hidden = mine && e.claude==="code";
+    document.getElementById("row-claude").hidden = mine && (e.claude==="pro" || e.claude==="code");
+    document.getElementById("row-domain").hidden = mine && e.email==="workspace";
+    badge("s-install", mine && e.claude==="pro" ? ["quick","Quick"] : null);
+    badge("s-email", mine && e.email==="workspace" ? ["quick","Quick check"] : null);
+
+    // the card at the top of the guide
+    var yg = document.getElementById("yourGuide");
+    document.getElementById("ygEyebrow").textContent = mine ? "Your guide" : "The full guide";
+    document.getElementById("ygTitle").textContent = mine ? "Built around where you are." : "Every step, from scratch.";
+    document.getElementById("ygText").textContent = mine
+      ? "Steps you already have are hidden, and every prompt uses your tools. Want to see everything? Switch to the full guide any time."
+      : "For someone starting with nothing: no Claude yet, a personal Gmail, and no lead finder picked. Nothing is hidden.";
+    var chips = document.getElementById("ygChips"); chips.innerHTML = "";
+    if(mine){
+      [{clients:"Finding clients", job:"Finding a job", insights:"Market insights"}[st.mode],
+       {none:"New to Claude", free:"Claude free plan", pro:"Claude Pro or Max", code:"Uses Claude Code"}[st.claude],
+       {gmail:"Personal Gmail", workspace:"Google Workspace", other:"Outlook or other"}[st.email],
+       st.lf==="unsure" ? "Lead finder: not picked" : "Lead finder: "+lfName(st)
+      ].forEach(function(x){ var s=document.createElement("span"); s.textContent=x; chips.appendChild(s); });
+    }
+    chips.hidden = !mine;
+    document.getElementById("ygPath").hidden = !mine;
+    if(mine) fillPath(yg, st);
+    document.getElementById("ygPrimary").textContent = mine ? "Show the full guide" : (st.answered ? "Back to my guide" : "Answer 4 quick questions");
+  }
+  function badge(id, b){
+    var step = document.getElementById(id); if(!step) return;
+    var h = step.querySelector("h3"), old = h.querySelector(".badge"); if(old) old.remove();
+    if(b){ var s=document.createElement("span"); s.className="badge "+b[0]; s.textContent=b[1]; h.appendChild(s); }
+  }
+
+  // ---- the questions, one screen at a time ----
+  var QS = [
+    {key:"mode", title:"What do you want your Kevin to find?", sub:"This sets the examples, sample emails and prompts.", opts:[
+      ["clients","Clients for my business","People who could pay for what you sell"],
+      ["job","A job","Hiring managers at companies you'd like to work for"],
+      ["insights","Market insights","Ask an industry what slows it down before you build anything. This is what Kevin does."]]},
+    {key:"claude", title:"What do you use Claude for today?", sub:"So the guide skips what you already have.", opts:[
+      ["none","I don't use Claude yet","We'll start from the download"],
+      ["free","Claude chat, free plan","You'll upgrade to Pro in step 1"],
+      ["pro","Claude Pro or Max","You have the plan. We'll set up Claude Code"],
+      ["code","I already use Claude Code","We'll skip the install"]]},
+    {key:"email", title:"Which email would you send from?", sub:"Kevin leaves his drafts in this inbox.", opts:[
+      ["gmail","Personal Gmail","Fine for testing"],
+      ["workspace","Google Workspace on my own domain","Best for outreach"],
+      ["other","Outlook or something else","We'll set up a Google mailbox just for outreach"]]},
+    {key:"lf", title:"How will you find email addresses?", sub:"Kevin uses Hunter. Pick yours and every prompt adapts.", opts:[
+      ["hunter","Hunter","What Kevin uses. Free: 50 credits a month"],
+      ["apollo","Apollo","A big people search. Free plan to start"],
+      ["other","Another tool","Type its name on the next tap"],
+      ["unsure","Not sure yet","You'll compare both in step 5"]]}
+  ];
+  var qi = 0, wizStage = document.getElementById("wizStage"), reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function el(tag, cls, text){ var x=document.createElement(tag); if(cls) x.className=cls; if(text!=null) x.textContent=text; return x; }
+  function renderQ(dir){
+    var scr = el("div","wiz-screen"+(dir<0?" back":""));
+    var dots = document.querySelectorAll(".wiz-dots i");
+    dots.forEach(function(d,i){ d.classList.toggle("on", i<=Math.min(qi,3)); });
+    document.getElementById("wizBack").disabled = qi===0;
+    if(qi < QS.length){
+      var q = QS[qi];
+      document.getElementById("wizCount").textContent = "Question "+(qi+1)+" of "+QS.length;
+      scr.appendChild(el("h2",null,q.title)); scr.appendChild(el("p","wsub",q.sub));
+      var list = el("div","wopts"); list.setAttribute("role","group"); list.setAttribute("aria-label",q.title);
+      var chosen = qi===0 ? st.mode : (st.answered || st["_"+q.key] ? st[q.key] : null);
+      var otherBox = null;
+      q.opts.forEach(function(o){
+        var btn = el("button","wopt"); btn.type="button"; btn.setAttribute("aria-pressed", o[0]===chosen && (qi>0 || st.answered || st._mode) ? "true":"false");
+        var txt = el("span"); txt.appendChild(el("b",null,o[1])); txt.appendChild(el("small",null,o[2]));
+        btn.appendChild(txt); btn.appendChild(el("span","radio"));
+        btn.addEventListener("click", function(){
+          list.querySelectorAll(".wopt").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+          btn.setAttribute("aria-pressed","true");
+          st[q.key] = o[0]; st["_"+q.key] = true;
+          if(q.key==="mode") setMode(o[0]);
+          if(q.key==="lf" && o[0]==="other"){ otherBox.hidden = false; otherBox.querySelector("input").focus(); return; }
+          if(otherBox) otherBox.hidden = true;
+          setTimeout(function(){ qi++; renderQ(1); }, reduceMotion ? 0 : 260);
+        });
+        list.appendChild(btn);
+      });
+      scr.appendChild(list);
+      if(q.key==="lf"){
+        otherBox = el("div","wiz-actions"); otherBox.hidden = st.lf!=="other" || !st._lf;
+        var inp = el("input","other-in"); inp.type="text"; inp.id="lfOther"; inp.placeholder="Its name, e.g. Snov.io"; inp.setAttribute("aria-label","Name of your lead finder"); inp.autocomplete="off"; inp.value = st.other;
+        var go = el("button","btn-p","Continue"); go.type="button"; go.disabled = !st.other.trim();
+        inp.addEventListener("input", function(){ st.other = inp.value; go.disabled = !inp.value.trim(); });
+        inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter" && inp.value.trim()){ qi++; renderQ(1); } });
+        go.addEventListener("click", function(){ qi++; renderQ(1); });
+        otherBox.appendChild(inp); otherBox.appendChild(go);
+        scr.appendChild(otherBox);
+      }
+    } else {
+      document.getElementById("wizCount").textContent = "All set";
+      scr.appendChild(el("h2",null,"Here's your path."));
+      scr.appendChild(el("p","wsub","Your guide hides the steps you already have and uses your tools in every prompt."));
+      var path = el("div","path");
+      [["Your time","js-time","span"],["Your cost","js-cost","span"],["Your path","js-path","ul"]].forEach(function(r){
+        var row = el("div","path-row"); row.appendChild(el("span",null,r[0])); row.appendChild(el(r[2],r[1])); path.appendChild(row);
+      });
+      scr.appendChild(path);
+      fillPath(scr, st);
+      var acts = el("div","wiz-actions");
+      var open = el("button","btn-p","Open my guide"); open.type="button";
+      open.addEventListener("click", function(){ st.answered = true; st.view = "mine"; openGuide(); });
+      var full = el("button","btn-s","Show the full guide from scratch"); full.type="button";
+      full.addEventListener("click", function(){ st.answered = true; st.view = "full"; openGuide(); });
+      acts.appendChild(open); acts.appendChild(full); scr.appendChild(acts);
+    }
+    wizStage.innerHTML = ""; wizStage.appendChild(scr);
+  }
+  function openGuide(){
+    st.stage = "guide"; applyStart();
+    var t = document.getElementById("yourGuide");
+    window.scrollTo({top: Math.max(0, t.getBoundingClientRect().top + window.scrollY - 80), behavior: reduceMotion ? "auto" : "smooth"});
+  }
+  function openQuiz(){
+    st.stage = "quiz"; qi = 0; applyStart(); renderQ(1);
+    window.scrollTo({top:0, behavior: reduceMotion ? "auto" : "smooth"});
+  }
+  document.getElementById("wizBack").addEventListener("click", function(){ if(qi>0){ qi--; renderQ(-1); } });
+  document.getElementById("wizSkip").addEventListener("click", function(){ st.view = "full"; openGuide(); });
+  document.getElementById("barChange").addEventListener("click", openQuiz);
+  document.getElementById("ygChange").addEventListener("click", openQuiz);
+  document.getElementById("ygPrimary").addEventListener("click", function(){
+    if(st.view==="mine"){ st.view = "full"; applyStart(); }
+    else if(st.answered){ st.view = "mine"; applyStart(); }
+    else openQuiz();
+  });
+  document.querySelectorAll("#viewSeg button").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var v = btn.getAttribute("data-view");
+      if(v==="mine" && !st.answered){ openQuiz(); return; }
+      st.view = v; applyStart();
+    });
+  });
+
+  setMode(st.mode);
+  showTab(0);
+  applyStart();
+  renderQ(1);
+
+  // click-through demos: highlight one pane at a time (all content stays visible)
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll("[data-cycle]").forEach(function(box){
+    var kids = Array.prototype.slice.call(box.children), i = 0;
+    kids[0].classList.add("on");
+    if(reduce) return;
+    setInterval(function(){ kids[i].classList.remove("on"); i=(i+1)%kids.length; kids[i].classList.add("on"); }, 2400);
+  });
+
+  // "You're in chat N": follows the last switch card scrolled past
+  var switches = Array.prototype.slice.call(document.querySelectorAll(".switch"));
+  var pill = document.getElementById("chatPill");
+  function whereAmI(){
+    var cur = null;
+    switches.forEach(function(sw){ if(sw.offsetParent && sw.getBoundingClientRect().top < 140) cur = sw; });
+    if(cur){ pill.textContent = "You're in: " + cur.getAttribute("data-chat"); pill.hidden = false; }
+    else pill.hidden = true;
+  }
+  window.addEventListener("scroll", whereAmI, {passive:true}); whereAmI();
+
+  // reading progress
+  var prog = document.getElementById("prog");
+  function onScroll(){ var h=document.documentElement; var max=h.scrollHeight-h.clientHeight; prog.style.width = (max>0? (h.scrollTop/max*100):0)+"%"; }
+  window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+})();
+</script>
+</body>
+</html>
