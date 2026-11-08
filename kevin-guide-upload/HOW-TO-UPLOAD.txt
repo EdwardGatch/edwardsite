@@ -1,0 +1,36 @@
+BUILD YOUR OWN KEVIN: PUT IT ON EDWARDGATCH.COM
+About 5 minutes. Same way you update the rest of your site (GitHub, then Vercel goes live by itself).
+
+WHAT'S IN THIS FOLDER
+  kevin/index.html        The guide as a full page. Lives at edwardgatch.com/kevin
+  kevin/og.png            The preview picture people see when you share the link (Instagram DMs, iMessage, etc.)
+  assets/preview-kevin.jpg The picture on the new Kevin card on your Free resources page
+  resources.html          Your current Free resources page, with the Kevin card added above the other three.
+                          Nothing else on it changed.
+
+UPLOAD
+1. Go to github.com and open your website's repository (the one Vercel deploys).
+2. Click "Add file" > "Upload files".
+3. Open this folder (kevin-guide-upload) on your computer, select everything inside it
+   (the kevin folder, the assets folder and resources.html), and drag it all onto the GitHub page.
+   Leave out this instructions file (HOW-TO-UPLOAD.txt). If it goes up by accident, it does no harm.
+   - The kevin folder is new.
+   - assets/preview-kevin.jpg is added next to your other pictures. Nothing in assets is replaced.
+   - resources.html replaces the old one. That's expected.
+4. At the bottom, write a message like "Add Kevin guide" and click "Commit changes".
+5. Wait about a minute. Vercel puts it live automatically.
+
+CHECK IT (on your phone and computer)
+  - edwardgatch.com/kevin opens on question 1 of 4.
+  - Answer the questions; "Open my guide" works; "Full guide" in the top bar works.
+  - A "Copy prompt" button copies.
+  - edwardgatch.com/resources.html shows the Kevin card first, and "Open the guide" goes to the guide.
+  - Send yourself the link in an Instagram DM or text. The preview should show the gold "Build your own Kevin" picture.
+    (Instagram and others can take a while to refresh previews. If an old preview shows, wait and try again later.)
+
+VISITORS
+  Vercel > your project > Analytics shows visits to /kevin like your other pages.
+
+IF SOMETHING LOOKS WRONG
+  In GitHub, open the file's history and click "Revert", or upload your old resources.html again.
+  The guide page is separate, so deleting the kevin folder removes it completely.
