@@ -162,6 +162,7 @@ select.s{background:var(--surface);border:1px solid var(--border);border-radius:
 .sheet{background:var(--surface);width:100%;border-radius:18px 18px 0 0;padding:12px 16px 18px;max-height:82%;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow-lg)}
 .grab{width:36px;height:4px;border-radius:2px;background:var(--border-strong);margin:0 auto}
 .sheet .list{overflow-y:auto;gap:0}
+.sheet .list>*{flex-shrink:0}
 .pick{border:0;border-top:1px solid var(--border);background:none;padding:8px 4px;display:flex;align-items:center;gap:10px;text-align:left;width:100%;min-height:48px;color:var(--text)}
 .pick:first-child{border-top:0}
 .av{width:28px;height:28px;border-radius:50%;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-secondary);font-size:11px;font-weight:600;display:grid;place-items:center;flex:none}
@@ -387,14 +388,62 @@ body{margin:0}[hidden]{display:none!important}
 html.m-foreman{padding:0}
 .m-foreman body{padding:0;background:var(--bg)}
 .m-foreman .stage{display:block}
-.m-foreman .phone{max-width:none;min-height:0;height:100vh;height:100dvh;border:0;border-radius:0;box-shadow:none}
+/* phone build: the page itself scrolls (reliable on iPhone); bottom bar and sheets are fixed to the screen */
+.m-foreman .phone{max-width:none;height:auto;min-height:100vh;min-height:100dvh;overflow:visible;border:0;border-radius:0;box-shadow:none;display:block}
 .m-foreman .ph-status{display:none}
-.m-foreman .ph-body{padding-top:calc(16px + env(safe-area-inset-top,0px));overflow-y:auto;min-height:0;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-.m-foreman .ph-bottom{position:absolute}
-.m-foreman .sheet .list{min-height:0;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.m-foreman .ph-body{overflow:visible;padding-top:calc(16px + env(safe-area-inset-top,0px))}
+.m-foreman .ph-bottom{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:430px}
 .m-foreman .ph-nav{padding-bottom:max(10px,env(safe-area-inset-bottom,0px))}
+.m-foreman .overlay{position:fixed;left:0;right:0;top:0;bottom:0;margin:0 auto;max-width:430px}
+.m-foreman .sheet{max-height:82vh;max-height:82dvh}
+.m-foreman .sheet .list{min-height:0;overscroll-behavior:contain}
 .m-foreman .toast{bottom:calc(150px + env(safe-area-inset-bottom,0px))}
 @media (min-width:600px){.m-foreman .phone{max-width:430px;margin:0 auto;border-left:1px solid var(--border);border-right:1px solid var(--border)}}
+
+/* guided demo */
+.demo-strip{position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:calc(8px + env(safe-area-inset-top,0px)) 16px 8px;background:var(--bar-bg);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border-subtle);font-size:13px;color:var(--text-secondary)}
+.demo-strip b{color:var(--text);font-weight:600}
+.demo-strip .btn{min-height:34px;padding:0 12px;font-size:14px}
+.m-foreman .ph-body{padding-top:12px}
+#tour{position:fixed;inset:0;z-index:60;pointer-events:none}
+#tour[hidden]{display:none}
+.t-blk{position:fixed;pointer-events:auto;background:transparent}
+.t-hole{position:fixed;border-radius:12px;box-shadow:0 0 0 200vmax var(--scrim);pointer-events:none;transition:left .32s cubic-bezier(.2,.8,.2,1),top .32s cubic-bezier(.2,.8,.2,1),width .32s cubic-bezier(.2,.8,.2,1),height .32s cubic-bezier(.2,.8,.2,1)}
+#tour.is-modal .t-hole{left:50%!important;top:50%!important;width:0!important;height:0!important;transition:none}
+.t-ring{position:absolute;inset:-3px;border-radius:14px;border:2px solid var(--accent);opacity:0}
+#tour.tap .t-ring{animation:tpulse 1.6s ease-out infinite}
+@keyframes tpulse{0%{transform:scale(1);opacity:.95}70%{transform:scale(1.05);opacity:0}100%{opacity:0}}
+.t-card{pointer-events:auto}
+.t-pop{position:fixed;width:min(340px,calc(100vw - 24px));background:var(--surface);color:var(--text);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.24);padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;animation:tin .26s cubic-bezier(.2,.8,.2,1);transition:top .32s cubic-bezier(.2,.8,.2,1),left .32s cubic-bezier(.2,.8,.2,1)}
+.t-pop.nudge{animation:tnudge .36s}
+@keyframes tin{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes tnudge{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.t-meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-secondary);font-weight:500}
+.t-x{border:0;background:none;color:var(--text-secondary);width:32px;height:32px;margin:-6px -8px -6px 0;border-radius:8px;display:grid;place-items:center;cursor:pointer}
+.t-x:hover{background:var(--fill)}
+.t-pop h3{margin:0;font-size:16px;font-weight:600;line-height:1.3}
+.t-pop p{margin:0;font-size:14px;line-height:1.45;color:var(--text-secondary)}
+.t-bar{padding-top:2px}.t-prog{height:4px;border-radius:2px;background:var(--fill);overflow:hidden}.t-prog i{display:block;height:100%;background:var(--accent);border-radius:2px;transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.t-act{display:flex;gap:8px;justify-content:flex-end;align-items:center;margin-top:2px}
+.t-act .btn{min-height:36px}
+.t-hint{flex:1;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--accent-text)}
+.t-modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow:auto;background:var(--surface);color:var(--text);border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.28);padding:24px;display:flex;flex-direction:column;gap:12px;animation:tmin .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes tmin{from{opacity:0;transform:translate(-50%,-47%) scale(.97)}to{opacity:1;transform:translate(-50%,-50%)}}
+.t-modal h2{margin:0;font-size:22px;font-weight:700;line-height:1.25;text-wrap:balance}
+.t-modal p{margin:0;color:var(--text-secondary);line-height:1.5}
+.t-badge{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--accent-text);background:var(--accent-soft);padding:4px 10px;border-radius:8px}
+.t-opts,.t-col{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.t-opt{all:unset;box-sizing:border-box;display:flex;gap:12px;align-items:flex-start;width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);cursor:pointer;transition:border-color .15s,background .15s,transform .15s}
+.t-opt:hover{border-color:var(--accent);background:var(--accent-soft)}
+.t-opt:active{transform:scale(.99)}
+.t-opt:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.t-opt .ico{width:36px;height:36px;border-radius:10px;background:var(--accent-soft);color:var(--accent-text);display:grid;place-items:center;flex-shrink:0}
+.t-opt b{display:block;font-weight:600;font-size:15px;color:var(--text)}
+.t-opt span span{display:block;font-size:13px;line-height:1.45;color:var(--text-secondary);margin-top:2px}
+.t-links{display:flex;justify-content:center}
+.t-done{width:52px;height:52px;border-radius:16px;background:var(--success-bg);color:var(--success-fg);display:grid;place-items:center;animation:tpop .4s cubic-bezier(.2,1.4,.4,1)}
+@keyframes tpop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){#tour *{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -618,7 +667,7 @@ function fToday(){
   <div><div class="sup">Good morning, Marco</div><h2 class="h-page">${fmtDate(TODAY)}</h2></div>
   ${nt?`<div class="notif" role="status"><span class="ic">${ic('bell',18)}</span><div style="flex:1"><b>${nt[0]}</b><span class="sup">${nt[1]}</span></div><button class="ibtn" data-a="notif-off" aria-label="Dismiss notification">${ic('x',16)}</button></div>`:''}
   <div class="label">Your projects</div>
-  ${mine.map(({p,sh},i)=>`<div class="card">
+  ${mine.map(({p,sh},i)=>`<div class="card"${i===0?' data-tour="proj"':''}>
       <div class="row-between"><span class="cap">${ic('folder',14)} #${p.id} · PM ${esc(pmName(p.id))}</span>${chip(sh&&sheetStatus(sh))}</div>
       <h3 class="h-sub">${esc(p.short)}</h3>
       <div class="cap">${ic('clock',14)} ${fmtTime(p.start)} – ${fmtTime(p.end)}${i>0?' · only if you run a second site today':''}</div>
@@ -633,7 +682,7 @@ function fCarry(){const c=S.carry;const p=P(c.pid);
   return `<button class="back" data-a="go" data-s="today">${ic('left',16)}Today</button>
   <div><div class="cap">${ic('folder',14)} #${p.id} · ${fmtDate(TODAY)}</div><h2 class="h-sec">${esc(p.short)}</h2></div>
   ${c.ids.length?`<div class="flag note">${ic('users',15)}<span>${c.ids.length} people from ${fmtDate(c.date)}. Untick anyone who isn't here today.</span></div>
-  <div class="crew">${c.ids.map(id=>{const w=W(id);const cd=roleDefault(id,c.pid);return `<label class="check${c.on[id]?'':' off'}"><input type="checkbox" data-c="carry" data-w="${id}" ${c.on[id]?'checked':''}><span class="av">${ini(w.name)}</span><span style="flex:1;min-width:0"><span class="crew-name">${esc(w.name)}</span><br><span class="crew-sub">${esc(w.trade)} · ${cd?cd+' '+esc(codeDesc(cd,c.pid)):'pick a code after you start'}</span></span><span class="crew-sub">${c.on[id]?'':'Absent'}</span></label>`}).join('')}</div>
+  <div class="crew" data-tour="carry">${c.ids.map(id=>{const w=W(id);const cd=roleDefault(id,c.pid);return `<label class="check${c.on[id]?'':' off'}"><input type="checkbox" data-c="carry" data-w="${id}" ${c.on[id]?'checked':''}><span class="av">${ini(w.name)}</span><span style="flex:1;min-width:0"><span class="crew-name">${esc(w.name)}</span><br><span class="crew-sub">${esc(w.trade)} · ${cd?cd+' '+esc(codeDesc(cd,c.pid)):'pick a code after you start'}</span></span><span class="crew-sub">${c.on[id]?'':'Absent'}</span></label>`}).join('')}</div>
   <div class="cap">Everyone starts on their role's cost code. You can change codes, add or remove people after you start.</div>`
   :`<div class="empty">${ic('users',28)}<b>No earlier crew on this project</b><span class="sup">You'll start with just yourself and add crew from the list.</span></div>`}`;
 }
@@ -642,13 +691,13 @@ function fSheet(sh){
   const p=P(sh.projectId);const v=validate(sh);const codes=uniq(sh.rows.map(r=>r.costCode).filter(Boolean));
   return `
   <div class="row-between"><button class="proj-pick" data-a="go" data-s="today">${ic('folder',16)}${esc(p.short)} ${ic('down',14)}</button>${chip('draft')}</div>
-  <div class="summary">
+  <div class="summary" data-tour="summary">
     <div><div class="cap">${ic('calendar',13)} ${fmtDate(sh.date)} · ${ic('users',13)} ${sh.rows.length} crew</div><div class="big">${sheetHours(sh).toFixed(2)} h</div></div>
     <div class="right"><span class="cap">${ic('tag',13)} ${codes.length===1?codes[0]+' '+codeDesc(codes[0],p.id):codes.length+' cost codes'}</span><span class="cap">#${p.id} · ${sh.id}</span></div>
   </div>
-  <div class="field"><label class="label" for="cc">Change everyone's cost code</label>${codeSel('','class="ctl" id="cc" data-c="cc"','Keep each person\'s code',p.id)}</div>
-  <div class="row-between"><span class="label">Crew (${sh.rows.length})</span><button class="link" data-a="ov" data-o="pick">${ic('plus',15)}Add crew</button></div>
-  <div class="crew">${sh.rows.map((r,i)=>{const w=W(r.workerId);return `<div class="crew-row">
+  <div class="field" data-tour="cc"><label class="label" for="cc">Change everyone's cost code</label>${codeSel('','class="ctl" id="cc" data-c="cc"','Keep each person\'s code',p.id)}</div>
+  <div class="row-between"><span class="label">Crew (${sh.rows.length})</span><button class="link" data-a="ov" data-o="pick" data-tour="add">${ic('plus',15)}Add crew</button></div>
+  <div class="crew">${sh.rows.map((r,i)=>{const w=W(r.workerId);return `<div class="crew-row"${i===Math.min(1,sh.rows.length-1)?' data-tour="row"':''}>
       <div class="crew-top"><span style="min-width:0"><span class="crew-name">${esc(w.name)}</span> ${i===0?'<span class="tag">Foreman</span>':''}<br><span class="crew-sub">${esc(w.trade)}</span></span>
         <span style="display:flex;align-items:center;gap:2px"><b class="num" style="font-weight:600">${fmtH(rowHours(sh,r))}</b>${i>0?`<button class="ibtn" data-a="rm" data-w="${r.workerId}" aria-label="Remove ${esc(w.name)}">${ic('x',15)}</button>`:''}</span></div>
       <div class="crew-grid">
@@ -673,7 +722,7 @@ function fSheetRO(sh){const p=P(sh.projectId);const st=sheetStatus(sh);
 function fReview(sh){const v=validate(sh);const p=P(sh.projectId);
   return `<button class="back" data-a="go" data-s="sheet">${ic('left',16)}Edit timesheet</button>
   <h2 class="h-sec">Review and submit</h2><div class="sup">#${p.id} ${esc(p.short)} · ${fmtDate(sh.date)}</div>
-  <div class="crew">${sh.rows.map(r=>`<div class="ro-row"><span class="crew-name">${esc(W(r.workerId).name)}</span><b class="num" style="font-weight:600">${fmtH(rowHours(sh,r))}</b><span class="crew-sub num">${fmtTime(r.start)} – ${fmtTime(r.end)}${nextDay(sh,r)?' +1':''} · ${r.costCode||'no code'}</span></div>`).join('')}</div>
+  <div class="crew" data-tour="review">${sh.rows.map(r=>`<div class="ro-row"><span class="crew-name">${esc(W(r.workerId).name)}</span><b class="num" style="font-weight:600">${fmtH(rowHours(sh,r))}</b><span class="crew-sub num">${fmtTime(r.start)} – ${fmtTime(r.end)}${nextDay(sh,r)?' +1':''} · ${r.costCode||'no code'}</span></div>`).join('')}</div>
   <div class="total"><span class="label">Total</span><b>${sheetHours(sh).toFixed(2)} h</b></div>
   ${v.errors.length?`<div class="label">Fix before submitting</div>${v.errors.map(e=>`<div class="flag err">${ic('alert',14)}<span>${esc(e)}</span></div>`).join('')}`:`<div class="flag ok">${ic('check',14)}<span>Everything checks out. After you submit, you can only add notes.</span></div>`}`;
 }
@@ -717,6 +766,7 @@ function renderForeman(){
   const nav=S.fScreen==='alerts'?'alerts':(S.fScreen==='history'||S.from==='history')?'history':'today';
   return `<div class="stage"><div class="phone" aria-label="Foreman phone view">
     <div class="ph-status"><span class="num">9:41</span><span>Northline Interiors</span></div>
+    ${MODE==='foreman'?`<div class="demo-strip"><span><b>Northline Interiors</b> · <span class="tag">${S.cleared?'Your data':'Sample data'}</span></span><button class="btn primary" data-a="guide">${ic('review',15)}Guide</button></div>`:''}
     <div class="ph-body" id="phbody" style="padding-bottom:${footer?190:86}px">${body}</div>
     <div class="ph-bottom">${footer}<nav class="ph-nav">${[['today','Today','home'],['history','History','list'],['alerts','Alerts','bell']].map(t=>`<button data-a="go" data-s="${t[0]}" aria-current="${nav===t[0]}">${ic(t[2],20)}${t[1]}</button>`).join('')}</nav></div>
     ${sh&&S.fScreen==='sheet'?fOverlay(sh):''}
@@ -732,7 +782,7 @@ function hbars(rows){const max=Math.max(1,...rows.map(r=>r[1]));
 function reviewHead(){const ps=S.period;const cur=ps===curPeriod();const opts=periodOptions();const i=opts.indexOf(ps);
   const u=U();const scope=u.role==='pm'?`Your projects ${scopePids().map(x=>'#'+x).join(', ')}`:'All projects';
   return `<div class="head"><div><h2 class="h-page">Review hours</h2><div class="ctx"><span>${ic('calendar',14)}Pay period ${periodLabel(ps)}${cur?' · in progress':''}</span><span>${ic('folder',14)}${scope}</span></div></div>
-  <div class="pnav"><button class="ibtn" data-a="pprev" aria-label="Previous pay period" ${i<=0?'disabled':''}>${ic('left',18)}</button>
+  <div class="pnav" data-tour="period"><button class="ibtn" data-a="pprev" aria-label="Previous pay period" ${i<=0?'disabled':''}>${ic('left',18)}</button>
     <select class="ctl" data-c="period" aria-label="Pay period">${opts.map(o=>`<option value="${o}"${o===ps?' selected':''}>${periodLabel(o)}${o===curPeriod()?' (current)':''}</option>`).join('')}</select>
     <button class="ibtn" data-a="pnext" aria-label="Next pay period" ${i>=opts.length-1?'disabled':''}>${ic('right',18)}</button></div></div>`;
 }
@@ -757,7 +807,7 @@ function workerList(){const ps=S.period;const u=U();const ws=reviewWorkers();
   const groups=[[u.role==='pm'?'Waiting on you':'Waiting on PMs',waiting],['Approved',ws.filter(w=>!waiting.includes(w))]].filter(g=>g[1].length);
   const q=S.wq.trim().toLowerCase();
   const hits=q?ws.filter(id=>{const w=W(id);return w.name.toLowerCase().includes(q)||w.trade.toLowerCase().includes(q)||w.id.toLowerCase().includes(q)}).slice(0,8):[];
-  return `<div class="panel" style="padding:12px 16px"><div class="bar-row" style="justify-content:space-between">
+  return `<div class="panel" style="padding:12px 16px" data-tour="wbar"><div class="bar-row" style="justify-content:space-between">
     <div class="bar-row">
       <div class="wsearch"><label class="search">${ic('search',15)}<input id="wq" placeholder="Search name, trade or ID" value="${esc(S.wq)}" autocomplete="off" aria-label="Search workers" aria-controls="wres" aria-expanded="${q?'true':'false'}"></label>
       ${q?`<div class="wres" id="wres" role="listbox" aria-label="Matching workers">${hits.length?hits.map(id=>`<button role="option" data-a="wpickq" data-w="${id}"><span style="min-width:0;flex:1"><span class="crew-name">${esc(W(id).name)}</span><span class="sub2">${esc(W(id).trade)} · ${id}</span></span>${chip(wpStatus(ps,id))}</button>`).join('')
@@ -793,7 +843,7 @@ function workerDetail(w){const ps=S.period;const wo=W(w);const es=entries(ps,e=>
   const editor=sel?(()=>{const r=sel.row;const fl=errOf(sel);const canE=canEditRow(sel);
     const why=r.exp?`${ic('lock',13)} Exported by ${esc(r.exp.by)}, ${esc(r.exp.at)} · view only`:r.appr?`${ic('check',13)} Approved by ${esc(r.appr.by)}, ${esc(r.appr.at)} · view only`:canE?'Every change is saved in the history.':`${ic('clock',13)} Waiting on ${esc(pmName(sel.pid))} · view only`;
     const ro=(l,v)=>`<div class="field"><span class="mini">${l}</span><div class="ro-val num">${v}</div></div>`;
-    return `<div class="editrow">
+    return `<div class="editrow" data-tour="editrow">
       <div class="ed-h"><b>${fmtDate(sel.date)} · #${sel.pid} ${esc(P(sel.pid).short)}</b><span class="cap">${why}</span></div>
       ${canE?`<label class="field"><span class="mini">Start</span>${timeSel(r.start,`data-c="et" data-f="start" data-s="${sel.sheet.id}" data-w="${w}" aria-label="Start ${fmtDate(sel.date)}"`)}</label>
       <label class="field"><span class="mini">End${nextDay(sel.sheet,r)?' (next day)':''}</span>${timeSel(r.end,`data-c="et" data-f="end" data-s="${sel.sheet.id}" data-w="${w}" aria-label="End ${fmtDate(sel.date)}"`)}</label>
@@ -811,7 +861,7 @@ function workerDetail(w){const ps=S.period;const wo=W(w);const es=entries(ps,e=>
   ${anyExp?(S.unlocking?`<label class="field"><span class="label">Reason for unlocking (saved in the history)</span><input class="ctl" id="ureason" placeholder="e.g. Wrong cost code on Oct 22"></label><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-a="unlock-cancel">Cancel</button><button class="btn danger" data-a="unlock">Unlock ${esc(first)}'s pay period</button></div>`
       :`<div class="banner lock">${ic('lock',16)}<span style="flex:1">Exported to payroll and locked.</span><button class="link" style="color:inherit" data-a="unlock-start">Unlock to correct</button></div>`):''}
   <div class="stats" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div><span class="cap">Hours</span><b>${hours.toFixed(2)}</b></div><div><span class="cap">Days worked</span><b>${uniq(es.map(e=>e.date)).length}</b></div><div><span class="cap">Gross wages</span><b>${money(wageOf(es))}</b></div><div><span class="cap">Labor cost (incl. ${D.burden}% burden)</span><b>${money(costOf(es))}</b></div></div>
-  <div class="tbl-wrap"><table class="mx wcal"><colgroup><col style="width:196px">${days.map(()=>'<col>').join('')}<col style="width:64px"><col style="width:92px"></colgroup>
+  <div class="tbl-wrap" data-tour="wcal"><table class="mx wcal"><colgroup><col style="width:196px">${days.map(()=>'<col>').join('')}<col style="width:64px"><col style="width:92px"></colgroup>
     <thead><tr><th class="nm">Project</th>${days.map((d,i)=>`<th class="${cls(d,i)}">${parse(d).toLocaleDateString('en-CA',{weekday:'short'}).slice(0,3)}<br>${parse(d).getDate()}</th>`).join('')}<th class="tot">Hours</th><th class="tot">Labor cost</th></tr></thead><tbody>
     ${pids.map(p=>{const pe=es.filter(e=>e.pid===p);return `<tr><td class="nm"><b>#${p} ${esc(P(p).name)}</b><span class="pmline">${chip(sliceSt(p))}<small>${esc(pmName(p))}${u.role==='pm'&&P(p).pm===u.id?' (you)':''}</small></span></td>${days.map((d,i)=>cell(p,d,i)).join('')}<td class="tot">${hrsOf(pe).toFixed(2)}</td><td class="tot">${money(costOf(pe))}</td></tr>`}).join('')}
     </tbody><tfoot>
@@ -857,14 +907,14 @@ function oDashboard(){const u=U();const pids=scopePids();const ph=pids.map(projH
   const allCodes=ph.flatMap(x=>x.cs).filter(x=>x.v!=null&&x.v>5).sort((a,b)=>b.v-a.v).slice(0,8);
   const hr=new Date().getHours();const greet=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
   return `<div class="head"><div><h2 class="h-page">${greet}, ${esc(u.name.split(' ')[0])}</h2><div class="ctx"><span>${ic('folder',14)}${u.role==='pm'?'Your projects '+pids.map(x=>'#'+x).join(', '):'All projects'}</span><span>${ic('tag',14)}Labor cost includes ${D.burden}% burden</span></div></div>
-    ${segBtns('Measure budget in',S.vmode,[['vmode','cost','Dollars','dollar'],['vmode','hours','Hours','clock']])}</div>
+    <div data-tour="vmode">${segBtns('Measure budget in',S.vmode,[['vmode','cost','Dollars','dollar'],['vmode','hours','Hours','clock']])}</div></div>
   <div class="dgrid">
-    <div class="panel s7"><div class="row-between"><b class="h-sub">Labor budget health</b><span class="legend" style="font-size:12px"><span class="legend-k"><i style="background:var(--accent)"></i>Budget used</span><span class="legend-k"><i style="background:var(--text-secondary)"></i>Work complete</span></span></div>
+    <div class="panel s7" data-tour="health"><div class="row-between"><b class="h-sub">Labor budget health</b><span class="legend" style="font-size:12px"><span class="legend-k"><i style="background:var(--accent)"></i>Budget used</span><span class="legend-k"><i style="background:var(--text-secondary)"></i>Work complete</span></span></div>
       ${ph.map(x=>`<div class="pblock"><div class="row-between"><span><b style="font-weight:600">#${x.pid} ${esc(P(x.pid).short)}</b><span class="sub2">${x.bu?kU(x.su)+' of '+kU(x.bu)+(isH()?' budgeted':' labor budget'):'No budget yet'}</span></span><span style="display:flex;gap:8px;align-items:center"><span class="cap num">${x.over>0?kU(x.over)+' projected over':x.bu?'On budget':''}</span>${chip(x.st)}</span></div>
         <div class="meter"><span class="cap">Budget used</span><span class="t"><span class="f" style="width:${Math.min(100,x.used)}%;background:var(--accent)"></span></span><b>${Math.round(x.used)}%</b></div>
         <div class="meter"><span class="cap">Work complete</span><span class="t"><span class="f" style="width:${x.comp||0}%;background:var(--text-secondary)"></span></span><b>${x.comp==null?'–':Math.round(x.comp)+'%'}</b></div></div>`).join('')}
       <button class="link" data-a="otab" data-t="budgets">Open budgets ${ic('right',14)}</button></div>
-    <div class="panel s5"><div class="row-between"><b class="h-sub">Cost codes to watch</b><span class="cap">${isH()?'Hours':'Dollars'}: budget used minus work complete</span></div>
+    <div class="panel s5" data-tour="watch"><div class="row-between"><b class="h-sub">Cost codes to watch</b><span class="cap">${isH()?'Hours':'Dollars'}: budget used minus work complete</span></div>
       ${allCodes.length?allCodes.map(x=>`<button class="rank rankbtn" data-a="obudget" data-p="${x.pid}"><span><b style="font-weight:500">${x.code} ${esc(codeDesc(x.code,x.pid))}</b><span class="sub2">#${x.pid} ${esc(P(x.pid).short)} · ${Math.round(x.used)}% used, ${x.c}% done</span></span><span class="t"><span class="f" style="display:block;width:${Math.min(100,x.v/40*100)}%;background:${x.st==='over'?'var(--error-fg)':'var(--warning-fg)'}"></span></span><b style="color:${x.st==='over'?'var(--error-fg)':'var(--warning-fg)'}">+${Math.round(x.v)} pts</b></button>`).join('')
         :`<div class="empty">${ic('check',28)}<b>Every cost code is on track</b><span class="sup">Codes appear here when budget used runs more than 5 points ahead of work complete.</span></div>`}
       <span class="cap">Watch: more than 5 points ahead. Over budget: more than 15. Select a code to open that project's budget.</span></div>
@@ -876,9 +926,9 @@ function oBudgets(){const u=U();const pids=scopePids();if(!S.bproj||!pids.includ
   const log=D.budgetLog.filter(x=>x.pid===pid).slice().reverse();
   return `<div class="head"><div><h2 class="h-page">Budgets</h2><div class="ctx"><span>${ic('folder',14)}#${pid} ${esc(P(pid).short)} · PM ${esc(pmName(pid))}</span><span>${ic('tag',14)}Labor cost includes ${D.burden}% burden</span></div></div>
     <div class="bar-row">${segBtns('Measure budget in',S.vmode,[['vmode','cost','Dollars','dollar'],['vmode','hours','Hours','clock']])}<select class="ctl" style="width:auto" data-c="bproj" aria-label="Project">${pids.map(p=>`<option value="${p}"${p===pid?' selected':''}>#${p} ${esc(P(p).short)}</option>`).join('')}</select>
-    ${canEdit?`<label class="btn" style="cursor:pointer">${ic('export',16)}Import budget CSV<input type="file" accept=".csv,text/csv" data-c="bimport" style="display:none"></label>`:''}</div></div>
+    ${canEdit?`<label class="btn" style="cursor:pointer" data-tour="bimport">${ic('export',16)}Import budget CSV<input type="file" accept=".csv,text/csv" data-c="bimport" style="display:none"></label>`:''}</div></div>
   <div class="panel" style="padding:14px 20px"><div class="legend"><span>Budget <b>${fU(h.bu)}</b></span><span>Spent to date <b>${fU(h.su)}</b> (${Math.round(h.used)}%)</span><span>Work complete <b>${h.comp==null?'–':Math.round(h.comp)+'%'}</b></span><span>Projected over <b style="color:${h.over>0?'var(--error-fg)':'var(--text)'}">${fU(h.over)}</b></span><span>${chip(h.st)}</span></div></div>
-  <div class="panel" style="padding:0"><div class="tbl-wrap"><table><thead><tr><th>Cost code</th><th class="n">Budget</th><th class="n">Spent to date</th><th class="n">Budget used</th><th class="n">Work complete</th><th class="n">Variance</th><th class="n">Projected final</th><th>Status</th></tr></thead><tbody>
+  <div class="panel" style="padding:0" data-tour="btable"><div class="tbl-wrap"><table><thead><tr><th>Cost code</th><th class="n">Budget</th><th class="n">Spent to date</th><th class="n">Budget used</th><th class="n">Work complete</th><th class="n">Variance</th><th class="n">Projected final</th><th>Status</th></tr></thead><tbody>
   ${h.cs.map(x=>`<tr style="height:60px"><td><b style="font-weight:500">${x.code}</b> <span class="muted">${esc(codeDesc(x.code,pid))}</span></td>
     <td class="n">${isH()?x.bh.toLocaleString()+' h':money(x.budget)}<span class="sub2">${isH()?money(x.budget):x.bh.toLocaleString()+' h'}</span></td>
     <td class="n">${isH()?Math.round(x.hrs).toLocaleString()+' h':money(x.spent)}<span class="sub2">${isH()?money(x.spent):Math.round(x.hrs).toLocaleString()+' h'}</span></td>
@@ -950,7 +1000,7 @@ function oProjects(){const u=U();const pids=scopePids();if(!S.pproj||!pids.inclu
     <label class="field"><span class="label">Description</span><input class="ctl" id="ndesc" placeholder="e.g. Acoustic ceilings" autocomplete="off"></label>
     <button class="btn primary" style="justify-self:start" data-a="addcode">${ic('plus',16)}Add cost code</button></div>
     <span class="cap">New codes show up straight away in this project's foreman dropdowns, the review and the budget.</span></div>`:''}
-  <div class="panel" style="padding:0"><div style="padding:16px 20px 0" class="row-between"><b class="h-sub">Cost codes on #${pid}</b><span class="cap">${codes.length} codes</span></div>
+  <div class="panel" style="padding:0" data-tour="pcodes"><div style="padding:16px 20px 0" class="row-between"><b class="h-sub">Cost codes on #${pid}</b><span class="cap">${codes.length} codes</span></div>
     <div class="tbl-wrap"><table><thead><tr><th style="width:96px">Code</th><th>Description</th><th class="n">Hours to date</th><th class="n">Budget</th><th style="width:96px"></th></tr></thead><tbody>
     ${codes.map(c=>{const h=hrsOf(allEntries(pid,c.code));const b=(D.budgets[pid]||{})[c.code];return `<tr><td class="num"><b style="font-weight:500">${esc(c.code)}</b></td>
       <td>${canEdit?`<input class="ctl" style="min-height:36px" value="${esc(c.desc)}" data-c="pcdesc" data-code="${esc(c.code)}" aria-label="Description for ${esc(c.code)}">`:esc(c.desc)}</td>
@@ -982,19 +1032,145 @@ function renderOffice(){const u=U();
 /* ================= SHELL ================= */
 function applyTheme(){const r=document.documentElement;if(S.theme==='auto'){if(ROOT_THEME)r.setAttribute('data-theme',ROOT_THEME);else r.removeAttribute('data-theme')}else r.setAttribute('data-theme',S.theme)}
 function render(){
-  const ph=document.getElementById('phbody');const sc=ph?ph.scrollTop:0;const ae=document.activeElement;const pq=ae&&ae.id==='pickq';const wqf=ae&&ae.id==='wq';
+  const ph=document.getElementById('phbody');const sc=ph?ph.scrollTop:0;const scrKey=S.view+'|'+S.fScreen+'|'+S.fSheet;const newScr=render.k!==undefined&&render.k!==scrKey;render.k=scrKey;const ae=document.activeElement;const pq=ae&&ae.id==='pickq';const wqf=ae&&ae.id==='wq';
   document.getElementById('app').innerHTML=`
   ${MODE==='foreman'?'':`<header class="demo">
-    <div class="brand"><div class="mark">N</div><div><b>Northline Interiors</b><span class="cap">Timesheets ${MODE==='office'?'demo':'prototype'} · <span class="tag">Sample data</span></span></div></div>
+    <div class="brand"><div class="mark">N</div><div><b>Northline Interiors</b><span class="cap">Timesheets ${MODE==='office'?'demo':'prototype'} · <span class="tag">${S.cleared?'Your data':'Sample data'}</span></span></div></div>
     ${MODE==='both'?`<div class="views" role="group" aria-label="Switch view"><button data-a="view" data-v="foreman" aria-pressed="${S.view==='foreman'}">${ic('phone',15)}Foreman</button><button data-a="view" data-v="office" aria-pressed="${S.view==='office'}">${ic('desk',15)}Office · PM, payroll, admin</button></div>`:''}
     <div class="demo-r">${segBtns('Appearance',S.theme,[['theme','auto','Auto'],['theme','light','Light'],['theme','dark','Dark']])}
-      <button class="btn" style="min-height:36px" data-a="reset">Reset demo</button></div>
+      <button class="btn primary" style="min-height:36px" data-a="guide">${ic('review',15)}Guide</button><button class="btn" style="min-height:36px" data-a="reset">Reset demo</button></div>
   </header>`}
   ${S.view==='foreman'?renderForeman():renderOffice()}
   ${S.toast?`<div class="toast" role="status">${esc(S.toast)}</div>`:''}`;
-  const ph2=document.getElementById('phbody');if(ph2)ph2.scrollTop=sc;
+  const ph2=document.getElementById('phbody');if(ph2)ph2.scrollTop=newScr?0:sc;if(newScr&&MODE==='foreman')window.scrollTo(0,0);
   if(pq||wqf){const i=document.getElementById(pq?'pickq':'wq');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length)}}
+  tourAfterRender();
 }
+
+/* ================= GUIDED DEMO (welcome, tour, finish) ================= */
+const LS_KEY='tsdemo-intro-'+MODE;
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const tourView=()=>S.view==='foreman'?'foreman':'office';
+const q=s=>document.querySelector(s);
+function resetSample(){D=seed();seedCodes();seedBudgets();S.cleared=false;
+  Object.assign(S,{wq:'',ecell:null,newProj:false,pproj:null,fScreen:'today',fSheet:null,carry:null,overlay:null,lastCsv:null,oWorker:null,period:addDays(curPeriod(),-14),exPeriod:null,notifOff:false,unlocking:false,from:null,pickQ:''})}
+function clearSample(){D.sheets=[];D.audit=[];D.budgetLog=[];
+  Object.keys(D.budgets).forEach(pid=>Object.keys(D.budgets[pid]).forEach(c=>{D.budgets[pid][c]={cost:0,hours:0,prior:0,priorH:0,complete:null,by:S.user,at:fmtShort(TODAY)}}));
+  Object.assign(S,{cleared:true,wq:'',ecell:null,newProj:false,fScreen:'today',fSheet:null,carry:null,overlay:null,lastCsv:null,oWorker:null,period:curPeriod(),exPeriod:null,notifOff:false,unlocking:false,from:null,oTab:'dashboard',pickQ:''})}
+
+const TOURS={
+foreman:[
+ {pre:()=>{resetSample();S.view='foreman'},sel:'[data-tour="proj"]',t:'Your job sites',b:'Each morning you pick the project you’re on. The PM and the usual site hours are shown on the card.'},
+ {sel:'[data-tour="proj"] [data-a="prestart"]',tap:1,t:'Start the day',b:'Tap “Start today’s timesheet” for Brentwood Tower.'},
+ {sel:'[data-tour="carry"]',noBack:1,t:'Yesterday’s crew carries over',b:'No retyping names. Untick anyone who isn’t on site today. Everyone starts on their role’s cost code.'},
+ {sel:'[data-a="start"]',tap:1,t:'Create today’s timesheet',b:'Tap the blue button to start with this crew.'},
+ {sel:'[data-tour="summary"]',noBack:1,t:'Today at a glance',b:'Date, crew size, total hours and cost codes. Hours fill in as people sign out.'},
+ {sel:'[data-tour="row"]',t:'One row per person',b:'Someone late? Change their start time. Their cost code defaults to their role. Change it if they’re on other work today.'},
+ {sel:'[data-tour="cc"]',t:'Whole crew on the same work?',b:'Change everyone’s cost code in one go.'},
+ {sel:'[data-tour="add"]',t:'Someone extra on site?',b:'Add people from the company list. Anyone already on another site today is marked.'},
+ {sel:'.ph-footer [data-o="signout"]',tap:1,t:'End of the day',b:'When the crew leaves, tap “Sign out all”.'},
+ {sel:'.sheet [data-a="signout"]',tap:1,noBack:1,t:'One shared end time',b:'Everyone still on site gets this time. If someone left early, change theirs afterwards. Tap “Sign out all”.'},
+ {sel:'.ph-footer [data-s="review"]',tap:1,noBack:1,t:'Check before you send',b:'Tap “Review and submit”.'},
+ {sel:'[data-tour="review"]',noBack:1,t:'Last check',b:'Hours, times and codes for everyone. Anything wrong shows in red, and you can’t submit until it’s fixed.'},
+ {sel:'[data-a="submit"]',tap:1,t:'Send it to your PM',b:'Tap Submit. After that you can only add notes, so the hours can’t change by accident.'},
+ {sel:'.ph-nav [data-s="history"]',noBack:1,t:'History',b:'Every timesheet you’ve sent, grouped by pay period, with its status: submitted, approved or exported.'},
+ {sel:'.ph-nav [data-s="alerts"]',t:'Reminders',b:'The app reminds you to start and to sign out at each project’s usual times.'},
+],
+office:[
+ {pre:()=>{resetSample();S.view='office';S.user='dana';S.oTab='dashboard';S.vmode='cost'},sel:'.side',t:'Everything in one place',b:'Dashboard, hours to review, budgets, projects, the payroll export, workers and settings.'},
+ {sel:'[data-tour="health"]',t:'Labor budget health',b:'Each project’s budget used against work complete. When spending runs ahead of progress, it turns orange, then red.'},
+ {sel:'[data-tour="vmode"]',t:'Dollars or hours',b:'Measure budgets in labor dollars (with burden) or in hours. It changes the dashboard and Budgets.'},
+ {sel:'[data-tour="watch"]',t:'Cost codes to watch',b:'The scopes running furthest ahead of progress. Select one to open its budget.'},
+ {sel:'.side [data-t="review"]',tap:1,t:'Review hours',b:'Foremen submit daily. You approve once per pay period. Tap “Review hours”.'},
+ {sel:'[data-tour="period"]',noBack:1,t:'One pay period at a time',b:'The current period fills in day by day. Approval opens once the period has ended.'},
+ {sel:'[data-tour="wbar"]',t:'One worker at a time',b:'Search by name or trade, or step through the people waiting on you.'},
+ {sel:'[data-tour="wcal"]',t:'Their two weeks on one screen',b:'Each row is a project, each column a day: hours and the cost code. Days that need fixing show in red.'},
+ {sel:'[data-tour="wcal"] .cellbtn',tap:1,t:'Open a day',b:'Tap any day to see its start and end times.'},
+ {sel:'[data-tour="editrow"]',noBack:1,t:'Fix it before you approve',b:'On your own projects you can change start, end and cost code until you approve. Every change goes into the history.'},
+ {sel:'[data-a="approve"]',tap:1,t:'Approve',b:'Tap Approve. The next worker waiting on you opens on its own.',alt:'Approval is closed for this worker right now. In a live pay period you’d approve here.'},
+ {sel:'.side [data-t="budgets"]',tap:1,noBack:1,t:'Budgets',b:'Tap “Budgets”.'},
+ {sel:'[data-tour="bimport"]',noBack:1,t:'Bring in your estimate',b:'Import each project’s labor budget per cost code from a CSV. Then update work complete as the job moves.'},
+ {sel:'[data-tour="btable"]',t:'Budget against actual',b:'Spent to date comes straight from approved timesheets. Variance is budget used minus work complete.'},
+ {sel:'.side [data-t="projects"]',tap:1,t:'Projects',b:'Tap “Projects”.'},
+ {sel:'[data-tour="pcodes"]',noBack:1,t:'Each project, its own cost codes',b:'Add a project, then add, rename or remove its cost codes. Foremen only see the codes for their project.'},
+ {sel:'.side [data-t="export"]',tap:1,t:'Payroll export',b:'Tap “Export”.'},
+ {sel:'[data-a="export"]',noBack:1,t:'Export and lock',b:'Once every PM has approved, payroll exports a CSV for your accounting software and the hours lock.'},
+]};
+
+const T={on:false,i:0,steps:[],mode:null,el:null};
+let tourRoot=null;
+function tourLayer(){if(tourRoot)return tourRoot;tourRoot=document.createElement('div');tourRoot.id='tour';tourRoot.hidden=true;
+  tourRoot.innerHTML='<div class="t-blk" data-b="t"></div><div class="t-blk" data-b="b"></div><div class="t-blk" data-b="l"></div><div class="t-blk" data-b="r"></div><div class="t-blk" data-b="c"></div><div class="t-hole"><div class="t-ring"></div></div><div class="t-card"></div>';
+  document.body.appendChild(tourRoot);
+  tourRoot.addEventListener('click',e=>{const b=e.target.closest('[data-tt]');if(b){e.preventDefault();e.stopPropagation();tourAct(b.dataset.tt);return}
+    if(e.target.closest('.t-blk')){const c=tourRoot.querySelector('.t-pop');if(c){c.classList.remove('nudge');void c.offsetWidth;c.classList.add('nudge')}}});
+  return tourRoot}
+function modal(html,label){const r=tourLayer();T.mode='modal';r.hidden=false;r.className='is-modal';
+  const card=r.querySelector('.t-card');card.innerHTML=`<div class="t-modal" role="dialog" aria-modal="true" aria-label="${label}">${html}</div>`;
+  r.querySelectorAll('.t-blk').forEach(b=>Object.assign(b.style,{left:'0',top:'0',width:'0',height:'0'}));r.querySelector('[data-b="c"]').setAttribute('style','left:0;top:0;width:100vw;height:100vh');
+  const f=card.querySelector('.t-opt,.btn.primary');if(f)f.focus({preventScroll:true})}
+function closeLayer(){if(tourRoot){tourRoot.hidden=true;tourRoot.className=''}T.on=false;T.mode=null}
+function openWelcome(){const fm=tourView()==='foreman';
+  modal(`<div class="t-badge">${ic(fm?'phone':'desk',18)}${fm?'Foreman app':'Office app'} · demo</div>
+    <h2>${fm?'Run a day’s timesheet in under a minute':'Review hours, watch labor budgets, export payroll'}</h2>
+    <p>${fm?'This is a demo with sample projects and crew. Nothing you do here is saved or sent to anyone.':'This is a demo with sample projects, workers and hours for a drywall company. Nothing you do here is saved or sent to anyone.'}</p>
+    <div class="t-opts">
+      <button class="t-opt" data-tt="start"><span class="ico">${ic('review',18)}</span><span><b>Take the guided tour</b><span>About ${fm?'2':'3'} minutes. We point out each part and you tap the main buttons. Then you get a clean app to try yourself.</span></span></button>
+      <button class="t-opt" data-tt="explore"><span class="ico">${ic('search',18)}</span><span><b>Explore on my own</b><span>Look around the sample data. Open the guide again from “Guide” at the top.</span></span></button>
+    </div>
+    <div class="t-links">${S.cleared?'<button class="link" data-tt="sample">Bring back the sample data</button>':'<button class="link" data-tt="fresh">Skip ahead: start with a clean app</button>'}</div>`,'Welcome')}
+function openFinish(){const fm=tourView()==='foreman';
+  modal(`<div class="t-done">${ic('check',28)}</div>
+    <h2>That’s the whole ${fm?'day':'pay period'}</h2>
+    <p>Now try it yourself. We’ll clear the sample hours${fm?'':', approvals and budgets'} and keep the projects, crew and cost codes, so you can start from a clean ${fm?'timesheet':'slate'}.</p>
+    <div class="t-col"><button class="btn primary block" data-tt="fresh">Clear sample data and start</button><button class="btn block" data-tt="explore">Keep exploring the sample data</button></div>
+    <div class="t-links"><button class="link" data-tt="start">Replay the tour</button></div>`,'Tour finished')}
+function tourAct(a){
+  if(a==='start'){lsSet(LS_KEY,'1');T.steps=TOURS[tourView()];T.on=true;T.mode='tour';tourGo(0)}
+  else if(a==='explore'){lsSet(LS_KEY,'1');closeLayer();render()}
+  else if(a==='fresh'){lsSet(LS_KEY,'1');closeLayer();clearSample();render();toast(tourView()==='foreman'?'Sample hours cleared. Your projects and crew list are ready.':'Sample hours, approvals and budgets cleared. Projects, workers and cost codes are kept.')}
+  else if(a==='sample'){closeLayer();resetSample();render();toast('Sample data is back')}
+  else if(a==='next')tourGo(T.i+1);
+  else if(a==='back')tourGo(T.i-1);
+  else if(a==='skip'){closeLayer();render()}
+}
+function tourGo(i){if(i<0)return;if(i>=T.steps.length){T.on=false;openFinish();return}
+  T.i=i;const st=T.steps[i];if(st.pre)st.pre();render();const r=tourLayer();r.hidden=false;r.className='is-tour';
+  let tries=0;const find=()=>{const el=q(st.sel);if(el){T.el=el;showStep(st,el)}else if(tries++<20)setTimeout(find,60);else tourGo(i+1)};find()}
+function inView(r){return r.top>=60&&r.bottom<=innerHeight-(tourView()==='foreman'?170:20)}
+function showStep(st,el){
+  const r=el.getBoundingClientRect();
+  if(!inView(r)){const red=matchMedia('(prefers-reduced-motion: reduce)').matches;el.scrollIntoView({block:'center',behavior:red?'auto':'smooth'});setTimeout(placeTour,red?0:380)}
+  const dis=st.tap&&el.disabled;const n=T.steps.length;
+  const card=tourRoot.querySelector('.t-card');
+  card.innerHTML=`<div class="t-pop" role="dialog" aria-live="polite" aria-label="${esc(st.t)}">
+    <div class="t-meta"><span>Step ${T.i+1} of ${n}</span><button class="t-x" data-tt="skip" aria-label="End the tour">${ic('x',16)}</button></div>
+    <h3>${esc(st.t)}</h3><p>${esc(dis&&st.alt?st.alt:st.b)}</p>
+    <div class="t-bar"><div class="t-prog"><i style="width:${(T.i+1)/n*100}%"></i></div></div>
+    <div class="t-act">${st.tap&&!dis?`<span class="t-hint">${ic('right',14)}Tap the highlighted button</span>`:''}
+      ${T.i>0&&!st.noBack?'<button class="btn" data-tt="back">Back</button>':''}
+      ${st.tap&&!dis?'':`<button class="btn primary" data-tt="next">${T.i===n-1?'Finish':'Next'}</button>`}</div></div>`;
+  tourRoot.classList.toggle('tap',!!(st.tap&&!dis));
+  placeTour();const f=card.querySelector('[data-tt="next"]');if(f)f.focus({preventScroll:true})}
+function placeTour(){if(!T.on||T.mode!=='tour'||!tourRoot)return;const st=T.steps[T.i];const el=q(st.sel);if(!el)return;T.el=el;
+  const vw=innerWidth,vh=innerHeight,pad=6;const r=el.getBoundingClientRect();
+  const x=Math.max(4,r.left-pad),y=Math.max(4,r.top-pad),x2=Math.min(vw-4,r.right+pad),y2=Math.min(vh-4,r.bottom+pad);const w=Math.max(0,x2-x),h=Math.max(0,y2-y);
+  const hole=tourRoot.querySelector('.t-hole');Object.assign(hole.style,{left:x+'px',top:y+'px',width:w+'px',height:h+'px'});
+  const B=k=>tourRoot.querySelector(`[data-b="${k}"]`);const S2=(k,l,t,ww,hh)=>Object.assign(B(k).style,{left:l+'px',top:t+'px',width:Math.max(0,ww)+'px',height:Math.max(0,hh)+'px'});
+  S2('t',0,0,vw,y);S2('b',0,y+h,vw,vh-y-h);S2('l',0,y,x,h);S2('r',x+w,y,vw-x-w,h);
+  const tapOk=st.tap&&!el.disabled;if(tapOk)S2('c',0,0,0,0);else S2('c',x,y,w,h);
+  const pop=tourRoot.querySelector('.t-pop');if(!pop)return;const pw=pop.offsetWidth,ph=pop.offsetHeight,gap=12;
+  let top,left=Math.min(Math.max(8,x+w/2-pw/2),vw-pw-8);const midTop=Math.min(Math.max(8,y+h/2-ph/2),vh-ph-8);
+  if(vh-(y+h)>=ph+gap+8)top=y+h+gap;else if(y>=ph+gap+8)top=y-ph-gap;
+  else if(vw-(x+w)>=pw+gap+8){left=x+w+gap;top=midTop}else if(x>=pw+gap+8){left=x-pw-gap;top=midTop}
+  else top=Math.max(8,vh-ph-8);Object.assign(pop.style,{left:left+'px',top:top+'px'})}
+let rafT=0;const rePlace=()=>{if(rafT)return;rafT=requestAnimationFrame(()=>{rafT=0;placeTour()})};
+addEventListener('scroll',rePlace,true);addEventListener('resize',rePlace);
+document.addEventListener('click',e=>{if(!T.on||T.mode!=='tour')return;const st=T.steps[T.i];if(!st.tap)return;const el=q(st.sel);
+  if(el&&!el.disabled&&(e.target===el||el.contains(e.target))){const i=T.i;setTimeout(()=>{if(T.on&&T.i===i)tourGo(i+1)},80)}},true);
+document.addEventListener('keydown',e=>{if(!tourRoot||tourRoot.hidden)return;if(e.key==='Escape'){if(T.mode==='tour'){closeLayer();render()}else tourAct('explore')}});
+function tourAfterRender(){if(T.on&&T.mode==='tour')requestAnimationFrame(placeTour)}
 
 /* ================= EVENTS ================= */
 const cur=()=>SH(S.fSheet);
@@ -1007,7 +1183,8 @@ document.addEventListener('click',e=>{
   if(el.classList.contains('overlay')&&e.target.closest('[data-stop]'))return;
   const a=el.dataset.a;
   if(a==='view')S.view=el.dataset.v;
-  else if(a==='reset'){D=seed();seedCodes();seedBudgets();Object.assign(S,{wq:'',ecell:null,newProj:false,pproj:null,fScreen:'today',fSheet:null,carry:null,overlay:null,lastCsv:null,oWorker:null,period:addDays(curPeriod(),-14),exPeriod:null,day:null,notifOff:false,unlocking:false});return toast('Demo data reset')}
+  else if(a==='reset'){resetSample();return toast('Demo data reset')}
+  else if(a==='guide'){openWelcome();return}
   else if(a==='notif-off')S.notifOff=true;
   else if(a==='go'){S.fScreen=el.dataset.s;if(['today','history','alerts'].includes(S.fScreen))S.from=null}
   else if(a==='prestart'){const lc=lastCrew(el.dataset.p);S.carry={pid:el.dataset.p,date:lc.date,ids:lc.ids,on:Object.fromEntries(lc.ids.map(i=>[i,true]))};S.fScreen='carry'}
@@ -1094,6 +1271,7 @@ document.addEventListener('change',e=>{const c=e.target.dataset.c;if(!c)return;c
 });
 document.addEventListener('input',e=>{if(e.target.id==='pickq'){S.pickQ=e.target.value;render()}else if(e.target.id==='wq'){S.wq=e.target.value;render()}});
 seedCodes();seedBudgets();applyTheme();render();
+if(MODE!=='both'&&!lsGet(LS_KEY))setTimeout(openWelcome,350);
 })();
 </script>
 
