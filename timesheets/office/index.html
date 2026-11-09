@@ -387,9 +387,11 @@ body{margin:0}[hidden]{display:none!important}
 html.m-foreman{padding:0}
 .m-foreman body{padding:0;background:var(--bg)}
 .m-foreman .stage{display:block}
-.m-foreman .phone{max-width:none;height:100vh;height:100dvh;border:0;border-radius:0;box-shadow:none}
+.m-foreman .phone{max-width:none;min-height:0;height:100vh;height:100dvh;border:0;border-radius:0;box-shadow:none}
 .m-foreman .ph-status{display:none}
-.m-foreman .ph-body{padding-top:calc(16px + env(safe-area-inset-top,0px))}
+.m-foreman .ph-body{padding-top:calc(16px + env(safe-area-inset-top,0px));overflow-y:auto;min-height:0;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.m-foreman .ph-bottom{position:absolute}
+.m-foreman .sheet .list{min-height:0;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .m-foreman .ph-nav{padding-bottom:max(10px,env(safe-area-inset-bottom,0px))}
 .m-foreman .toast{bottom:calc(150px + env(safe-area-inset-bottom,0px))}
 @media (min-width:600px){.m-foreman .phone{max-width:430px;margin:0 auto;border-left:1px solid var(--border);border-right:1px solid var(--border)}}
